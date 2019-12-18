@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             val month = current.month
             val this_year = current.year
 
-            d( " diff: " , )
+            d( " diff: " , ((current.year - year) * 365.25 + Math.abs((month.to - monthOfYear.toBigInteger() )) * 30 + Math.abs(today-dayOfMonth)).toString() )
 
             d(
                 "Selected date",
