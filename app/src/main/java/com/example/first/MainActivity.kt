@@ -1,46 +1,29 @@
 package com.example.first
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.util.Log.d
-import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.DatePicker.OnDateChangedListener
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import java.time.LocalDateTime
+import java.time.*
+import java.time.LocalDate.parse
+import java.time.format.DateTimeFormatter
 import java.util.Date
 
 
 class MainActivity : AppCompatActivity() {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        TextOutput.setOnEditorActionListener { v, actionId, event ->
-            var handled = false
-            if (event.getAction() === KeyEvent.KEYCODE_ENTER) { // Handle pressing "Enter" key here
-                handled = true
-                changeText()
-            }
-            handled
-        }
-
-        bigButton.setOnClickListener {
-            changeText()
-            it.hideKeyboard()
-        }
-
-        ResetTextButton.setOnClickListener {
-            TextOutput.text = "Hello World :?>"
-            NameTextField.setText("")
-            it.hideKeyboard()
-        }
 
         DatePickerDialog.setOnDateChangedListener{ view, year, monthOfYear, dayOfMonth ->
 
@@ -49,19 +32,15 @@ class MainActivity : AppCompatActivity() {
             var date = Date()
 
             val current = LocalDateTime.now();
-
             val today = current.dayOfMonth
-            val month = current.month
+            val month = current.monthValue
             val this_year = current.year
 
-            d( " diff: " , ((current.year - year) * 365.25 + Math.abs((month.to - monthOfYear.toBigInteger() )) * 30 + Math.abs(today-dayOfMonth)).toString() )
+            val seconds = dateToEpoch(this_year, month, today) - dateToEpoch(year, monthOfYear+1, dayOfMonth)
+            val days = seconds / 86400
 
-            d(
-                "Selected date",
-                year.toString() + " : " + monthOfYear.toString() + " : " + dayOfMonth.toString()
-            )
-
-            handled
+            setSecondsText("Du har levet for: $seconds Sekunder")
+            setDaysText("Du har levet for: $days Dage")
 
         }
 
@@ -72,7 +51,29 @@ class MainActivity : AppCompatActivity() {
         inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 
-    fun changeText() {
-        TextOutput.text = NameTextField.text
+    fun setSecondsText(text: String) {
+        SecondsTextField.setText(text);
+    }
+
+    fun setDaysText(text: String) {
+        DaysTextView.setText(text)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun dateToEpoch(year: Int, month: Int, day: Int): Long {
+
+        val parsedMonth = when(month){
+            in 0..9 -> "0${month}"
+            else -> (month).toString()
+        }
+
+        val parsedDay = when(day){
+            in 0..9 -> "0${day.toString()}"
+            else -> day.toString()
+        }
+
+        val l = parse("$parsedDay-$parsedMonth-$year", DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+        val unix = l.atStartOfDay(ZoneId.systemDefault()).toInstant().epochSecond
+        return unix
     }
 }
