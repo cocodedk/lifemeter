@@ -42,6 +42,11 @@ class MainActivity : AppCompatActivity() {
             setSecondsText("Du har levet for: $seconds Sekunder")
             setDaysText("Du har levet for: $days Dage")
 
+            val mSecounds = dateToEpoch(this_year, month, today) - dateToEpoch(year+18, monthOfYear+1, dayOfMonth)
+            val mDays = mSecounds / 86400
+            val mLicked = mDays * 20
+            setMasoudText("Du har slikket fisse i $mLicked minutter :D:D")
+
         }
 
     }
@@ -57,6 +62,10 @@ class MainActivity : AppCompatActivity() {
 
     fun setDaysText(text: String) {
         DaysTextView.setText(text)
+    }
+
+    fun setMasoudText(text: String) {
+        MasoudText.setText(text);
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
