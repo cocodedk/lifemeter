@@ -3,7 +3,7 @@ package com.example.first
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log.d
+import android.os.CountDownTimer
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
@@ -24,6 +24,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        val millisecondsInFuture:Long = 999999999
+        val countDownInterval:Long = 1000
+
+        val timer = InnerCountDownCounter(millisecondsInFuture, countDownInterval)
+        timer.start()
 
         DatePickerDialog.setOnDateChangedListener{ view, year, monthOfYear, dayOfMonth ->
 
@@ -47,6 +52,9 @@ class MainActivity : AppCompatActivity() {
             val mLicked = mDays * 20
             setMasoudText("Du har slikket fisse i $mLicked minutter :D:D")
 
+            val foodConsumption = days/2
+            setFootConsumptionText("Du har spist $foodConsumption kilo mad")
+
         }
 
     }
@@ -65,7 +73,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setMasoudText(text: String) {
-        MasoudText.setText(text);
+        SlickingText.setText(text);
+    }
+
+    fun setFootConsumptionText(text: String) {
+        FoodConsumptionText.setText(text)
+    }
+
+    fun setSecondsPassed(text: String) {
+        SecondsPassedText.setText(text);
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -82,7 +98,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         val l = parse("$parsedDay-$parsedMonth-$year", DateTimeFormatter.ofPattern("dd-MM-yyyy"))
-        val unix = l.atStartOfDay(ZoneId.systemDefault()).toInstant().epochSecond
-        return unix
+        return l.atStartOfDay(ZoneId.systemDefault()).toInstant().epochSecond
+    }
+
+    inner class InnerCountDownCounter(
+        millisInFuture: Long,
+        countDownInterval: Long
+    ) : CountDownTimer(millisInFuture, countDownInterval) {
+
+        val millisInFuture = millisInFuture
+
+        override fun onFinish() {
+            println("Timer Completed.")
+        }
+
+        override fun onTick(millisUntilFinished: Long) {
+            setSecondsPassed("Tid passered mens du kigger paa skaermen  : " +  (this.millisInFuture - millisUntilFinished) / 1000)
+//            println("Timer  : " + millisUntilFinished / 1000)
+        }
     }
 }

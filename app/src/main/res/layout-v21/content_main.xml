@@ -23,36 +23,66 @@
         app:layout_constraintVertical_bias="0.684" tools:targetApi="lollipop" />
 
     <TextView
-        android:id="@+id/SecondsTextField"
-        android:layout_width="301dp"
-        android:layout_height="31dp"
+        android:id="@+id/SlickingText"
+        android:layout_width="333dp"
+        android:layout_height="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.183" />
+        app:layout_constraintVertical_bias="0.153" />
+
+    <TextView
+        android:id="@+id/SecondsTextField"
+        android:layout_width="333dp"
+        android:layout_height="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.082" />
 
     <TextView
         android:id="@+id/DaysTextView"
-        android:layout_width="298dp"
-        android:layout_height="34dp"
+        android:layout_width="333dp"
+        android:layout_height="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.091" />
+        app:layout_constraintVertical_bias="0.012" />
 
     <TextView
-        android:id="@+id/MasoudText"
-        android:layout_width="293dp"
-        android:layout_height="27dp"
+        android:id="@+id/FoodConsumptionText"
+        android:layout_width="333dp"
+        android:layout_height="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.274" />
+        app:layout_constraintVertical_bias="0.228" />
+
+    <TextView
+        android:id="@+id/TitleText"
+        android:layout_width="214dp"
+        android:layout_height="29dp"
+        android:text="Vælg din Fødselsdato"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.421" />
+
+    <TextView
+        android:id="@+id/SecondsPassedText"
+        android:layout_width="333dp"
+        android:layout_height="36dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.305" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
