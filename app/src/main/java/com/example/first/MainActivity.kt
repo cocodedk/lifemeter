@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log.d
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
@@ -47,10 +48,12 @@ class MainActivity : AppCompatActivity() {
             setSecondsText("Du har levet for: $seconds Sekunder")
             setDaysText("Du har levet for: $days Dage")
 
-            val mSecounds = dateToEpoch(this_year, month, today) - dateToEpoch(year+18, monthOfYear+1, dayOfMonth)
-            val mDays = mSecounds / 86400
-            val mLicked = mDays * 20
-            setMasoudText("Du har slikket fisse i $mLicked minutter :D:D")
+            if(this_year - year>= 18) {
+                val mSecounds = dateToEpoch(this_year, month, today) - dateToEpoch(year+18, monthOfYear+1, dayOfMonth)
+                val mDays = mSecounds / 86400
+                val mSex = mDays * 20
+                setSexText("Du har haft sex i $mSex minutter :D:D")
+            }
 
             val foodConsumption = days/2
             setFootConsumptionText("Du har spist $foodConsumption kilo mad")
@@ -72,8 +75,8 @@ class MainActivity : AppCompatActivity() {
         DaysTextView.setText(text)
     }
 
-    fun setMasoudText(text: String) {
-        SlickingText.setText(text);
+    fun setSexText(text: String) {
+        SexText.setText(text);
     }
 
     fun setFootConsumptionText(text: String) {
@@ -88,7 +91,7 @@ class MainActivity : AppCompatActivity() {
     fun dateToEpoch(year: Int, month: Int, day: Int): Long {
 
         val parsedMonth = when(month){
-            in 0..9 -> "0${month}"
+            in 0..9 -> "0$month"
             else -> (month).toString()
         }
 
