@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log.d
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
@@ -48,11 +47,13 @@ class MainActivity : AppCompatActivity() {
             setSecondsText("Du har levet for: $seconds Sekunder")
             setDaysText("Du har levet for: $days Dage")
 
-            if(this_year - year>= 18) {
-                val mSecounds = dateToEpoch(this_year, month, today) - dateToEpoch(year+18, monthOfYear+1, dayOfMonth)
+            if(this_year - year>= 15) {
+                val mSecounds = dateToEpoch(this_year, month, today) - dateToEpoch(year+15, monthOfYear+1, dayOfMonth)
                 val mDays = mSecounds / 86400
-                val mSex = mDays * 20
+                val mSex = mDays * 10
                 setSexText("Du har haft sex i $mSex minutter :D:D")
+            } else {
+                setSexText("")
             }
 
             val foodConsumption = days/2
@@ -87,6 +88,10 @@ class MainActivity : AppCompatActivity() {
         SecondsPassedText.setText(text);
     }
 
+    fun setDeathsSince(text: String) {
+        DeathsSinceText.setText(text);
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun dateToEpoch(year: Int, month: Int, day: Int): Long {
 
@@ -105,19 +110,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     inner class InnerCountDownCounter(
-        millisInFuture: Long,
+        private val millisInFuture: Long,
         countDownInterval: Long
     ) : CountDownTimer(millisInFuture, countDownInterval) {
-
-        val millisInFuture = millisInFuture
 
         override fun onFinish() {
             println("Timer Completed.")
         }
 
         override fun onTick(millisUntilFinished: Long) {
-            setSecondsPassed("Tid passered mens du kigger paa skaermen  : " +  (this.millisInFuture - millisUntilFinished) / 1000)
-//            println("Timer  : " + millisUntilFinished / 1000)
+            setSecondsPassed("Tid passeret mens du kigger paa skaermen  : " +  (this.millisInFuture - millisUntilFinished) / 1000)
+            setDeathsSince("Antal døde mens du kigger på skærmen : " +  Math.round((this.millisInFuture - millisUntilFinished) * 1.8 / 1000) )
         }
     }
 }
