@@ -32,11 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         DatePickerDialog.setOnDateChangedListener{ view, year, monthOfYear, dayOfMonth ->
 
-            var handled = false
-
-            var date = Date()
-
-            val current = LocalDateTime.now();
+            val current = LocalDateTime.now()
             val today = current.dayOfMonth
             val month = current.monthValue
             val this_year = current.year
@@ -46,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
             setSecondsText("Du har levet for: $seconds Sekunder")
             setDaysText("Du har levet for: $days Dage")
+            setDeathSinceBirth("Døde siden du blev født: " + (seconds * 2) )
 
             if(this_year - year>= 15) {
                 val mSecounds = dateToEpoch(this_year, month, today) - dateToEpoch(year+15, monthOfYear+1, dayOfMonth)
@@ -69,7 +66,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setSecondsText(text: String) {
-        SecondsTextField.setText(text);
+        SecondsTextField.setText(text)
+    }
+
+    fun setDeathSinceBirth(text: String) {
+        DeathsSinceBirth.setText(text)
     }
 
     fun setDaysText(text: String) {
@@ -77,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setSexText(text: String) {
-        SexText.setText(text);
+        SexText.setText(text)
     }
 
     fun setFootConsumptionText(text: String) {
@@ -85,13 +86,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setSecondsPassed(text: String) {
-        SecondsPassedText.setText(text);
+        SecondsPassedText.setText(text)
     }
 
     fun setDeathsSince(text: String) {
-        DeathsSinceText.setText(text);
+        DeathsSinceText.setText(text)
     }
 
+    fun setBirthsSince(text: String) {
+        BirtsSinceText.setText(text)
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     fun dateToEpoch(year: Int, month: Int, day: Int): Long {
 
@@ -119,8 +123,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onTick(millisUntilFinished: Long) {
-            setSecondsPassed("Tid passeret mens du kigger paa skaermen  : " +  (this.millisInFuture - millisUntilFinished) / 1000)
-            setDeathsSince("Antal døde mens du kigger på skærmen : " +  Math.round((this.millisInFuture - millisUntilFinished) * 1.8 / 1000) )
+            val timePassed = (this.millisInFuture - millisUntilFinished) / 1000
+            setSecondsPassed("Tid mens du kigger paa skaermen: " +  timePassed)
+            setDeathsSince("Dødsfald mens du kigger på skærmen: " +  Math.round(timePassed * 1.8) )
+            setBirthsSince("Fødsler mens du kigger på skærmen: " +  Math.round(timePassed * 4.0) )
         }
     }
 }
