@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -13,7 +14,6 @@ import kotlinx.android.synthetic.main.content_main.*
 import java.time.*
 import java.time.LocalDate.parse
 import java.time.format.DateTimeFormatter
-import java.util.Date
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,28 +27,25 @@ class MainActivity : AppCompatActivity() {
         val millisecondsInFuture:Long = 999999999
         val countDownInterval:Long = 1000
 
-        val timer = InnerCountDownCounter(millisecondsInFuture, countDownInterval)
+
+        val timer = InnerCountDownCounter(millisecondsInFuture, countDownInterval, 0)
         timer.start()
 
         DatePickerDialog.setOnDateChangedListener{ view, year, monthOfYear, dayOfMonth ->
 
             val current = LocalDateTime.now()
-            val today = current.dayOfMonth
-            val month = current.monthValue
-            val this_year = current.year
 
-            val seconds = dateToEpoch(this_year, month, today) - dateToEpoch(year, monthOfYear+1, dayOfMonth)
-            val days = seconds / 86400
+            val secondsSinceBirth = dateToEpoch(current.year, current.monthValue, current.dayOfMonth) - dateToEpoch(year, monthOfYear+1, dayOfMonth)
+            val days = secondsSinceBirth / 86400
 
-            setSecondsText("Du har levet for: $seconds Sekunder")
-            setDaysText("Du har levet for: $days Dage")
-            setDeathSinceBirth("Døde siden du blev født: " + (seconds * 2) )
+            timer.setSecondsSinceBirth(secondsSinceBirth)
 
-            if(this_year - year>= 15) {
-                val mSecounds = dateToEpoch(this_year, month, today) - dateToEpoch(year+15, monthOfYear+1, dayOfMonth)
-                val mDays = mSecounds / 86400
-                val mSex = mDays * 10
-                setSexText("Du har haft sex i $mSex minutter :D:D")
+            Toast.makeText(this, "Scanned: " + timer.getSecondsSinceBirth(), Toast.LENGTH_LONG).show()
+            if(current.year - year>= 15) {
+                val Secounds = dateToEpoch(current.year, current.monthValue, current.dayOfMonth) - dateToEpoch(year+15, monthOfYear+1, dayOfMonth)
+                val Days = Secounds / 86400
+                val Sex = Days * 10 / 60
+                setSexText("Du har haft sex i $Sex timer :D:D")
             } else {
                 setSexText("")
             }
@@ -115,7 +112,8 @@ class MainActivity : AppCompatActivity() {
 
     inner class InnerCountDownCounter(
         private val millisInFuture: Long,
-        countDownInterval: Long
+        countDownInterval: Long,
+        private var secondsSinceBirth:Long
     ) : CountDownTimer(millisInFuture, countDownInterval) {
 
         override fun onFinish() {
@@ -123,10 +121,29 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onTick(millisUntilFinished: Long) {
-            val timePassed = (this.millisInFuture - millisUntilFinished) / 1000
-            setSecondsPassed("Tid mens du kigger paa skaermen: " +  timePassed)
+            val timePassed:Long = (this.millisInFuture - millisUntilFinished) / 1000
+            setSecondsPassed("Tid mens du kigger paa skærmen: $timePassed")
             setDeathsSince("Dødsfald mens du kigger på skærmen: " +  Math.round(timePassed * 1.8) )
             setBirthsSince("Fødsler mens du kigger på skærmen: " +  Math.round(timePassed * 4.0) )
+
+            if(this.secondsSinceBirth > 0) {
+                timePassed + this.secondsSinceBirth
+                setSecondsText("Du har levet for: ${timePassed + this.secondsSinceBirth} Sekunder")
+                setDaysText("Du har levet for: ${(timePassed + this.secondsSinceBirth)/86400} Dage")
+                setDeathSinceBirth("Døde siden du blev født: " + (timePassed + this.secondsSinceBirth) * 2)
+            } else {
+                setSecondsText("")
+                setDaysText("")
+                setDeathSinceBirth("")
+            }
+        }
+
+        fun setSecondsSinceBirth(ssb: Long) {
+            this.secondsSinceBirth = ssb
+        }
+
+        fun getSecondsSinceBirth(): Long {
+            return this.secondsSinceBirth
         }
     }
 }
