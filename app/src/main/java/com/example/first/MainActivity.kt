@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
 
             timer.setSecondsSinceBirth(secondsSinceBirth)
 
-            Toast.makeText(this, "Scanned: " + timer.getSecondsSinceBirth(), Toast.LENGTH_LONG).show()
             if(current.year - year>= 15) {
                 val Secounds = dateToEpoch(current.year, current.monthValue, current.dayOfMonth) - dateToEpoch(year+15, monthOfYear+1, dayOfMonth)
                 val Days = Secounds / 86400
@@ -55,8 +54,58 @@ class MainActivity : AppCompatActivity() {
 
             val foodConsumption = days/2
             setFootConsumptionText("Du har spist $foodConsumption kilo mad")
+            setHoroscopeSignText("Du er født i " + getHoroscopeSign(monthOfYear, dayOfMonth))
 
         }
+    }
+
+    fun getHoroscopeSign(month: Int, day: Int): String {
+        
+        val localMonth = month + 1
+        
+        var sign = ""
+        
+        if( (localMonth == 3 && day >= 21) || (localMonth == 4 && day <= 19) ) {
+            sign =  "Aries, planet Mars"
+        }
+        else if( (localMonth == 4 && day >= 20) || (localMonth == 5 && day <= 20) ) {
+            sign =  "Taurus, planets Venus & the Moon "
+        }
+        else if( (localMonth == 5 && day >= 21) || (localMonth == 6 && day <= 20) ) {
+            sign =  "Gemini, planet Mercury"
+        }
+        else if( (localMonth == 6 && day >= 21) || (localMonth == 7 && day <= 22) ) {
+            sign =  "Cancer, planets the Moon & Jupiter"
+        }
+        else if( (localMonth == 7 && day >= 23) || (localMonth == 8 && day <= 22) ) {
+            sign =  "Leo, Star Sun"
+        }
+        else if( (localMonth == 8 && day >= 23) || (localMonth == 9 && day <= 22) ) {
+            sign =  "Virgo, planet Mercury "
+        }
+        else if( (localMonth == 9 && day >= 23) || (localMonth == 10 && day <= 22) ) {
+            sign =  "Libra, planet Venus and Saturn"
+        }
+        else if( (localMonth == 10 && day >= 23) || (localMonth == 11 && day <= 21) ) {
+            sign =  "Scorpio, planets Mars & Pluto"
+        }
+        else if( (localMonth == 11 && day >= 22) || (localMonth == 12 && day <= 21) ) {
+            sign =  "Sagittarius, planet Jupiter"
+        }
+        else if( (localMonth == 12 && day >= 22) || (localMonth == 1 && day <= 19) ) {
+            sign =  "Capricorn, planets Saturn & Mars"
+        }
+        else if( (localMonth == 1 && day >= 20) || (localMonth == 2 && day <= 18) ) {
+            sign =  "Aquarius, planets Saturn and Uranus"
+        }
+        else if( (localMonth == 2 && day >= 19) || (localMonth == 3 && day <= 20) ) {
+            sign =  "Pisces, planets Jupiter, Neptune, Venus"
+        }
+        return sign
+    }
+
+    fun setHoroscopeSignText(text: String) {
+        HoroscopeSignText.setText(text)
     }
 
     fun launchLogin() {
