@@ -1,6 +1,7 @@
 package com.example.first
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -9,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.first.ui.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.time.*
@@ -24,9 +26,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        launchLogin()
+
         val millisecondsInFuture:Long = 999999999
         val countDownInterval:Long = 1000
-
 
         val timer = InnerCountDownCounter(millisecondsInFuture, countDownInterval, 0)
         timer.start()
@@ -54,7 +57,11 @@ class MainActivity : AppCompatActivity() {
             setFootConsumptionText("Du har spist $foodConsumption kilo mad")
 
         }
+    }
 
+    fun launchLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     fun View.hideKeyboard() {
@@ -122,9 +129,9 @@ class MainActivity : AppCompatActivity() {
 
         override fun onTick(millisUntilFinished: Long) {
             val timePassed:Long = (this.millisInFuture - millisUntilFinished) / 1000
-            setSecondsPassed("Tid mens du kigger paa skærmen: $timePassed")
-            setDeathsSince("Dødsfald mens du kigger på skærmen: " +  Math.round(timePassed * 1.8) )
-            setBirthsSince("Fødsler mens du kigger på skærmen: " +  Math.round(timePassed * 4.0) )
+            setSecondsPassed("Tid mens du har kigget paa skærmen: $timePassed")
+            setDeathsSince("Dødsfald mens du har kigget på skærmen: " +  Math.round(timePassed * 1.8) )
+            setBirthsSince("Fødsler mens du har kigget på skærmen: " +  Math.round(timePassed * 4.0) )
 
             if(this.secondsSinceBirth > 0) {
                 timePassed + this.secondsSinceBirth
