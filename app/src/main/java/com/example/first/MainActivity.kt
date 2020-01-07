@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
@@ -57,6 +60,24 @@ class MainActivity : AppCompatActivity() {
             setHoroscopeSignText("Du er født i " + getHoroscopeSign(monthOfYear, dayOfMonth))
 
         }
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_tarotCards -> {
+                val intent = Intent(this, TarotCardActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
     }
 
     fun getHoroscopeSign(month: Int, day: Int): String {
@@ -104,11 +125,11 @@ class MainActivity : AppCompatActivity() {
         return sign
     }
 
-    fun setHoroscopeSignText(text: String) {
+    private fun setHoroscopeSignText(text: String) {
         HoroscopeSignText.setText(text)
     }
 
-    fun launchLogin() {
+    private fun launchLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
@@ -134,7 +155,7 @@ class MainActivity : AppCompatActivity() {
         SexText.setText(text)
     }
 
-    fun setFootConsumptionText(text: String) {
+    private fun setFootConsumptionText(text: String) {
         FoodConsumptionText.setText(text)
     }
 
