@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             if(current.year - year>= 15) {
                 val Secounds = dateToEpoch(current.year, current.monthValue, current.dayOfMonth) - dateToEpoch(year+15, monthOfYear+1, dayOfMonth)
                 val Days = Secounds / 86400
-                val Sex = Days * 10 / 60
+                val Sex = Days / 6 // this is number of hours
                 setSexText("Du har haft sex i $Sex timer :D:D")
             } else {
                 setSexText("")
@@ -90,13 +90,13 @@ class MainActivity : AppCompatActivity() {
             sign =  "Aries, planet Mars"
         }
         else if( (localMonth == 4 && day >= 20) || (localMonth == 5 && day <= 20) ) {
-            sign =  "Taurus, planets Venus & the Moon "
+            sign =  "Taurus, planeter Venus & månen "
         }
         else if( (localMonth == 5 && day >= 21) || (localMonth == 6 && day <= 20) ) {
             sign =  "Gemini, planet Mercury"
         }
         else if( (localMonth == 6 && day >= 21) || (localMonth == 7 && day <= 22) ) {
-            sign =  "Cancer, planets the Moon & Jupiter"
+            sign =  "Cancer, planeter månen & Jupiter"
         }
         else if( (localMonth == 7 && day >= 23) || (localMonth == 8 && day <= 22) ) {
             sign =  "Leo, Star Sun"
@@ -108,19 +108,19 @@ class MainActivity : AppCompatActivity() {
             sign =  "Libra, planet Venus and Saturn"
         }
         else if( (localMonth == 10 && day >= 23) || (localMonth == 11 && day <= 21) ) {
-            sign =  "Scorpio, planets Mars & Pluto"
+            sign =  "Scorpio, planeter Mars & Pluto"
         }
         else if( (localMonth == 11 && day >= 22) || (localMonth == 12 && day <= 21) ) {
             sign =  "Sagittarius, planet Jupiter"
         }
         else if( (localMonth == 12 && day >= 22) || (localMonth == 1 && day <= 19) ) {
-            sign =  "Capricorn, planets Saturn & Mars"
+            sign =  "Capricorn, planeter Saturn & Mars"
         }
         else if( (localMonth == 1 && day >= 20) || (localMonth == 2 && day <= 18) ) {
-            sign =  "Aquarius, planets Saturn and Uranus"
+            sign =  "Aquarius, planeter Saturn and Uranus"
         }
         else if( (localMonth == 2 && day >= 19) || (localMonth == 3 && day <= 20) ) {
-            sign =  "Pisces, planets Jupiter, Neptune, Venus"
+            sign =  "Pisces, planeter Jupiter, Neptune, Venus"
         }
         return sign
     }

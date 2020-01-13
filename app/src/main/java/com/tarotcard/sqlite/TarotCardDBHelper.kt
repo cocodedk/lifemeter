@@ -10,16 +10,24 @@ import android.database.sqlite.SQLiteOpenHelper
 
 import java.util.ArrayList
 
+import CSVFile
+import android.os.Environment
+import android.util.Log
+import android.widget.Toast
+import com.example.first.R
+import java.io.File
+import java.io.InputStream
+
 class TarotCardDBHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL(SQL_CREATE_ENTRIES)
+        db.execSQL(SQL_CREATE_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
-        db.execSQL(SQL_DELETE_ENTRIES)
+        db.execSQL(SQL_DROP_TABLE)
         onCreate(db)
     }
 
@@ -66,18 +74,20 @@ class TarotCardDBHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_
             cursor = db.rawQuery("select * from " + DBContract.TarotCardEntry.TABLE_NAME + " WHERE " + DBContract.TarotCardEntry.COLUMN_ID + "='" + id + "'", null)
         } catch (e: SQLiteException) {
             // if table not yet present, create it
-            db.execSQL(SQL_CREATE_ENTRIES)
+            db.execSQL(SQL_CREATE_TABLE)
             return ArrayList()
         }
 
         var name: String
         var age: String
+        var meaning: String
         if (cursor!!.moveToFirst()) {
             while (cursor.isAfterLast == false) {
                 name = cursor.getString(cursor.getColumnIndex(DBContract.TarotCardEntry.COLUMN_NAME))
                 age = cursor.getString(cursor.getColumnIndex(DBContract.TarotCardEntry.COLUMN_DESCRIPTION))
+                meaning = cursor.getString(cursor.getColumnIndex(DBContract.TarotCardEntry.COLUMN_MEANING))
 
-                users.add(TarotCardModel(id, name, age))
+                users.add(TarotCardModel(id, name, age, meaning))
                 cursor.moveToNext()
             }
         }
@@ -92,20 +102,22 @@ class TarotCardDBHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_
         try {
             cursor = db.rawQuery("select * from " + DBContract.TarotCardEntry.TABLE_NAME, null)
         } catch (e: SQLiteException) {
-            db.execSQL(SQL_CREATE_ENTRIES)
+            db.execSQL(SQL_CREATE_TABLE)
             return ArrayList()
         }
 
         var id: Int
         var name: String
-        var age: String
+        var description: String
+        var meaning: String
         if (cursor!!.moveToFirst()) {
             while (cursor.isAfterLast == false) {
                 id = cursor.getInt(cursor.getColumnIndex(DBContract.TarotCardEntry.COLUMN_ID))
                 name = cursor.getString(cursor.getColumnIndex(DBContract.TarotCardEntry.COLUMN_NAME))
-                age = cursor.getString(cursor.getColumnIndex(DBContract.TarotCardEntry.COLUMN_DESCRIPTION))
+                description = cursor.getString(cursor.getColumnIndex(DBContract.TarotCardEntry.COLUMN_DESCRIPTION))
+                meaning = cursor.getString(cursor.getColumnIndex(DBContract.TarotCardEntry.COLUMN_MEANING))
 
-                tarotCards.add(TarotCardModel(id, name, age))
+                tarotCards.add(TarotCardModel(id, name, description, meaning))
                 cursor.moveToNext()
             }
         }
@@ -114,11 +126,36 @@ class TarotCardDBHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_
     }
 
     fun populateTable() {
-        insertTarotCard(
-            TarotCardModel(1, "The World", "The World card in the tarot deck has a dancing figure at the center. The dancing figure on the card has one leg crossed over the other and holds a wand in either hand. She symbolizes balance and evolution in movement. The fulfillment and unity that she represents is not one that is static, but ever-changing, dynamic and eternal.\n" +
-                    "\n" +
-                    "The green wreath of flowers that surrounds the central figure is a symbol of success, while the red ribbons that wrap around it are reminiscent of infinity. There are four figures on each corner of the card - and they are the same ones that are in the Wheel of Fortune. The four figures represent Scorpio, Leo, Aquarius and Taurus - representative of the four corners of the universe, the four elements, and the four evangelicals. Together, they symbolize the harmony between all of their energies.")
-        )
+
+        val tarotCards =  ArrayList<Array<String>>()
+
+        val file: File = File("res/raw/tarot_cards.csv")
+
+        Log.d("Log", "File open")
+
+        tarotCards.add(arrayOf(
+            "",
+            "",
+            ""))
+
+
+    }
+
+    fun getCount() : Int{
+        var cursor: Cursor? = null;
+        val db = writableDatabase
+        try{
+            cursor = db.rawQuery(SQL_GET_COUNT, null)
+        }catch (e: SQLiteException) {
+            return 0
+        }
+
+        var c: Int = 0
+        if(cursor!!.moveToFirst()) {
+            c = cursor.getInt(cursor.getColumnIndex("c"))
+        }
+        cursor.close()
+        return c
     }
 
     companion object {
@@ -126,13 +163,16 @@ class TarotCardDBHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_
         val DATABASE_VERSION = 1
         val DATABASE_NAME = "TarotCards.db"
 
-        private val SQL_CREATE_ENTRIES =
+        private val SQL_CREATE_TABLE =
             "CREATE TABLE " + DBContract.TarotCardEntry.TABLE_NAME + " (" +
                     DBContract.TarotCardEntry.COLUMN_ID + " TEXT PRIMARY KEY," +
                     DBContract.TarotCardEntry.COLUMN_NAME + " TEXT," +
-                    DBContract.TarotCardEntry.COLUMN_DESCRIPTION + " TEXT)"
+                    DBContract.TarotCardEntry.COLUMN_DESCRIPTION + " TEXT," +
+                    DBContract.TarotCardEntry.COLUMN_MEANING + " TEXT)"
 
-        private val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + DBContract.TarotCardEntry.TABLE_NAME
+        private val SQL_DROP_TABLE = "DROP TABLE IF EXISTS " + DBContract.TarotCardEntry.TABLE_NAME
+
+        private val SQL_GET_COUNT = "SELECT COUNT(*) as c FROM ${DBContract.TarotCardEntry.TABLE_NAME}"
     }
 
 }
