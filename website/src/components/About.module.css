@@ -1,0 +1,11 @@
+.section { padding: 28px; margin-top: 24px; margin-bottom: 8px; }
+
+.h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--text); margin-bottom: 14px; }
+
+.body { color: var(--muted); line-height: 1.65; font-size: 0.95rem; }
+.body strong { color: var(--text); }
+.body a { color: var(--amber); text-decoration: underline; text-underline-offset: 2px; }
+
+.links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 18px; }
+.links a { color: var(--amber); font-size: 0.9rem; text-decoration: underline; text-underline-offset: 2px; transition: color 0.15s; }
+.links a:hover { color: var(--warm-pink); }

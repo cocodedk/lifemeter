@@ -1,0 +1,56 @@
+.hero { padding: 56px 0 36px; }
+
+.kicker {
+  color: var(--amber);
+  font-size: 0.85rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.h1 {
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  line-height: 1.05;
+  max-width: 760px;
+  color: var(--text);
+}
+
+.copy {
+  margin-top: 18px;
+  max-width: 660px;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.72;
+}
+
+.cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.btnPrimary, .btnGhost {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.18s, box-shadow 0.18s;
+  cursor: pointer;
+}
+
+.btnPrimary:hover, .btnGhost:hover { transform: translateY(-2px); }
+
+.btnPrimary {
+  background: linear-gradient(90deg, var(--amber), var(--warm-pink));
+  color: #120a04;
+  box-shadow: 0 0 28px rgba(232, 136, 42, 0.35);
+}
+
+.btnGhost {
+  border: 1px solid var(--line-strong);
+  background: rgba(20, 10, 4, 0.5);
+  color: var(--text);
+}

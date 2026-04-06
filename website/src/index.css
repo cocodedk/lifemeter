@@ -1,0 +1,59 @@
+:root {
+  --bg: #120a04;
+  --bg-2: #1e1008;
+  --surface: rgba(38, 20, 8, 0.82);
+  --line: rgba(210, 130, 70, 0.28);
+  --line-strong: rgba(210, 130, 70, 0.5);
+  --text: #f5e6d8;
+  --muted: #c4966a;
+  --amber: #e8882a;
+  --warm-pink: #d45c3a;
+  --cream: #f0d4b0;
+  --success: #6ab87a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  color: var(--text);
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(1400px 900px at 10% -10%, #3d1f0a 0%, transparent 60%),
+    radial-gradient(1200px 800px at 90% 10%, #2a1208 0%, transparent 58%),
+    linear-gradient(180deg, var(--bg-2), var(--bg));
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.bg-grid {
+  position: fixed; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(200, 110, 50, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 110, 50, 0.07) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: radial-gradient(circle at center, black 36%, transparent 85%);
+}
+
+.bg-orb { position: fixed; inset: 0; pointer-events: none; filter: blur(80px); opacity: 0.38; }
+.orb-a { background: radial-gradient(circle, rgba(230, 120, 40, 0.55), transparent 66%); transform: translate(-24%, -16%); }
+.orb-b { background: radial-gradient(circle, rgba(190, 70, 40, 0.42), transparent 66%); transform: translate(52%, 10%); }
+
+.shell { width: min(1100px, 92vw); margin: 0 auto; }
+
+h1, h2, h3 { font-family: "Space Grotesk", "IBM Plex Sans", sans-serif; }
+a { color: var(--text); text-decoration: none; }
+
+.glass {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal { animation: rise 0.7s ease both; }
+.reveal-2 { animation: rise 0.7s 0.12s ease both; }
+.reveal-3 { animation: rise 0.7s 0.24s ease both; }

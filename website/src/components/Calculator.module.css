@@ -1,0 +1,131 @@
+.section { padding: 48px 0 32px; }
+
+.kicker {
+  color: var(--amber);
+  font-size: 0.82rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.sub { color: var(--muted); font-size: 1rem; margin-bottom: 24px; }
+
+.datePicker {
+  display: block;
+  background: rgba(38, 20, 8, 0.9);
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  color: var(--text);
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 1.1rem;
+  padding: 14px 20px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.18s;
+  margin-bottom: 32px;
+  color-scheme: dark;
+}
+.datePicker:focus { border-color: var(--amber); }
+
+/* Dashboard */
+.dashboard { animation: fadeIn 0.4s ease both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.sectionLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.statCard {
+  padding: 18px 16px;
+}
+
+.statValue {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.live { color: var(--amber); }
+
+.statLabel {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Session card */
+.sessionCard { padding: 4px 0; }
+.sessionRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--line);
+}
+.sessionRow:last-child { border-bottom: none; }
+.rowLabel { font-size: 0.9rem; color: var(--muted); }
+.rowValue {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Horoscope */
+.horoscopeCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+}
+.signSymbol {
+  font-size: 2.4rem;
+  color: var(--amber);
+  line-height: 1;
+}
+.signName {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+/* Empty state */
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 48px 0;
+  color: var(--muted);
+  font-size: 1rem;
+}
+.hourglass { font-size: 3rem; }
+
+@media (max-width: 520px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+  .statValue { font-size: 1.4rem; }
+}

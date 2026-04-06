@@ -1,0 +1,8 @@
+.footer {
+  padding: 32px 0 48px;
+  font-size: 0.88rem;
+  color: #7a5030;
+}
+
+.footer a { color: #9a6840; text-decoration: underline; text-underline-offset: 2px; }
+.footer a:hover { color: var(--amber); }
