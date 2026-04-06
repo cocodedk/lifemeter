@@ -76,4 +76,15 @@ class HoroscopeTest {
         assertEquals("Capricorn", getHoroscopeSign(0, 19).name)
         assertEquals("Aquarius",  getHoroscopeSign(0, 20).name)
     }
+
+    @Test fun `invalid month returns empty result`() {
+        val r = getHoroscopeSign(12, 1)
+        assertEquals("", r.symbol)
+        assertEquals("", r.name)
+    }
+
+    @Test fun `boundary - aquarius ends feb 18`() {
+        assertEquals("Aquarius", getHoroscopeSign(1, 18).name)
+        assertEquals("Pisces",   getHoroscopeSign(1, 19).name)
+    }
 }

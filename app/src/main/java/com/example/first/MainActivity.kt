@@ -168,41 +168,8 @@ class MainActivity : AppCompatActivity() {
 
         val foodConsumption = days / 2
         setFootConsumptionText("Du har spist $foodConsumption kilo mad")
-        val horoscope = com.example.first.getHoroscopeSign(monthOfYear, dayOfMonth)
+        val horoscope = getHoroscopeSign(monthOfYear, dayOfMonth)
         setHoroscopeSignText("Du er født i ${horoscope.symbol} ${horoscope.name}")
-    }
-
-    fun getHoroscopeSign(month: Int, day: Int): String {
-        val localMonth = month + 1
-
-        var sign = ""
-
-        if ((localMonth == 3 && day >= 21) || (localMonth == 4 && day <= 19)) {
-            sign = "Aries, planet Mars"
-        } else if ((localMonth == 4 && day >= 20) || (localMonth == 5 && day <= 20)) {
-            sign = "Taurus, planeter Venus & månen "
-        } else if ((localMonth == 5 && day >= 21) || (localMonth == 6 && day <= 20)) {
-            sign = "Gemini, planet Mercury"
-        } else if ((localMonth == 6 && day >= 21) || (localMonth == 7 && day <= 22)) {
-            sign = "Cancer, planeter månen & Jupiter"
-        } else if ((localMonth == 7 && day >= 23) || (localMonth == 8 && day <= 22)) {
-            sign = "Leo, Star Sun"
-        } else if ((localMonth == 8 && day >= 23) || (localMonth == 9 && day <= 22)) {
-            sign = "Virgo, planet Mercury "
-        } else if ((localMonth == 9 && day >= 23) || (localMonth == 10 && day <= 22)) {
-            sign = "Libra, planet Venus and Saturn"
-        } else if ((localMonth == 10 && day >= 23) || (localMonth == 11 && day <= 21)) {
-            sign = "Scorpio, planeter Mars & Pluto"
-        } else if ((localMonth == 11 && day >= 22) || (localMonth == 12 && day <= 21)) {
-            sign = "Sagittarius, planet Jupiter"
-        } else if ((localMonth == 12 && day >= 22) || (localMonth == 1 && day <= 19)) {
-            sign = "Capricorn, planeter Saturn & Mars"
-        } else if ((localMonth == 1 && day >= 20) || (localMonth == 2 && day <= 18)) {
-            sign = "Aquarius, planeter Saturn and Uranus"
-        } else if ((localMonth == 2 && day >= 19) || (localMonth == 3 && day <= 20)) {
-            sign = "Pisces, planeter Jupiter, Neptune, Venus"
-        }
-        return sign
     }
 
     private fun setHoroscopeSignText(text: String) {
