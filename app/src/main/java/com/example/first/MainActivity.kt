@@ -17,6 +17,27 @@ import java.time.ZoneId
 import java.text.NumberFormat
 import java.util.Locale
 
+data class HoroscopeResult(val symbol: String, val name: String, val planets: String)
+
+fun getHoroscopeSign(month: Int, day: Int): HoroscopeResult {
+    val m = month + 1
+    return when {
+        (m == 3 && day >= 21) || (m == 4 && day <= 19)  -> HoroscopeResult("♈", "Aries", "Mars")
+        (m == 4 && day >= 20) || (m == 5 && day <= 20)  -> HoroscopeResult("♉", "Taurus", "Venus · Moon")
+        (m == 5 && day >= 21) || (m == 6 && day <= 20)  -> HoroscopeResult("♊", "Gemini", "Mercury")
+        (m == 6 && day >= 21) || (m == 7 && day <= 22)  -> HoroscopeResult("♋", "Cancer", "Moon · Jupiter")
+        (m == 7 && day >= 23) || (m == 8 && day <= 22)  -> HoroscopeResult("♌", "Leo", "Sun")
+        (m == 8 && day >= 23) || (m == 9 && day <= 22)  -> HoroscopeResult("♍", "Virgo", "Mercury")
+        (m == 9 && day >= 23) || (m == 10 && day <= 22) -> HoroscopeResult("♎", "Libra", "Venus · Saturn")
+        (m == 10 && day >= 23) || (m == 11 && day <= 21)-> HoroscopeResult("♏", "Scorpio", "Mars · Pluto")
+        (m == 11 && day >= 22) || (m == 12 && day <= 21)-> HoroscopeResult("♐", "Sagittarius", "Jupiter")
+        (m == 12 && day >= 22) || (m == 1 && day <= 19) -> HoroscopeResult("♑", "Capricorn", "Saturn · Mars")
+        (m == 1 && day >= 20) || (m == 2 && day <= 18)  -> HoroscopeResult("♒", "Aquarius", "Saturn · Uranus")
+        (m == 2 && day >= 19) || (m == 3 && day <= 20)  -> HoroscopeResult("♓", "Pisces", "Jupiter · Neptune · Venus")
+        else -> HoroscopeResult("", "", "")
+    }
+}
+
 fun formatNumber(n: Long): String = when {
     n >= 1_000_000_000L -> "%.2fB".format(n / 1_000_000_000.0)
     n >= 1_000_000L     -> "%.1fM".format(n / 1_000_000.0)
@@ -147,7 +168,8 @@ class MainActivity : AppCompatActivity() {
 
         val foodConsumption = days / 2
         setFootConsumptionText("Du har spist $foodConsumption kilo mad")
-        setHoroscopeSignText("Du er født i " + getHoroscopeSign(monthOfYear, dayOfMonth))
+        val horoscope = com.example.first.getHoroscopeSign(monthOfYear, dayOfMonth)
+        setHoroscopeSignText("Du er født i ${horoscope.symbol} ${horoscope.name}")
     }
 
     fun getHoroscopeSign(month: Int, day: Int): String {
