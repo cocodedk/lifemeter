@@ -1,0 +1,71 @@
+<h2>Date Entry Flow</h2>
+<p class="subtitle">How should picking a birthdate work? This affects the whole first-screen experience.</p>
+
+<div class="section">
+  <div class="split" style="align-items:stretch;">
+
+    <div style="flex:1;min-width:0;">
+      <div class="mockup">
+        <div class="mockup-header">Option A — Two steps (keep current)</div>
+        <div class="mockup-body" style="font-size:13px;line-height:1.7;padding:16px;">
+          <div style="background:#fff8f1;border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+            <div style="font-weight:600;font-size:15px;color:#33211A;margin-bottom:6px;">Choose your birth date</div>
+            <div style="font-size:12px;color:#7B5D50;margin-bottom:10px;">The dashboard updates live as soon as you pick a date.</div>
+            <div style="background:#F8EFE7;border-radius:10px;padding:10px 12px;margin-bottom:8px;">
+              <div style="font-weight:600;color:#33211A;margin-bottom:8px;">Selected birthday: 15/3/1990</div>
+              <div style="display:inline-block;background:#C26B43;color:#fff;padding:6px 14px;border-radius:10px;font-size:12px;margin-bottom:6px;">Change birth date</div><br>
+              <div style="display:block;background:#C26B43;color:#fff;padding:8px;border-radius:10px;font-size:12px;text-align:center;margin-top:6px;">Continue →</div>
+            </div>
+          </div>
+          <div style="color:#7B5D50;font-size:12px;padding:0 4px;">User must tap <em>Change birth date</em> → pick date in dialog → then tap <em>Continue</em> to see results. Two taps minimum.</div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top:8px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Explicit confirmation step</li><li>User controls when to apply</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Extra tap every time</li><li>"Continue" is redundant once you understand the app</li></ul></div>
+      </div>
+    </div>
+
+    <div style="flex:1;min-width:0;">
+      <div class="mockup">
+        <div class="mockup-header">Option B — One tap (recommended)</div>
+        <div class="mockup-body" style="font-size:13px;line-height:1.7;padding:16px;">
+          <div style="background:#fff8f1;border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+            <div style="font-weight:600;font-size:15px;color:#33211A;margin-bottom:6px;">Choose your birth date</div>
+            <div style="font-size:12px;color:#7B5D50;margin-bottom:10px;">Tap the button below to set your date. Results appear instantly.</div>
+            <div style="background:#F8EFE7;border-radius:10px;padding:10px 12px;">
+              <div style="font-weight:600;color:#33211A;margin-bottom:8px;">Your birthday: 15/3/1990</div>
+              <div style="display:block;background:#C26B43;color:#fff;padding:8px 14px;border-radius:10px;font-size:12px;text-align:center;">Set birth date →</div>
+            </div>
+          </div>
+          <div style="color:#7B5D50;font-size:12px;padding:0 4px;">User taps <em>Set birth date</em> → picks date → dashboard appears <strong>immediately</strong>. One tap. On re-launch, saved date auto-loads results.</div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top:8px;">
+        <div class="pros"><h4>Pros</h4><ul><li>One tap to results</li><li>Pairs perfectly with "remember last date"</li><li>On re-launch: results are instant</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Less explicit — first-time users might not see the change</li></ul></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px;">
+  <p class="subtitle">I recommend <strong>Option B</strong>. With the saved birthdate feature, the app should open directly into the dashboard on subsequent launches — zero friction. Which do you prefer?</p>
+  <div class="options">
+    <div class="option" data-choice="two-step" onclick="toggleSelect(this)">
+      <div class="letter">A</div>
+      <div class="content">
+        <h3>Keep two steps</h3>
+        <p>Change date button + Continue button (current flow)</p>
+      </div>
+    </div>
+    <div class="option" data-choice="one-tap" onclick="toggleSelect(this)">
+      <div class="letter">B</div>
+      <div class="content">
+        <h3>One tap — recommended</h3>
+        <p>Single "Set birth date" button → results appear immediately</p>
+      </div>
+    </div>
+  </div>
+</div>

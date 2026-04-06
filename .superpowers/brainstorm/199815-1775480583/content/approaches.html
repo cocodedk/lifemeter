@@ -1,0 +1,56 @@
+<h2>Three Approaches</h2>
+<p class="subtitle">How deep should we go? Here are three levels of work — same goals, different scope.</p>
+
+<div class="options" style="flex-direction:column;">
+
+  <div class="option" data-choice="bugfix" onclick="toggleSelect(this)" style="align-items:flex-start;">
+    <div class="letter">A</div>
+    <div class="content" style="width:100%;">
+      <h3>Bug-fix pass only</h3>
+      <p>Fix exactly what's broken. No visual changes.</p>
+      <ul style="margin:8px 0 0 0;padding-left:18px;font-size:14px;line-height:1.8;color:#33211A;">
+        <li>Save/restore birthdate with SharedPreferences</li>
+        <li>Merge "Change date" + "Continue" into one button</li>
+        <li>Unify all strings to English</li>
+        <li>Remove TarotCardActivity + menu item + all tarot files</li>
+        <li>Default date picker to 30 years ago (not today)</li>
+      </ul>
+      <div style="margin-top:10px;font-size:13px;color:#B75C3A;">⚡ Smallest scope. Layout stays exactly the same.</div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="polished" onclick="toggleSelect(this)" style="align-items:flex-start;border:2px solid #C26B43;">
+    <div class="letter" style="background:#C26B43;">B</div>
+    <div class="content" style="width:100%;">
+      <h3>Polished refresh <span style="font-size:12px;background:#C26B43;color:#fff;border-radius:8px;padding:2px 10px;margin-left:8px;vertical-align:middle;">Recommended</span></h3>
+      <p>Everything in A, plus: make the numbers actually readable and the flow feel intentional.</p>
+      <ul style="margin:8px 0 0 0;padding-left:18px;font-size:14px;line-height:1.8;color:#33211A;">
+        <li>Everything in A</li>
+        <li>Separate value from label in each stat card — large number on top, small label below</li>
+        <li>Add thousands separators (1,234,567 not 1234567)</li>
+        <li>On re-launch with saved date: dashboard auto-shows immediately, no tap required</li>
+        <li>Clean up the "Curiosities" card — give horoscope its own label, remove ":D:D" from sex line</li>
+        <li>Fix stat text to be concise: "12,465" as the big number, "Days alive" as the label</li>
+        <li>Session section: same split-label treatment (big number + small label per row)</li>
+      </ul>
+      <div style="margin-top:10px;font-size:13px;color:#4F7B5C;">✓ Best balance. Fixes everything, improves readability, stays within existing layout structure.</div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="overhaul" onclick="toggleSelect(this)" style="align-items:flex-start;">
+    <div class="letter">C</div>
+    <div class="content" style="width:100%;">
+      <h3>Full experience overhaul</h3>
+      <p>Everything in B, plus a redesigned first-launch onboarding and animated live counters.</p>
+      <ul style="margin:8px 0 0 0;padding-left:18px;font-size:14px;line-height:1.8;color:#33211A;">
+        <li>Everything in B</li>
+        <li>First-launch welcome screen with app name + "Set your birthdate to begin"</li>
+        <li>Animated number transitions when counters tick (digit flip or count-up)</li>
+        <li>Horoscope sign shown with its symbol (♈ ♉ etc.) as an icon</li>
+        <li>Swipe-down to change birthdate instead of scrolling back up</li>
+      </ul>
+      <div style="margin-top:10px;font-size:13px;color:#7B5D50;">⚠ Larger scope. Animations and new screens add implementation time.</div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LifeMeter Mockup</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: #f0e8df; color: #33211A; padding: 24px 16px; }
+  h2 { font-size: 22px; font-weight: 700; color: #33211A; margin-bottom: 6px; }
+  .subtitle { font-size: 14px; color: #7B5D50; margin-bottom: 24px; line-height: 1.5; }
+  .split { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+  .phone-frame { flex: 1; min-width: 260px; max-width: 340px; }
+  .phone-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #C26B43; margin-bottom: 8px; }
+  .phone { background: linear-gradient(170deg, #F4E4D3, #ECD0B0); border-radius: 28px; overflow: hidden; border: 2px solid #d4b89a; box-shadow: 0 8px 32px rgba(80,40,20,.13); }
+  .toolbar { background: #FFF5EB; padding: 14px 16px 10px; border-bottom: 1px solid #e8d8c8; }
+  .toolbar-title { font-size: 16px; font-weight: 700; color: #33211A; }
+  .toolbar-sub { font-size: 11px; color: #7B5D50; margin-top: 2px; }
+  .screen-body { padding: 16px 14px 20px; }
+  .section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #7B5D50; margin-bottom: 8px; }
+  .card { background: #fffcf8; border-radius: 18px; border: 1px solid #e8d4c0; margin-bottom: 12px; overflow: hidden; }
+  .card-secondary { background: #F8EFE7; }
+  .card-body { padding: 14px; }
+  .hint { font-size: 12px; color: #7B5D50; line-height: 1.5; margin-bottom: 12px; }
+  .btn-primary { display: block; background: #C26B43; color: #fff; border: none; border-radius: 14px; padding: 11px 16px; font-size: 13px; font-weight: 600; width: 100%; text-align: center; }
+  .btn-secondary { background: #E8D4C0; color: #7B5D50; border: none; border-radius: 12px; padding: 6px 12px; font-size: 12px; font-weight: 600; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .stat-card { background: #fffcf8; border-radius: 16px; border: 1px solid #e8d4c0; padding: 12px 10px; }
+  .stat-num { font-size: 22px; font-weight: 700; color: #33211A; line-height: 1.1; margin-bottom: 3px; }
+  .stat-lbl { font-size: 11px; color: #7B5D50; }
+  .session-row { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-bottom: 1px solid #ecddd0; }
+  .session-row:last-child { border-bottom: none; }
+  .session-num { font-size: 17px; font-weight: 700; color: #33211A; }
+  .session-lbl { font-size: 12px; color: #7B5D50; }
+  .sign-badge { font-size: 28px; line-height: 1; }
+  .sign-name { font-size: 17px; font-weight: 700; color: #B75C3A; }
+  .sign-planet { font-size: 12px; color: #7B5D50; margin-top: 2px; }
+  .sex-line { font-size: 13px; color: #33211A; margin-top: 10px; padding-top: 10px; border-top: 1px solid #ecddd0; }
+  .swipe-hint { text-align: center; font-size: 11px; color: #a08878; margin-top: 16px; letter-spacing: .03em; }
+  .hero-section { text-align: center; padding: 24px 10px 14px; }
+  .hero-icon { font-size: 44px; margin-bottom: 10px; }
+  .hero-title { font-size: 20px; font-weight: 700; color: #33211A; margin-bottom: 6px; }
+  .hero-sub { font-size: 13px; color: #7B5D50; line-height: 1.5; }
+  .annotation { font-size: 12px; color: #7B5D50; background: #fff8f0; border: 1px solid #e0c9b3; border-radius: 10px; padding: 9px 12px; margin-top: 10px; line-height: 1.5; }
+  .summary-box { margin-top: 28px; padding: 18px 20px; background: #f5fff7; border: 1px solid #b8e0c0; border-radius: 14px; font-size: 14px; color: #33211A; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<h2>LifeMeter — Screen Mockups</h2>
+<p class="subtitle">Left: first launch. Right: returning user (saved date loaded immediately). Scroll in each phone to see the full screen.</p>
+
+<div class="split">
+
+  <!-- FIRST LAUNCH -->
+  <div class="phone-frame">
+    <div class="phone-label">First Launch (no saved date)</div>
+    <div class="phone">
+      <div class="toolbar">
+        <div class="toolbar-title">LifeMeter</div>
+        <div class="toolbar-sub">A warmer look at time, age and tiny absurdities.</div>
+      </div>
+      <div class="screen-body">
+        <div class="hero-section">
+          <div class="hero-icon">⏳</div>
+          <div class="hero-title">How long have you lived?</div>
+          <div class="hero-sub">Set your birth date to see your life in numbers.</div>
+        </div>
+        <div class="card card-secondary" style="margin-top:14px;">
+          <div class="card-body">
+            <div class="hint">Pick your date once — the app will remember it.</div>
+            <button class="btn-primary">Set birth date →</button>
+          </div>
+        </div>
+        <div class="annotation">
+          After you pick a date, the dashboard appears instantly below. No extra "Continue" tap needed.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RETURNING USER -->
+  <div class="phone-frame">
+    <div class="phone-label">Returning User (auto-loaded)</div>
+    <div class="phone">
+      <div class="toolbar">
+        <div class="toolbar-title">LifeMeter</div>
+        <div class="toolbar-sub">A warmer look at time, age and tiny absurdities.</div>
+      </div>
+      <div class="screen-body">
+
+        <!-- Compact date row -->
+        <div class="card card-secondary" style="margin-bottom:14px;">
+          <div class="card-body" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;">
+            <div>
+              <div style="font-size:10px;color:#7B5D50;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">Your birthday</div>
+              <div style="font-size:15px;font-weight:700;color:#33211A;">15 / 3 / 1990</div>
+            </div>
+            <button class="btn-secondary">Change</button>
+          </div>
+        </div>
+
+        <!-- LIFETIME TOTALS -->
+        <div class="section-label">Lifetime totals</div>
+        <div class="grid2">
+          <div class="stat-card">
+            <div class="stat-num">13,181</div>
+            <div class="stat-lbl">Days alive</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">1.14B</div>
+            <div class="stat-lbl">Seconds alive</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">6,590</div>
+            <div class="stat-lbl">kg food consumed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">2.28B</div>
+            <div class="stat-lbl">Deaths since birth</div>
+          </div>
+        </div>
+
+        <!-- THIS SESSION -->
+        <div class="section-label">This session</div>
+        <div class="card" style="margin-bottom:12px;">
+          <div class="card-body" style="padding:10px 14px;">
+            <div class="session-row">
+              <div class="session-lbl">Seconds on screen</div>
+              <div class="session-num">47</div>
+            </div>
+            <div class="session-row">
+              <div class="session-lbl">Deaths while watching</div>
+              <div class="session-num">84</div>
+            </div>
+            <div class="session-row">
+              <div class="session-lbl">Births while watching</div>
+              <div class="session-num">188</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CURIOSITIES -->
+        <div class="section-label">Curiosities</div>
+        <div class="card card-secondary">
+          <div class="card-body">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div class="sign-badge">♓</div>
+              <div>
+                <div class="sign-name">Pisces</div>
+                <div class="sign-planet">Jupiter · Neptune · Venus</div>
+              </div>
+            </div>
+            <div class="sex-line">Estimated time having sex: <strong>1,406 hrs</strong></div>
+          </div>
+        </div>
+
+        <div class="swipe-hint">↓ Pull down anywhere to change birth date</div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="summary-box">
+  <strong>What changed vs today:</strong><br>
+  • First launch → hero prompt, single "Set birth date" button<br>
+  • Re-launch → compact date row at top, results load instantly<br>
+  • Stats → large number on top, small label below (no string concat)<br>
+  • Big numbers → abbreviated: 1,140,134,400 → <strong>1.14B</strong><br>
+  • Session → label left, live number right<br>
+  • Curiosities → horoscope symbol + name + planets, sex line cleaned up<br>
+  • Swipe-down anywhere → change birth date<br>
+  • Session timer resets on app resume (truly "this session")<br><br>
+  Does this look right? Any changes before I write the spec?
+</div>
+
+</body>
+</html>

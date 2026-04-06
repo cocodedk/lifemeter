@@ -3,13 +3,17 @@
     <string name="action_settings">Settings</string>
     <string name="change_text">Change Text</string>
     <string name="reset_text">Reset Text</string>
-    <string name="title_activity_login">Sign in</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="main_title">LifeMeter</string>
+    <string name="main_subtitle">A warmer look at time, age and tiny absurdities.</string>
+    <string name="birth_date_prompt">Choose your birth date</string>
+    <string name="birth_date_hint">The dashboard updates live as soon as you pick a date.</string>
+    <string name="change_birth_date">Change birth date</string>
+    <string name="continue_to_dashboard">Continue</string>
+    <string name="overview_label">Lifetime totals</string>
+    <string name="session_label">Current session</string>
+    <string name="story_label">Curiosities</string>
+    <string name="tarot_title">Tarot archive</string>
+    <string name="tarot_subtitle">Local card database status</string>
+    <string name="tarot_count_label">Cards stored</string>
+    <string name="tarot_count_empty">0</string>
 </resources>

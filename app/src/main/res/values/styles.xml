@@ -1,20 +1,63 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@drawable/bg_screen</item>
+        <item name="android:textColorPrimary">@color/colorTextPrimary</item>
+        <item name="android:textColorSecondary">@color/colorTextSecondary</item>
+        <item name="colorOnPrimary">@color/colorWhite</item>
+        <item name="colorOnSurface">@color/colorTextPrimary</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="materialCardViewStyle">@style/AppCard</item>
+        <item name="toolbarStyle">@style/AppToolbar</item>
+        <item name="textInputStyle">@style/AppTextInputLayout</item>
+        <item name="materialButtonStyle">@style/AppPrimaryButton</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+    <style name="AppToolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@color/colorToolbar</item>
+        <item name="titleTextColor">@color/colorTextPrimary</item>
+        <item name="subtitleTextColor">@color/colorTextSecondary</item>
+        <item name="navigationIconTint">@color/colorTextPrimary</item>
+    </style>
+
+    <style name="AppCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/colorCard</item>
+        <item name="cardCornerRadius">24dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeColor">@color/colorDivider</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="AppPrimaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">18dp</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="AppTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/colorCard</item>
+        <item name="boxCornerRadiusTopStart">20dp</item>
+        <item name="boxCornerRadiusTopEnd">20dp</item>
+        <item name="boxCornerRadiusBottomEnd">20dp</item>
+        <item name="boxCornerRadiusBottomStart">20dp</item>
+        <item name="boxStrokeColor">@color/colorDivider</item>
+        <item name="hintTextColor">@color/colorTextSecondary</item>
+    </style>
 
 </resources>

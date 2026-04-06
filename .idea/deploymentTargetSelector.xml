@@ -4,7 +4,22 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DialogSelection />
+        <DropdownSelection timestamp="2026-04-06T11:52:04.111178964Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=R5CR925CZAV" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection>
+          <targets>
+            <Target type="DEFAULT_BOOT">
+              <handle>
+                <DeviceId pluginId="PhysicalDevice" identifier="serial=R5CR925CZAV" />
+              </handle>
+            </Target>
+          </targets>
+        </DialogSelection>
       </SelectionState>
     </selectionStates>
   </component>

@@ -4,17 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_screen"
+    android:padding="24dp"
     tools:context=".TarotCardActivity">
 
-    <TextView
-        android:id="@+id/TarotCardCountText"
-        android:layout_width="274dp"
-        android:layout_height="45dp"
-        android:text="Not available"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.314" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/tarot_title"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="28sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/tarot_subtitle"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/tarot_count_label"
+                android:textAllCaps="true"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/TarotCardCountText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/tarot_count_empty"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="36sp"
+                tools:text="78" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

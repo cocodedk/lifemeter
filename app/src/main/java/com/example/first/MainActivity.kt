@@ -1,137 +1,182 @@
 package com.example.first
 
+import android.app.DatePickerDialog
 import android.content.Context
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
-import androidx.annotation.RequiresApi
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.first.ui.login.LoginActivity
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
-import java.time.*
-import java.time.LocalDate.parse
-import java.time.format.DateTimeFormatter
-
+import androidx.core.widget.NestedScrollView
+import com.google.android.material.button.MaterialButton
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var toolbarView: androidx.appcompat.widget.Toolbar
+    private lateinit var mainScrollView: NestedScrollView
+    private lateinit var selectedBirthDateText: TextView
+    private lateinit var changeBirthDateButton: MaterialButton
+    private lateinit var continueButton: MaterialButton
+    private lateinit var resultsContainer: LinearLayout
+    private lateinit var horoscopeSignText: TextView
+    private lateinit var secondsTextField: TextView
+    private lateinit var deathsSinceBirth: TextView
+    private lateinit var daysTextView: TextView
+    private lateinit var sexText: TextView
+    private lateinit var foodConsumptionText: TextView
+    private lateinit var secondsPassedText: TextView
+    private lateinit var deathsSinceText: TextView
+    private lateinit var birthsSinceText: TextView
+    private var timer: InnerCountDownCounter? = null
+    private var selectedBirthDate: LocalDate = LocalDate.now()
+    private var resultsVisible = false
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        toolbarView = findViewById(R.id.toolbar)
+        mainScrollView = findViewById(R.id.main_scroll_view)
+        selectedBirthDateText = findViewById(R.id.selected_birth_date_text)
+        changeBirthDateButton = findViewById(R.id.change_birth_date_button)
+        continueButton = findViewById(R.id.continue_button)
+        resultsContainer = findViewById(R.id.results_container)
+        horoscopeSignText = findViewById(R.id.horoscope_sign_text)
+        secondsTextField = findViewById(R.id.seconds_text_field)
+        deathsSinceBirth = findViewById(R.id.deaths_since_birth)
+        daysTextView = findViewById(R.id.days_text_view)
+        sexText = findViewById(R.id.sex_text)
+        foodConsumptionText = findViewById(R.id.food_consumption_text)
+        secondsPassedText = findViewById(R.id.seconds_passed_text)
+        deathsSinceText = findViewById(R.id.deaths_since_text)
+        birthsSinceText = findViewById(R.id.births_since_text)
 
-        launchLogin()
+        setSupportActionBar(toolbarView)
 
-        val millisecondsInFuture:Long = 999999999
-        val countDownInterval:Long = 1000
-
-        val timer = InnerCountDownCounter(millisecondsInFuture, countDownInterval, 0)
-        timer.start()
-
-        DatePickerDialog.setOnDateChangedListener{ view, year, monthOfYear, dayOfMonth ->
-
-            val current = LocalDateTime.now()
-
-            val secondsSinceBirth = dateToEpoch(current.year, current.monthValue, current.dayOfMonth) - dateToEpoch(year, monthOfYear+1, dayOfMonth)
-            val days = secondsSinceBirth / 86400
-
-            timer.setSecondsSinceBirth(secondsSinceBirth)
-
-            if(current.year - year>= 15) {
-                val Secounds = dateToEpoch(current.year, current.monthValue, current.dayOfMonth) - dateToEpoch(year+15, monthOfYear+1, dayOfMonth)
-                val Days = Secounds / 86400
-                val Sex = Days / 6 // this is number of hours
-                setSexText("Du har haft sex i $Sex timer :D:D")
-            } else {
-                setSexText("")
-            }
-
-            val foodConsumption = days/2
-            setFootConsumptionText("Du har spist $foodConsumption kilo mad")
-            setHoroscopeSignText("Du er født i " + getHoroscopeSign(monthOfYear, dayOfMonth))
-
+        selectedBirthDate = LocalDate.now()
+        changeBirthDateButton.setOnClickListener {
+            showBirthDatePicker()
+        }
+        continueButton.setOnClickListener {
+            showResults()
         }
 
+        resultsContainer.visibility = View.GONE
+        renderSelectedBirthDate()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_tarotCards -> {
-                val intent = Intent(this, TarotCardActivity::class.java)
-                startActivity(intent)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    override fun onDestroy() {
+        timer?.cancel()
+        super.onDestroy()
+    }
+
+    private fun showBirthDatePicker() {
+        DatePickerDialog(
+            this,
+            { _, year, month, dayOfMonth ->
+                selectedBirthDate = LocalDate.of(year, month + 1, dayOfMonth)
+                renderSelectedBirthDate()
+                if (resultsVisible) {
+                    updateDashboard(requireNotNull(timer), year, month, dayOfMonth)
+                }
+            },
+            selectedBirthDate.year,
+            selectedBirthDate.monthValue - 1,
+            selectedBirthDate.dayOfMonth
+        ).show()
+    }
+
+    private fun renderSelectedBirthDate() {
+        selectedBirthDateText.text = "Selected birthday: ${selectedBirthDate.dayOfMonth}/${selectedBirthDate.monthValue}/${selectedBirthDate.year}"
+    }
+
+    private fun showResults() {
+        if (timer == null) {
+            val millisecondsInFuture: Long = 999999999
+            val countDownInterval: Long = 1000
+            timer = InnerCountDownCounter(millisecondsInFuture, countDownInterval, 0).also { it.start() }
         }
+
+        resultsVisible = true
+        resultsContainer.visibility = View.VISIBLE
+        updateDashboard(requireNotNull(timer), selectedBirthDate.year, selectedBirthDate.monthValue - 1, selectedBirthDate.dayOfMonth)
+        mainScrollView.post { mainScrollView.smoothScrollTo(0, resultsContainer.top) }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+    private fun updateDashboard(
+        timer: InnerCountDownCounter,
+        year: Int,
+        monthOfYear: Int,
+        dayOfMonth: Int
+    ) {
+        if (!resultsVisible) {
+            return
+        }
+
+        val current = LocalDateTime.now()
+
+        val secondsSinceBirth =
+            dateToEpoch(current.year, current.monthValue, current.dayOfMonth) -
+                dateToEpoch(year, monthOfYear + 1, dayOfMonth)
+        val days = secondsSinceBirth / 86400
+
+        timer.setSecondsSinceBirth(secondsSinceBirth)
+
+        if (current.year - year >= 15) {
+            val seconds =
+                dateToEpoch(current.year, current.monthValue, current.dayOfMonth) -
+                    dateToEpoch(year + 15, monthOfYear + 1, dayOfMonth)
+            val daysAfterFifteen = seconds / 86400
+            val sexHours = daysAfterFifteen / 6
+            setSexText("Du har haft sex i $sexHours timer :D:D")
+        } else {
+            setSexText("")
+        }
+
+        val foodConsumption = days / 2
+        setFootConsumptionText("Du har spist $foodConsumption kilo mad")
+        setHoroscopeSignText("Du er født i " + getHoroscopeSign(monthOfYear, dayOfMonth))
     }
 
     fun getHoroscopeSign(month: Int, day: Int): String {
-        
         val localMonth = month + 1
-        
+
         var sign = ""
-        
-        if( (localMonth == 3 && day >= 21) || (localMonth == 4 && day <= 19) ) {
-            sign =  "Aries, planet Mars"
-        }
-        else if( (localMonth == 4 && day >= 20) || (localMonth == 5 && day <= 20) ) {
-            sign =  "Taurus, planeter Venus & månen "
-        }
-        else if( (localMonth == 5 && day >= 21) || (localMonth == 6 && day <= 20) ) {
-            sign =  "Gemini, planet Mercury"
-        }
-        else if( (localMonth == 6 && day >= 21) || (localMonth == 7 && day <= 22) ) {
-            sign =  "Cancer, planeter månen & Jupiter"
-        }
-        else if( (localMonth == 7 && day >= 23) || (localMonth == 8 && day <= 22) ) {
-            sign =  "Leo, Star Sun"
-        }
-        else if( (localMonth == 8 && day >= 23) || (localMonth == 9 && day <= 22) ) {
-            sign =  "Virgo, planet Mercury "
-        }
-        else if( (localMonth == 9 && day >= 23) || (localMonth == 10 && day <= 22) ) {
-            sign =  "Libra, planet Venus and Saturn"
-        }
-        else if( (localMonth == 10 && day >= 23) || (localMonth == 11 && day <= 21) ) {
-            sign =  "Scorpio, planeter Mars & Pluto"
-        }
-        else if( (localMonth == 11 && day >= 22) || (localMonth == 12 && day <= 21) ) {
-            sign =  "Sagittarius, planet Jupiter"
-        }
-        else if( (localMonth == 12 && day >= 22) || (localMonth == 1 && day <= 19) ) {
-            sign =  "Capricorn, planeter Saturn & Mars"
-        }
-        else if( (localMonth == 1 && day >= 20) || (localMonth == 2 && day <= 18) ) {
-            sign =  "Aquarius, planeter Saturn and Uranus"
-        }
-        else if( (localMonth == 2 && day >= 19) || (localMonth == 3 && day <= 20) ) {
-            sign =  "Pisces, planeter Jupiter, Neptune, Venus"
+
+        if ((localMonth == 3 && day >= 21) || (localMonth == 4 && day <= 19)) {
+            sign = "Aries, planet Mars"
+        } else if ((localMonth == 4 && day >= 20) || (localMonth == 5 && day <= 20)) {
+            sign = "Taurus, planeter Venus & månen "
+        } else if ((localMonth == 5 && day >= 21) || (localMonth == 6 && day <= 20)) {
+            sign = "Gemini, planet Mercury"
+        } else if ((localMonth == 6 && day >= 21) || (localMonth == 7 && day <= 22)) {
+            sign = "Cancer, planeter månen & Jupiter"
+        } else if ((localMonth == 7 && day >= 23) || (localMonth == 8 && day <= 22)) {
+            sign = "Leo, Star Sun"
+        } else if ((localMonth == 8 && day >= 23) || (localMonth == 9 && day <= 22)) {
+            sign = "Virgo, planet Mercury "
+        } else if ((localMonth == 9 && day >= 23) || (localMonth == 10 && day <= 22)) {
+            sign = "Libra, planet Venus and Saturn"
+        } else if ((localMonth == 10 && day >= 23) || (localMonth == 11 && day <= 21)) {
+            sign = "Scorpio, planeter Mars & Pluto"
+        } else if ((localMonth == 11 && day >= 22) || (localMonth == 12 && day <= 21)) {
+            sign = "Sagittarius, planet Jupiter"
+        } else if ((localMonth == 12 && day >= 22) || (localMonth == 1 && day <= 19)) {
+            sign = "Capricorn, planeter Saturn & Mars"
+        } else if ((localMonth == 1 && day >= 20) || (localMonth == 2 && day <= 18)) {
+            sign = "Aquarius, planeter Saturn and Uranus"
+        } else if ((localMonth == 2 && day >= 19) || (localMonth == 3 && day <= 20)) {
+            sign = "Pisces, planeter Jupiter, Neptune, Venus"
         }
         return sign
     }
 
     private fun setHoroscopeSignText(text: String) {
-        HoroscopeSignText.setText(text)
-    }
-
-    private fun launchLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
+        horoscopeSignText.text = text
     }
 
     fun View.hideKeyboard() {
@@ -140,57 +185,45 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setSecondsText(text: String) {
-        SecondsTextField.setText(text)
+        secondsTextField.text = text
     }
 
     fun setDeathSinceBirth(text: String) {
-        DeathsSinceBirth.setText(text)
+        deathsSinceBirth.text = text
     }
 
     fun setDaysText(text: String) {
-        DaysTextView.setText(text)
+        daysTextView.text = text
     }
 
     fun setSexText(text: String) {
-        SexText.setText(text)
+        sexText.text = text
     }
 
     private fun setFootConsumptionText(text: String) {
-        FoodConsumptionText.setText(text)
+        foodConsumptionText.text = text
     }
 
     fun setSecondsPassed(text: String) {
-        SecondsPassedText.setText(text)
+        secondsPassedText.text = text
     }
 
     fun setDeathsSince(text: String) {
-        DeathsSinceText.setText(text)
+        deathsSinceText.text = text
     }
 
     fun setBirthsSince(text: String) {
-        BirtsSinceText.setText(text)
+        birthsSinceText.text = text
     }
-    @RequiresApi(Build.VERSION_CODES.O)
+
     fun dateToEpoch(year: Int, month: Int, day: Int): Long {
-
-        val parsedMonth = when(month){
-            in 0..9 -> "0$month"
-            else -> (month).toString()
-        }
-
-        val parsedDay = when(day){
-            in 0..9 -> "0${day.toString()}"
-            else -> day.toString()
-        }
-
-        val l = parse("$parsedDay-$parsedMonth-$year", DateTimeFormatter.ofPattern("dd-MM-yyyy"))
-        return l.atStartOfDay(ZoneId.systemDefault()).toInstant().epochSecond
+        return LocalDate.of(year, month, day).atStartOfDay(ZoneId.systemDefault()).toInstant().epochSecond
     }
 
     inner class InnerCountDownCounter(
         private val millisInFuture: Long,
         countDownInterval: Long,
-        private var secondsSinceBirth:Long
+        private var secondsSinceBirth: Long
     ) : CountDownTimer(millisInFuture, countDownInterval) {
 
         override fun onFinish() {
@@ -198,15 +231,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onTick(millisUntilFinished: Long) {
-            val timePassed:Long = (this.millisInFuture - millisUntilFinished) / 1000
-            setSecondsPassed("Tid mens du har kigget paa skærmen: $timePassed")
-            setDeathsSince("Dødsfald mens du har kigget på skærmen: " +  Math.round(timePassed * 1.8) )
-            setBirthsSince("Fødsler mens du har kigget på skærmen: " +  Math.round(timePassed * 4.0) )
+            if (!resultsVisible) {
+                return
+            }
 
-            if(this.secondsSinceBirth > 0) {
-                timePassed + this.secondsSinceBirth
+            val timePassed: Long = (this.millisInFuture - millisUntilFinished) / 1000
+            setSecondsPassed("Tid mens du har kigget paa skærmen: $timePassed")
+            setDeathsSince("Dødsfald mens du har kigget på skærmen: " + Math.round(timePassed * 1.8))
+            setBirthsSince("Fødsler mens du har kigget på skærmen: " + Math.round(timePassed * 4.0))
+
+            if (this.secondsSinceBirth > 0) {
                 setSecondsText("Du har levet for: ${timePassed + this.secondsSinceBirth} Sekunder")
-                setDaysText("Du har levet for: ${(timePassed + this.secondsSinceBirth)/86400} Dage")
+                setDaysText("Du har levet for: ${(timePassed + this.secondsSinceBirth) / 86400} Dage")
                 setDeathSinceBirth("Døde siden du blev født: " + (timePassed + this.secondsSinceBirth) * 2)
             } else {
                 setSecondsText("")
@@ -217,10 +253,6 @@ class MainActivity : AppCompatActivity() {
 
         fun setSecondsSinceBirth(ssb: Long) {
             this.secondsSinceBirth = ssb
-        }
-
-        fun getSecondsSinceBirth(): Long {
-            return this.secondsSinceBirth
         }
     }
 }

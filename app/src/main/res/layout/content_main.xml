@@ -1,133 +1,318 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
-    tools:showIn="@layout/activity_main">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
-    <DatePicker
-        android:id="@+id/DatePickerDialog"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-        android:spinnersShown="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.165"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.965"
-        tools:targetApi="lollipop" />
+        android:fontFamily="sans-serif-medium"
+        android:paddingBottom="6dp"
+        android:text="@string/birth_date_prompt"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="28sp" />
 
     <TextView
-        android:id="@+id/TitleText"
-        android:layout_width="214dp"
-        android:layout_height="29dp"
-        android:text="Vælg din Fødselsdato"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.622" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:text="@string/birth_date_hint"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="15sp" />
 
-    <TextView
-        android:id="@+id/SexText"
-        android:layout_width="333dp"
-        android:layout_height="36dp"
-        android:autoText="false"
-        android:background="#00FA0303"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56" />
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        app:cardBackgroundColor="@color/colorCardSecondary">
 
-    <TextView
-        android:id="@+id/SecondsTextField"
-        android:layout_width="333dp"
-        android:layout_height="36dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.082" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
 
-    <TextView
-        android:id="@+id/DaysTextView"
-        android:layout_width="333dp"
-        android:layout_height="36dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.012" />
+            <TextView
+                android:id="@+id/selected_birth_date_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="20sp"
+                tools:text="Selected birthday: 6/4/2026" />
 
-    <TextView
-        android:id="@+id/FoodConsumptionText"
-        android:layout_width="333dp"
-        android:layout_height="36dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.158" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/change_birth_date_button"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="@string/change_birth_date" />
 
-    <TextView
-        android:id="@+id/SecondsPassedText"
-        android:layout_width="333dp"
-        android:layout_height="36dp"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.318" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/continue_button"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="14dp"
+                android:text="@string/continue_to_dashboard" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-    <TextView
-        android:id="@+id/BirtsSinceText"
-        android:layout_width="333dp"
-        android:layout_height="36dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.463" />
+    <LinearLayout
+        android:id="@+id/results_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/DeathsSinceText"
-        android:layout_width="333dp"
-        android:layout_height="36dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.389" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/overview_label"
+            android:textAllCaps="true"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="12sp" />
 
-    <TextView
-        android:id="@+id/DeathsSinceBirth"
-        android:layout_width="332dp"
-        android:layout_height="43dp"
-        app:layout_constraintBottom_toBottomOf="@+id/DatePickerDialog"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/DaysTextView"
-        app:layout_constraintVertical_bias="0.233" />
+        <androidx.gridlayout.widget.GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alignmentMode="alignMargins"
+            android:columnCount="2"
+            android:layout_marginBottom="20dp"
+            android:useDefaultMargins="true">
 
-    <TextView
-        android:id="@+id/HoroscopeSignText"
-        android:layout_width="99dp"
-        android:layout_height="106dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.814" />
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill_horizontal">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Days alive"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/days_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="22sp"
+                        tools:text="Du har levet for: 12.465 dage" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill_horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seconds alive"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/seconds_text_field"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="22sp"
+                        tools:text="Du har levet for: 1.076.976.000 sekunder" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill_horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Food consumed"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/food_consumption_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="22sp"
+                        tools:text="Du har spist 6.232 kilo mad" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill_horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Deaths since birth"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/deaths_since_birth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="22sp"
+                        tools:text="Døde siden du blev født: 2.153.952.000" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.gridlayout.widget.GridLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/session_label"
+            android:textAllCaps="true"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="12sp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/seconds_passed_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="12dp"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="16sp"
+                    tools:text="Tid mens du har kigget paa skærmen: 124" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorDivider" />
+
+                <TextView
+                    android:id="@+id/deaths_since_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="16sp"
+                    tools:text="Dødsfald mens du har kigget på skærmen: 223" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorDivider" />
+
+                <TextView
+                    android:id="@+id/births_since_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="16sp"
+                    tools:text="Fødsler mens du har kigget på skærmen: 496" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/story_label"
+            android:textAllCaps="true"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="12sp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/colorCardSecondary">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/horoscope_sign_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/colorHighlight"
+                    android:textSize="22sp"
+                    tools:text="Du er født i Virgo, planet Mercury" />
+
+                <TextView
+                    android:id="@+id/sex_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="16sp"
+                    tools:text="Du har haft sex i 8.432 timer :D:D" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</LinearLayout>

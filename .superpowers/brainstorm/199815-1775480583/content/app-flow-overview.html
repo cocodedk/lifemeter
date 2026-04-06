@@ -1,0 +1,102 @@
+<h2>LifeMeter — Current State Audit</h2>
+<p class="subtitle">Here's what I found across the full app. Review, then scroll down for the first design question.</p>
+
+<div class="section">
+  <div class="label">App Flow</div>
+  <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-top:12px;">
+    <div style="background:#fff8f1;border:1.5px solid #e0c9b3;border-radius:16px;padding:16px 20px;min-width:170px;flex:1;">
+      <div style="font-weight:600;font-size:13px;color:#7B5D50;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">MainActivity</div>
+      <ul style="margin:0;padding:0 0 0 18px;font-size:14px;line-height:1.7;color:#33211A;">
+        <li>Pick birthdate</li>
+        <li>Press Continue</li>
+        <li>See live dashboard</li>
+      </ul>
+    </div>
+    <div style="font-size:22px;color:#C26B43;align-self:center;">→</div>
+    <div style="background:#fff8f1;border:1.5px solid #e0c9b3;border-radius:16px;padding:16px 20px;min-width:170px;flex:1;">
+      <div style="font-weight:600;font-size:13px;color:#7B5D50;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">TarotCardActivity</div>
+      <ul style="margin:0;padding:0 0 0 18px;font-size:14px;line-height:1.7;color:#33211A;">
+        <li>Via overflow menu</li>
+        <li>Shows card count: <strong>0</strong></li>
+        <li>Nothing else</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="label">Issues found</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:12px;">
+
+    <div style="background:#fff3f0;border:1px solid #f0c8b8;border-radius:14px;padding:14px 16px;">
+      <div style="font-size:18px;margin-bottom:6px;">🔴</div>
+      <div style="font-weight:600;font-size:14px;color:#33211A;margin-bottom:4px;">No birthdate memory</div>
+      <div style="font-size:13px;color:#7B5D50;line-height:1.5;">App resets to today's date every launch. You explicitly asked for this to be fixed.</div>
+    </div>
+
+    <div style="background:#fff3f0;border:1px solid #f0c8b8;border-radius:14px;padding:14px 16px;">
+      <div style="font-size:18px;margin-bottom:6px;">🔴</div>
+      <div style="font-weight:600;font-size:14px;color:#33211A;margin-bottom:4px;">Date picker opens on today</div>
+      <div style="font-size:13px;color:#7B5D50;line-height:1.5;">For a birthdate, the default year should scroll to ~30 years ago, not 2026.</div>
+    </div>
+
+    <div style="background:#fff8f0;border:1px solid #f0d8b8;border-radius:14px;padding:14px 16px;">
+      <div style="font-size:18px;margin-bottom:6px;">🟡</div>
+      <div style="font-weight:600;font-size:14px;color:#33211A;margin-bottom:4px;">Mixed Danish + English</div>
+      <div style="font-size:13px;color:#7B5D50;line-height:1.5;">Card labels are English ("Days alive") but values are Danish ("Du har levet for: X Dage"). Inconsistent throughout.</div>
+    </div>
+
+    <div style="background:#fff8f0;border:1px solid #f0d8b8;border-radius:14px;padding:14px 16px;">
+      <div style="font-size:18px;margin-bottom:6px;">🟡</div>
+      <div style="font-weight:600;font-size:14px;color:#33211A;margin-bottom:4px;">Two-button confusion</div>
+      <div style="font-size:13px;color:#7B5D50;line-height:1.5;">"Change birth date" + "Continue" are two steps when one tap on the date should be enough to drive the flow.</div>
+    </div>
+
+    <div style="background:#fff8f0;border:1px solid #f0d8b8;border-radius:14px;padding:14px 16px;">
+      <div style="font-size:18px;margin-bottom:6px;">🟡</div>
+      <div style="font-weight:600;font-size:14px;color:#33211A;margin-bottom:4px;">Stat values embed labels</div>
+      <div style="font-size:13px;color:#7B5D50;line-height:1.5;">e.g., "Du har levet for: 12465 Dage" — label and number are in one string. Hard to style the number prominently.</div>
+    </div>
+
+    <div style="background:#fff8f0;border:1px solid #f0d8b8;border-radius:14px;padding:14px 16px;">
+      <div style="font-size:18px;margin-bottom:6px;">🟡</div>
+      <div style="font-weight:600;font-size:14px;color:#33211A;margin-bottom:4px;">TarotCardActivity is a stub</div>
+      <div style="font-size:13px;color:#7B5D50;line-height:1.5;">populateTable() is empty, count is always 0. Has a debug Toast("OnCreate") still visible to users.</div>
+    </div>
+
+    <div style="background:#f5fff7;border:1px solid #b8e0c0;border-radius:14px;padding:14px 16px;">
+      <div style="font-size:18px;margin-bottom:6px;">🟢</div>
+      <div style="font-weight:600;font-size:14px;color:#33211A;margin-bottom:4px;">Design system is solid</div>
+      <div style="font-size:13px;color:#7B5D50;line-height:1.5;">Color palette, cards, typography and buttons are already well-defined and consistent.</div>
+    </div>
+
+    <div style="background:#f5fff7;border:1px solid #b8e0c0;border-radius:14px;padding:14px 16px;">
+      <div style="font-size:18px;margin-bottom:6px;">🟢</div>
+      <div style="font-weight:600;font-size:14px;color:#33211A;margin-bottom:4px;">Live timer works</div>
+      <div style="font-size:13px;color:#7B5D50;line-height:1.5;">Session counters (deaths, births, time on screen) tick correctly every second.</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" style="margin-top:32px;padding-top:24px;border-top:1px solid #e0c9b3;">
+  <div class="label">First design question</div>
+  <h3 style="margin-top:10px;">What language should the app use?</h3>
+  <p class="subtitle">Currently it's a mix — labels in English, values in Danish. Pick one direction.</p>
+  <div class="options" style="margin-top:16px;">
+    <div class="option" data-choice="danish" onclick="toggleSelect(this)">
+      <div class="letter">A</div>
+      <div class="content">
+        <h3>All Danish</h3>
+        <p>Every label, button, and string in Danish. "Dage i live", "Sekunder i live", "Mad spist", etc.</p>
+      </div>
+    </div>
+    <div class="option" data-choice="english" onclick="toggleSelect(this)">
+      <div class="letter">B</div>
+      <div class="content">
+        <h3>All English</h3>
+        <p>"Days alive", "Seconds alive", "Food consumed" — consistent English throughout.</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<h2>Design — Screen Flow</h2>
+<p class="subtitle">The complete navigation logic for all states and events. Review, then scroll for the mockups.</p>
+
+<div class="section">
+  <div class="label">App States</div>
+
+  <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px;">
+
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div style="background:#F8EFE7;border:1.5px solid #e0c9b3;border-radius:14px;padding:14px 20px;min-width:160px;flex:1;max-width:220px;">
+        <div style="font-size:11px;font-weight:600;color:#7B5D50;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">FIRST LAUNCH</div>
+        <div style="font-size:13px;color:#33211A;line-height:1.6;">No saved date<br>→ Welcome + date picker prominent</div>
+      </div>
+      <div style="font-size:20px;color:#C26B43;">→</div>
+      <div style="background:#fff8f1;border:1.5px solid #e0c9b3;border-radius:14px;padding:14px 20px;flex:2;min-width:200px;">
+        <div style="font-size:11px;font-weight:600;color:#7B5D50;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">DATE PICKED</div>
+        <div style="font-size:13px;color:#33211A;line-height:1.6;">DatePickerDialog appears → on confirm, save to SharedPreferences + immediately reveal dashboard with animation</div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div style="background:#F8EFE7;border:1.5px solid #e0c9b3;border-radius:14px;padding:14px 20px;min-width:160px;flex:1;max-width:220px;">
+        <div style="font-size:11px;font-weight:600;color:#7B5D50;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">RE-LAUNCH</div>
+        <div style="font-size:13px;color:#33211A;line-height:1.6;">Saved date found<br>→ Dashboard loads immediately, no tap</div>
+      </div>
+      <div style="font-size:20px;color:#C26B43;">→</div>
+      <div style="background:#fff8f1;border:1.5px solid #e0c9b3;border-radius:14px;padding:14px 20px;flex:2;min-width:200px;">
+        <div style="font-size:13px;color:#33211A;line-height:1.6;">Date card still visible at top (compact). User taps <strong>"Change birth date"</strong> → DatePickerDialog → picks new date → saved + dashboard updates live.</div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div style="background:#F8EFE7;border:1.5px solid #e0c9b3;border-radius:14px;padding:14px 20px;min-width:160px;flex:1;max-width:220px;">
+        <div style="font-size:11px;font-weight:600;color:#7B5D50;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">SWIPE DOWN</div>
+        <div style="font-size:13px;color:#33211A;line-height:1.6;">Pull down on scroll view → opens DatePickerDialog</div>
+      </div>
+      <div style="font-size:20px;color:#C26B43;">→</div>
+      <div style="background:#fff8f1;border:1.5px solid #e0c9b3;border-radius:14px;padding:14px 20px;flex:2;min-width:200px;">
+        <div style="font-size:13px;color:#33211A;line-height:1.6;">SwipeRefreshLayout wraps the NestedScrollView. Pulling down = change date. Removes need to scroll back to top. Immediate feedback.</div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div style="background:#F8EFE7;border:1.5px solid #e0c9b3;border-radius:14px;padding:14px 20px;min-width:160px;flex:1;max-width:220px;">
+        <div style="font-size:11px;font-weight:600;color:#7B5D50;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">BACKGROUND / FOREGROUND</div>
+        <div style="font-size:13px;color:#33211A;line-height:1.6;">App moves to background, comes back</div>
+      </div>
+      <div style="font-size:20px;color:#C26B43;">→</div>
+      <div style="background:#fff8f1;border:1.5px solid #e0c9b3;border-radius:14px;padding:14px 20px;flex:2;min-width:200px;">
+        <div style="font-size:13px;color:#33211A;line-height:1.6;">Session timer resets on resume (onResume restarts timer). "Time on screen" = truly this session, not cumulative since ever.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" style="margin-top:28px;padding-top:24px;border-top:1px solid #e0c9b3;">
+  <div class="label">Removed entirely</div>
+  <div style="margin-top:10px;font-size:14px;color:#33211A;line-height:1.8;">
+    ✗ TarotCardActivity.kt &nbsp;·&nbsp; TarotCardDBHelper.kt &nbsp;·&nbsp; TarotCardModel.kt &nbsp;·&nbsp; DBContract.kt &nbsp;·&nbsp; menu_main.xml &nbsp;·&nbsp; menu overflow in toolbar
+  </div>
+</div>
+
+<div style="margin-top:28px;padding:16px 20px;background:#f5fff7;border:1px solid #b8e0c0;border-radius:14px;font-size:14px;color:#33211A;line-height:1.6;">
+  ✓ Does this flow look right? If yes, next screen shows the full mockup of the two states (first-launch vs returning user).
+</div>
