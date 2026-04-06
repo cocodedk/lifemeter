@@ -5,17 +5,20 @@ import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
+import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.text.NumberFormat
 import java.util.Locale
+
+private const val PREFS_NAME = "lifemeter_prefs"
+private const val PREFS_KEY_BIRTHDATE = "birthdate"
 
 data class HoroscopeResult(val symbol: String, val name: String, val planets: String)
 
@@ -45,217 +48,216 @@ fun formatNumber(n: Long): String = when {
 }
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var toolbarView: androidx.appcompat.widget.Toolbar
+
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var mainScrollView: NestedScrollView
+    private lateinit var heroSection: LinearLayout
+    private lateinit var dateCompactRow: LinearLayout
+    private lateinit var firstLaunchContent: LinearLayout
     private lateinit var selectedBirthDateText: TextView
     private lateinit var changeBirthDateButton: MaterialButton
     private lateinit var setBirthDateButton: MaterialButton
     private lateinit var resultsContainer: LinearLayout
+    private lateinit var daysValue: TextView
+    private lateinit var secondsValue: TextView
+    private lateinit var foodValue: TextView
+    private lateinit var deathsValue: TextView
+    private lateinit var sessionSecondsValue: TextView
+    private lateinit var sessionDeathsValue: TextView
+    private lateinit var sessionBirthsValue: TextView
     private lateinit var horoscopeSymbol: TextView
     private lateinit var horoscopeName: TextView
     private lateinit var horoscopePlanets: TextView
-    private lateinit var secondsTextField: TextView
-    private lateinit var deathsSinceBirth: TextView
-    private lateinit var daysTextView: TextView
     private lateinit var sexText: TextView
-    private lateinit var foodConsumptionText: TextView
-    private lateinit var secondsPassedText: TextView
-    private lateinit var deathsSinceText: TextView
-    private lateinit var birthsSinceText: TextView
-    private var timer: InnerCountDownCounter? = null
-    private var selectedBirthDate: LocalDate = LocalDate.now()
-    private var resultsVisible = false
+
+    private var timer: CountDownTimer? = null
+    private var selectedBirthDate: LocalDate? = null
+    private var sessionStartTime: Long = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
-        toolbarView = findViewById(R.id.toolbar)
-        mainScrollView = findViewById(R.id.main_scroll_view)
-        selectedBirthDateText = findViewById(R.id.selected_birth_date_text)
-        changeBirthDateButton = findViewById(R.id.change_birth_date_button)
-        setBirthDateButton = findViewById(R.id.set_birth_date_button)
-        resultsContainer = findViewById(R.id.results_container)
-        horoscopeSymbol = findViewById(R.id.horoscope_symbol)
-        horoscopeName = findViewById(R.id.horoscope_name)
-        horoscopePlanets = findViewById(R.id.horoscope_planets)
-        secondsTextField = findViewById(R.id.seconds_value)
-        deathsSinceBirth = findViewById(R.id.deaths_value)
-        daysTextView = findViewById(R.id.days_value)
-        sexText = findViewById(R.id.sex_text)
-        foodConsumptionText = findViewById(R.id.food_value)
-        secondsPassedText = findViewById(R.id.session_seconds_value)
-        deathsSinceText = findViewById(R.id.session_deaths_value)
-        birthsSinceText = findViewById(R.id.session_births_value)
+        setSupportActionBar(findViewById(R.id.toolbar))
+        bindViews()
 
-        setSupportActionBar(toolbarView)
+        selectedBirthDate = loadBirthDate()
 
-        selectedBirthDate = LocalDate.now()
-        changeBirthDateButton.setOnClickListener {
-            showBirthDatePicker()
-        }
-        setBirthDateButton.setOnClickListener {
-            showBirthDatePicker()
+        if (selectedBirthDate != null) {
+            showReturningUserState()
+        } else {
+            showFirstLaunchState()
         }
 
-        resultsContainer.visibility = View.GONE
-        renderSelectedBirthDate()
+        setBirthDateButton.setOnClickListener { showBirthDatePicker() }
+        changeBirthDateButton.setOnClickListener { showBirthDatePicker() }
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = false
+            showBirthDatePicker()
+        }
     }
 
-    override fun onDestroy() {
+    override fun onResume() {
+        super.onResume()
+        if (selectedBirthDate != null) {
+            sessionStartTime = System.currentTimeMillis() / 1000
+            startTimer()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
         timer?.cancel()
-        super.onDestroy()
+        timer = null
+    }
+
+    private fun bindViews() {
+        swipeRefreshLayout    = findViewById(R.id.swipe_refresh_layout)
+        mainScrollView        = findViewById(R.id.main_scroll_view)
+        heroSection           = findViewById(R.id.hero_section)
+        dateCompactRow        = findViewById(R.id.date_compact_row)
+        firstLaunchContent    = findViewById(R.id.first_launch_content)
+        selectedBirthDateText = findViewById(R.id.selected_birth_date_text)
+        changeBirthDateButton = findViewById(R.id.change_birth_date_button)
+        setBirthDateButton    = findViewById(R.id.set_birth_date_button)
+        resultsContainer      = findViewById(R.id.results_container)
+        daysValue             = findViewById(R.id.days_value)
+        secondsValue          = findViewById(R.id.seconds_value)
+        foodValue             = findViewById(R.id.food_value)
+        deathsValue           = findViewById(R.id.deaths_value)
+        sessionSecondsValue   = findViewById(R.id.session_seconds_value)
+        sessionDeathsValue    = findViewById(R.id.session_deaths_value)
+        sessionBirthsValue    = findViewById(R.id.session_births_value)
+        horoscopeSymbol       = findViewById(R.id.horoscope_symbol)
+        horoscopeName         = findViewById(R.id.horoscope_name)
+        horoscopePlanets      = findViewById(R.id.horoscope_planets)
+        sexText               = findViewById(R.id.sex_text)
+    }
+
+    private fun showFirstLaunchState() {
+        heroSection.visibility        = View.VISIBLE
+        dateCompactRow.visibility     = View.GONE
+        firstLaunchContent.visibility = View.VISIBLE
+        resultsContainer.visibility   = View.GONE
+    }
+
+    private fun showReturningUserState() {
+        heroSection.visibility        = View.GONE
+        dateCompactRow.visibility     = View.VISIBLE
+        firstLaunchContent.visibility = View.GONE
+        resultsContainer.visibility   = View.VISIBLE
+        renderSelectedBirthDate()
+        updateDashboard()
     }
 
     private fun showBirthDatePicker() {
+        val current = selectedBirthDate ?: LocalDate.of(LocalDate.now().year - 30, 1, 1)
         DatePickerDialog(
             this,
-            { _, year, month, dayOfMonth ->
-                selectedBirthDate = LocalDate.of(year, month + 1, dayOfMonth)
+            { _, year, month, day ->
+                selectedBirthDate = LocalDate.of(year, month + 1, day)
+                saveBirthDate(selectedBirthDate!!)
                 renderSelectedBirthDate()
-                if (resultsVisible) {
-                    updateDashboard(requireNotNull(timer), year, month, dayOfMonth)
+                if (resultsContainer.visibility != View.VISIBLE) {
+                    heroSection.visibility        = View.GONE
+                    dateCompactRow.visibility     = View.VISIBLE
+                    firstLaunchContent.visibility = View.GONE
+                    revealDashboard()
+                } else {
+                    updateDashboard()
                 }
+                sessionStartTime = System.currentTimeMillis() / 1000
+                startTimer()
             },
-            selectedBirthDate.year,
-            selectedBirthDate.monthValue - 1,
-            selectedBirthDate.dayOfMonth
+            current.year,
+            current.monthValue - 1,
+            current.dayOfMonth
         ).show()
     }
 
     private fun renderSelectedBirthDate() {
-        selectedBirthDateText.text = "Selected birthday: ${selectedBirthDate.dayOfMonth}/${selectedBirthDate.monthValue}/${selectedBirthDate.year}"
+        val d = selectedBirthDate ?: return
+        selectedBirthDateText.text = "%02d / %02d / %d".format(d.dayOfMonth, d.monthValue, d.year)
     }
 
-    private fun showResults() {
-        if (timer == null) {
-            val millisecondsInFuture: Long = 999999999
-            val countDownInterval: Long = 1000
-            timer = InnerCountDownCounter(millisecondsInFuture, countDownInterval, 0).also { it.start() }
-        }
-
-        resultsVisible = true
-        resultsContainer.visibility = View.VISIBLE
-        updateDashboard(requireNotNull(timer), selectedBirthDate.year, selectedBirthDate.monthValue - 1, selectedBirthDate.dayOfMonth)
+    private fun revealDashboard() {
+        resultsContainer.visibility   = View.VISIBLE
+        resultsContainer.alpha        = 0f
+        resultsContainer.translationY = 32f * resources.displayMetrics.density
+        resultsContainer.animate()
+            .alpha(1f)
+            .translationY(0f)
+            .setDuration(300)
+            .start()
+        updateDashboard()
         mainScrollView.post { mainScrollView.smoothScrollTo(0, resultsContainer.top) }
     }
 
-    private fun updateDashboard(
-        timer: InnerCountDownCounter,
-        year: Int,
-        monthOfYear: Int,
-        dayOfMonth: Int
-    ) {
-        if (!resultsVisible) {
-            return
-        }
+    private fun startTimer() {
+        timer?.cancel()
+        timer = object : CountDownTimer(Long.MAX_VALUE / 2, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val timePassed = System.currentTimeMillis() / 1000 - sessionStartTime
+                sessionSecondsValue.text = formatNumber(timePassed)
+                sessionDeathsValue.text  = formatNumber(Math.round(timePassed * 1.8))
+                sessionBirthsValue.text  = formatNumber(Math.round(timePassed * 4.0))
+                updateLiveStats()
+            }
+            override fun onFinish() {}
+        }.also { it.start() }
+    }
 
-        val current = LocalDateTime.now()
-
-        val secondsSinceBirth =
-            dateToEpoch(current.year, current.monthValue, current.dayOfMonth) -
-                dateToEpoch(year, monthOfYear + 1, dayOfMonth)
+    private fun updateDashboard() {
+        val birth = selectedBirthDate ?: return
+        val now   = LocalDateTime.now()
+        val secondsSinceBirth = dateToEpoch(now.year, now.monthValue, now.dayOfMonth) -
+                dateToEpoch(birth.year, birth.monthValue, birth.dayOfMonth)
         val days = secondsSinceBirth / 86400
 
-        timer.setSecondsSinceBirth(secondsSinceBirth)
+        daysValue.text = formatNumber(days)
+        foodValue.text = formatNumber(days / 2)
 
-        if (current.year - year >= 15) {
-            val seconds =
-                dateToEpoch(current.year, current.monthValue, current.dayOfMonth) -
-                    dateToEpoch(year + 15, monthOfYear + 1, dayOfMonth)
-            val daysAfterFifteen = seconds / 86400
-            val sexHours = daysAfterFifteen / 6
-            setSexText("Du har haft sex i $sexHours timer :D:D")
+        val sign = getHoroscopeSign(birth.monthValue - 1, birth.dayOfMonth)
+        horoscopeSymbol.text  = sign.symbol
+        horoscopeName.text    = sign.name
+        horoscopePlanets.text = sign.planets
+
+        if (now.year - birth.year >= 15) {
+            val secAfter15  = dateToEpoch(now.year, now.monthValue, now.dayOfMonth) -
+                    dateToEpoch(birth.year + 15, birth.monthValue, birth.dayOfMonth)
+            val daysAfter15 = secAfter15 / 86400
+            sexText.text       = getString(R.string.curiosities_sex_hours, formatNumber(daysAfter15 / 6))
+            sexText.visibility = View.VISIBLE
         } else {
-            setSexText("")
+            sexText.visibility = View.GONE
         }
 
-        val foodConsumption = days / 2
-        setFootConsumptionText("Du har spist $foodConsumption kilo mad")
-        val horoscope = getHoroscopeSign(monthOfYear, dayOfMonth)
-        setHoroscopeSignText(horoscope)
+        updateLiveStats()
     }
 
-    private fun setHoroscopeSignText(horoscope: HoroscopeResult) {
-        horoscopeSymbol.text = horoscope.symbol
-        horoscopeName.text = horoscope.name
-        horoscopePlanets.text = horoscope.planets
+    private fun updateLiveStats() {
+        val birth = selectedBirthDate ?: return
+        val now   = LocalDateTime.now()
+        val secondsSinceBirth = dateToEpoch(now.year, now.monthValue, now.dayOfMonth) -
+                dateToEpoch(birth.year, birth.monthValue, birth.dayOfMonth)
+        val timePassed = if (sessionStartTime > 0L) System.currentTimeMillis() / 1000 - sessionStartTime else 0L
+        val total = secondsSinceBirth + timePassed
+        secondsValue.text = formatNumber(total)
+        deathsValue.text  = formatNumber(total * 2)
     }
 
-    fun View.hideKeyboard() {
-        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(windowToken, 0)
+    private fun saveBirthDate(date: LocalDate) {
+        getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .edit()
+            .putString(PREFS_KEY_BIRTHDATE, date.toString())
+            .apply()
     }
 
-    fun setSecondsText(text: String) {
-        secondsTextField.text = text
+    private fun loadBirthDate(): LocalDate? {
+        val s = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .getString(PREFS_KEY_BIRTHDATE, null) ?: return null
+        return try { LocalDate.parse(s) } catch (e: Exception) { null }
     }
 
-    fun setDeathSinceBirth(text: String) {
-        deathsSinceBirth.text = text
-    }
-
-    fun setDaysText(text: String) {
-        daysTextView.text = text
-    }
-
-    fun setSexText(text: String) {
-        sexText.text = text
-    }
-
-    private fun setFootConsumptionText(text: String) {
-        foodConsumptionText.text = text
-    }
-
-    fun setSecondsPassed(text: String) {
-        secondsPassedText.text = text
-    }
-
-    fun setDeathsSince(text: String) {
-        deathsSinceText.text = text
-    }
-
-    fun setBirthsSince(text: String) {
-        birthsSinceText.text = text
-    }
-
-    fun dateToEpoch(year: Int, month: Int, day: Int): Long {
-        return LocalDate.of(year, month, day).atStartOfDay(ZoneId.systemDefault()).toInstant().epochSecond
-    }
-
-    inner class InnerCountDownCounter(
-        private val millisInFuture: Long,
-        countDownInterval: Long,
-        private var secondsSinceBirth: Long
-    ) : CountDownTimer(millisInFuture, countDownInterval) {
-
-        override fun onFinish() {
-            println("Timer Completed.")
-        }
-
-        override fun onTick(millisUntilFinished: Long) {
-            if (!resultsVisible) {
-                return
-            }
-
-            val timePassed: Long = (this.millisInFuture - millisUntilFinished) / 1000
-            setSecondsPassed("Tid mens du har kigget paa skærmen: $timePassed")
-            setDeathsSince("Dødsfald mens du har kigget på skærmen: " + Math.round(timePassed * 1.8))
-            setBirthsSince("Fødsler mens du har kigget på skærmen: " + Math.round(timePassed * 4.0))
-
-            if (this.secondsSinceBirth > 0) {
-                setSecondsText("Du har levet for: ${timePassed + this.secondsSinceBirth} Sekunder")
-                setDaysText("Du har levet for: ${(timePassed + this.secondsSinceBirth) / 86400} Dage")
-                setDeathSinceBirth("Døde siden du blev født: " + (timePassed + this.secondsSinceBirth) * 2)
-            } else {
-                setSecondsText("")
-                setDaysText("")
-                setDeathSinceBirth("")
-            }
-        }
-
-        fun setSecondsSinceBirth(ssb: Long) {
-            this.secondsSinceBirth = ssb
-        }
-    }
+    private fun dateToEpoch(year: Int, month: Int, day: Int): Long =
+        LocalDate.of(year, month, day).atStartOfDay(ZoneId.systemDefault()).toInstant().epochSecond
 }
