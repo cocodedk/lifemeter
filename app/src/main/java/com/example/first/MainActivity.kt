@@ -14,6 +14,14 @@ import com.google.android.material.button.MaterialButton
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.text.NumberFormat
+import java.util.Locale
+
+fun formatNumber(n: Long): String = when {
+    n >= 1_000_000_000L -> "%.2fB".format(n / 1_000_000_000.0)
+    n >= 1_000_000L     -> "%.1fM".format(n / 1_000_000.0)
+    else                -> NumberFormat.getNumberInstance(Locale.US).format(n)
+}
 
 class MainActivity : AppCompatActivity() {
     private lateinit var toolbarView: androidx.appcompat.widget.Toolbar
