@@ -12,3 +12,7 @@
 /captures
 .externalNativeBuild
 .cxx
+
+# Signing keystores — never commit these
+*.keystore
+*.jks
