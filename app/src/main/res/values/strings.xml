@@ -12,8 +12,4 @@
     <string name="overview_label">Lifetime totals</string>
     <string name="session_label">Current session</string>
     <string name="story_label">Curiosities</string>
-    <string name="tarot_title">Tarot archive</string>
-    <string name="tarot_subtitle">Local card database status</string>
-    <string name="tarot_count_label">Cards stored</string>
-    <string name="tarot_count_empty">0</string>
 </resources>
