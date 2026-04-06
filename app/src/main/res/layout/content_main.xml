@@ -146,19 +146,17 @@
             android:textColor="@color/colorTextSecondary"
             android:textSize="12sp" />
 
-        <androidx.gridlayout.widget.GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:alignmentMode="alignMargins"
-            android:columnCount="2"
-            android:useDefaultMargins="true">
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill_horizontal">
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:id="@+id/days_value"
@@ -175,8 +173,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill_horizontal">
+                android:layout_weight="1"
+                android:layout_marginStart="6dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:id="@+id/seconds_value"
@@ -189,12 +187,19 @@
                         android:textColor="@color/colorTextSecondary" android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill_horizontal">
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:id="@+id/food_value"
@@ -211,8 +216,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill_horizontal">
+                android:layout_weight="1"
+                android:layout_marginStart="6dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:id="@+id/deaths_value"
@@ -225,8 +230,7 @@
                         android:textColor="@color/colorTextSecondary" android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
-        </androidx.gridlayout.widget.GridLayout>
+        </LinearLayout>
 
         <!-- THIS SESSION -->
         <TextView

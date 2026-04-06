@@ -44,6 +44,8 @@
         <item name="android:background">@color/colorToolbar</item>
         <item name="titleTextAppearance">@style/AppToolbarTitleText</item>
         <item name="subtitleTextAppearance">@style/AppToolbarSubtitleText</item>
+        <item name="titleTextColor">@color/colorTextPrimary</item>
+        <item name="subtitleTextColor">@color/colorTextSecondary</item>
         <item name="navigationIconTint">@color/colorTextPrimary</item>
     </style>
 
