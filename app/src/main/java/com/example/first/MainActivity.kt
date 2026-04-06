@@ -110,6 +110,11 @@ class MainActivity : AppCompatActivity() {
         timer = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        timer?.cancel()
+    }
+
     private fun bindViews() {
         swipeRefreshLayout    = findViewById(R.id.swipe_refresh_layout)
         mainScrollView        = findViewById(R.id.main_scroll_view)
@@ -140,11 +145,15 @@ class MainActivity : AppCompatActivity() {
         resultsContainer.visibility   = View.GONE
     }
 
-    private fun showReturningUserState() {
+    private fun transitionToReturningLayout() {
         heroSection.visibility        = View.GONE
         dateCompactRow.visibility     = View.VISIBLE
         firstLaunchContent.visibility = View.GONE
-        resultsContainer.visibility   = View.VISIBLE
+    }
+
+    private fun showReturningUserState() {
+        transitionToReturningLayout()
+        resultsContainer.visibility = View.VISIBLE
         renderSelectedBirthDate()
         updateDashboard()
     }
@@ -158,9 +167,7 @@ class MainActivity : AppCompatActivity() {
                 saveBirthDate(selectedBirthDate!!)
                 renderSelectedBirthDate()
                 if (resultsContainer.visibility != View.VISIBLE) {
-                    heroSection.visibility        = View.GONE
-                    dateCompactRow.visibility     = View.VISIBLE
-                    firstLaunchContent.visibility = View.GONE
+                    transitionToReturningLayout()
                     revealDashboard()
                 } else {
                     updateDashboard()
@@ -200,7 +207,11 @@ class MainActivity : AppCompatActivity() {
                 sessionSecondsValue.text = formatNumber(timePassed)
                 sessionDeathsValue.text  = formatNumber(Math.round(timePassed * 1.8))
                 sessionBirthsValue.text  = formatNumber(Math.round(timePassed * 4.0))
-                updateLiveStats()
+                val birth = selectedBirthDate ?: return
+                val now   = LocalDateTime.now()
+                val ssb = dateToEpoch(now.year, now.monthValue, now.dayOfMonth) -
+                        dateToEpoch(birth.year, birth.monthValue, birth.dayOfMonth)
+                updateLiveStats(ssb)
             }
             override fun onFinish() {}
         }.also { it.start() }
@@ -231,14 +242,10 @@ class MainActivity : AppCompatActivity() {
             sexText.visibility = View.GONE
         }
 
-        updateLiveStats()
+        updateLiveStats(secondsSinceBirth)
     }
 
-    private fun updateLiveStats() {
-        val birth = selectedBirthDate ?: return
-        val now   = LocalDateTime.now()
-        val secondsSinceBirth = dateToEpoch(now.year, now.monthValue, now.dayOfMonth) -
-                dateToEpoch(birth.year, birth.monthValue, birth.dayOfMonth)
+    private fun updateLiveStats(secondsSinceBirth: Long) {
         val timePassed = if (sessionStartTime > 0L) System.currentTimeMillis() / 1000 - sessionStartTime else 0L
         val total = secondsSinceBirth + timePassed
         secondsValue.text = formatNumber(total)
