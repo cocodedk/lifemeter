@@ -49,9 +49,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainScrollView: NestedScrollView
     private lateinit var selectedBirthDateText: TextView
     private lateinit var changeBirthDateButton: MaterialButton
-    private lateinit var continueButton: MaterialButton
+    private lateinit var setBirthDateButton: MaterialButton
     private lateinit var resultsContainer: LinearLayout
-    private lateinit var horoscopeSignText: TextView
+    private lateinit var horoscopeSymbol: TextView
+    private lateinit var horoscopeName: TextView
+    private lateinit var horoscopePlanets: TextView
     private lateinit var secondsTextField: TextView
     private lateinit var deathsSinceBirth: TextView
     private lateinit var daysTextView: TextView
@@ -72,17 +74,19 @@ class MainActivity : AppCompatActivity() {
         mainScrollView = findViewById(R.id.main_scroll_view)
         selectedBirthDateText = findViewById(R.id.selected_birth_date_text)
         changeBirthDateButton = findViewById(R.id.change_birth_date_button)
-        continueButton = findViewById(R.id.continue_button)
+        setBirthDateButton = findViewById(R.id.set_birth_date_button)
         resultsContainer = findViewById(R.id.results_container)
-        horoscopeSignText = findViewById(R.id.horoscope_sign_text)
-        secondsTextField = findViewById(R.id.seconds_text_field)
-        deathsSinceBirth = findViewById(R.id.deaths_since_birth)
-        daysTextView = findViewById(R.id.days_text_view)
+        horoscopeSymbol = findViewById(R.id.horoscope_symbol)
+        horoscopeName = findViewById(R.id.horoscope_name)
+        horoscopePlanets = findViewById(R.id.horoscope_planets)
+        secondsTextField = findViewById(R.id.seconds_value)
+        deathsSinceBirth = findViewById(R.id.deaths_value)
+        daysTextView = findViewById(R.id.days_value)
         sexText = findViewById(R.id.sex_text)
-        foodConsumptionText = findViewById(R.id.food_consumption_text)
-        secondsPassedText = findViewById(R.id.seconds_passed_text)
-        deathsSinceText = findViewById(R.id.deaths_since_text)
-        birthsSinceText = findViewById(R.id.births_since_text)
+        foodConsumptionText = findViewById(R.id.food_value)
+        secondsPassedText = findViewById(R.id.session_seconds_value)
+        deathsSinceText = findViewById(R.id.session_deaths_value)
+        birthsSinceText = findViewById(R.id.session_births_value)
 
         setSupportActionBar(toolbarView)
 
@@ -90,8 +94,8 @@ class MainActivity : AppCompatActivity() {
         changeBirthDateButton.setOnClickListener {
             showBirthDatePicker()
         }
-        continueButton.setOnClickListener {
-            showResults()
+        setBirthDateButton.setOnClickListener {
+            showBirthDatePicker()
         }
 
         resultsContainer.visibility = View.GONE
@@ -169,11 +173,13 @@ class MainActivity : AppCompatActivity() {
         val foodConsumption = days / 2
         setFootConsumptionText("Du har spist $foodConsumption kilo mad")
         val horoscope = getHoroscopeSign(monthOfYear, dayOfMonth)
-        setHoroscopeSignText("Du er født i ${horoscope.symbol} ${horoscope.name}")
+        setHoroscopeSignText(horoscope)
     }
 
-    private fun setHoroscopeSignText(text: String) {
-        horoscopeSignText.text = text
+    private fun setHoroscopeSignText(horoscope: HoroscopeResult) {
+        horoscopeSymbol.text = horoscope.symbol
+        horoscopeName.text = horoscope.name
+        horoscopePlanets.text = horoscope.planets
     }
 
     fun View.hideKeyboard() {

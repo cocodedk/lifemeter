@@ -7,24 +7,44 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/title_text"
+    <!-- Hero section (first launch only) -->
+    <LinearLayout
+        android:id="@+id/hero_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:paddingBottom="6dp"
-        android:text="@string/birth_date_prompt"
-        android:textColor="@color/colorTextPrimary"
-        android:textSize="28sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingBottom="20dp"
-        android:text="@string/birth_date_hint"
-        android:textColor="@color/colorTextSecondary"
-        android:textSize="15sp" />
+        android:visibility="gone"
+        tools:visibility="visible">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:text="⏳"
+            android:textAlignment="center"
+            android:textSize="52sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:paddingBottom="8dp"
+            android:text="@string/hero_heading"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="26sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hero_subtext"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <!-- Date card -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,31 +57,77 @@
             android:orientation="vertical"
             android:padding="18dp">
 
-            <TextView
-                android:id="@+id/selected_birth_date_text"
+            <!-- Compact row: shown for returning users -->
+            <LinearLayout
+                android:id="@+id/date_compact_row"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="20sp"
-                tools:text="Selected birthday: 6/4/2026" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="visible">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/change_birth_date_button"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="@string/change_birth_date" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/continue_button"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.08"
+                        android:text="@string/your_birthday_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/selected_birth_date_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="16sp"
+                        tools:text="15 / 03 / 1990" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/change_birth_date_button"
+                    style="@style/AppSecondaryButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="@string/change_birth_date" />
+            </LinearLayout>
+
+            <!-- First launch content -->
+            <LinearLayout
+                android:id="@+id/first_launch_content"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="14dp"
-                android:text="@string/continue_to_dashboard" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="14dp"
+                    android:text="@string/pick_date_hint"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/set_birth_date_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="@string/set_birth_date" />
+            </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
+    <!-- Results container (hidden until date is set) -->
     <LinearLayout
         android:id="@+id/results_container"
         android:layout_width="match_parent"
@@ -69,6 +135,7 @@
         android:orientation="vertical"
         android:visibility="gone">
 
+        <!-- LIFETIME TOTALS -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,9 +149,9 @@
         <androidx.gridlayout.widget.GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:alignmentMode="alignMargins"
             android:columnCount="2"
-            android:layout_marginBottom="20dp"
             android:useDefaultMargins="true">
 
             <com.google.android.material.card.MaterialCardView
@@ -92,29 +159,16 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Days alive"
-                        android:textColor="@color/colorTextSecondary"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/days_text_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:id="@+id/days_value"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:textColor="@color/colorTextPrimary"
-                        android:textSize="22sp"
-                        tools:text="Du har levet for: 12.465 dage" />
+                        android:textColor="@color/colorTextPrimary" android:textSize="28sp"
+                        tools:text="13,181" />
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp" android:text="@string/stat_days_alive"
+                        android:textColor="@color/colorTextSecondary" android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -123,29 +177,16 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Seconds alive"
-                        android:textColor="@color/colorTextSecondary"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/seconds_text_field"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:id="@+id/seconds_value"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:textColor="@color/colorTextPrimary"
-                        android:textSize="22sp"
-                        tools:text="Du har levet for: 1.076.976.000 sekunder" />
+                        android:textColor="@color/colorTextPrimary" android:textSize="28sp"
+                        tools:text="1.14B" />
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp" android:text="@string/stat_seconds_alive"
+                        android:textColor="@color/colorTextSecondary" android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -154,29 +195,16 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Food consumed"
-                        android:textColor="@color/colorTextSecondary"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/food_consumption_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:id="@+id/food_value"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:textColor="@color/colorTextPrimary"
-                        android:textSize="22sp"
-                        tools:text="Du har spist 6.232 kilo mad" />
+                        android:textColor="@color/colorTextPrimary" android:textSize="28sp"
+                        tools:text="6,590" />
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp" android:text="@string/stat_food_consumed"
+                        android:textColor="@color/colorTextSecondary" android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -185,33 +213,22 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Deaths since birth"
-                        android:textColor="@color/colorTextSecondary"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/deaths_since_birth"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:id="@+id/deaths_value"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:textColor="@color/colorTextPrimary"
-                        android:textSize="22sp"
-                        tools:text="Døde siden du blev født: 2.153.952.000" />
+                        android:textColor="@color/colorTextPrimary" android:textSize="28sp"
+                        tools:text="2.28B" />
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp" android:text="@string/stat_deaths_since_birth"
+                        android:textColor="@color/colorTextSecondary" android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
         </androidx.gridlayout.widget.GridLayout>
 
+        <!-- THIS SESSION -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -226,53 +243,56 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="18dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:paddingBottom="12dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="@string/session_seconds"
+                        android:textColor="@color/colorTextSecondary" android:textSize="14sp" />
+                    <TextView android:id="@+id/session_seconds_value"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/colorTextPrimary" android:textSize="18sp"
+                        tools:text="47" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/seconds_passed_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="12dp"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="16sp"
-                    tools:text="Tid mens du har kigget paa skærmen: 124" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                <View android:layout_width="match_parent" android:layout_height="1dp"
                     android:background="@color/colorDivider" />
 
-                <TextView
-                    android:id="@+id/deaths_since_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="16sp"
-                    tools:text="Dødsfald mens du har kigget på skærmen: 223" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="12dp" android:paddingBottom="12dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="@string/session_deaths"
+                        android:textColor="@color/colorTextSecondary" android:textSize="14sp" />
+                    <TextView android:id="@+id/session_deaths_value"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/colorTextPrimary" android:textSize="18sp"
+                        tools:text="84" />
+                </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                <View android:layout_width="match_parent" android:layout_height="1dp"
                     android:background="@color/colorDivider" />
 
-                <TextView
-                    android:id="@+id/births_since_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="12dp"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="16sp"
-                    tools:text="Fødsler mens du har kigget på skærmen: 496" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:paddingTop="12dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="@string/session_births"
+                        android:textColor="@color/colorTextSecondary" android:textSize="14sp" />
+                    <TextView android:id="@+id/session_births_value"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/colorTextPrimary" android:textSize="18sp"
+                        tools:text="188" />
+                </LinearLayout>
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- CURIOSITIES -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -288,31 +308,56 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             app:cardBackgroundColor="@color/colorCardSecondary">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="20dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:gravity="center_vertical" android:orientation="horizontal">
+                    <TextView android:id="@+id/horoscope_symbol"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:textColor="@color/colorHighlight" android:textSize="34sp"
+                        tools:text="♓" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:id="@+id/horoscope_name"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-medium"
+                            android:textColor="@color/colorHighlight" android:textSize="20sp"
+                            tools:text="Pisces" />
+                        <TextView android:id="@+id/horoscope_planets"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                            tools:text="Jupiter · Neptune · Venus" />
+                    </LinearLayout>
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/horoscope_sign_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:textColor="@color/colorHighlight"
-                    android:textSize="22sp"
-                    tools:text="Du er født i Virgo, planet Mercury" />
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:layout_marginTop="14dp" android:background="@color/colorDivider" />
 
-                <TextView
-                    android:id="@+id/sex_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <TextView android:id="@+id/sex_text"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="16sp"
-                    tools:text="Du har haft sex i 8.432 timer :D:D" />
+                    android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                    android:visibility="gone"
+                    tools:text="Estimated time having sex: 1,406 hrs"
+                    tools:visibility="visible" />
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <!-- Pull-down hint -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/pull_to_change"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="12sp" />
+
     </LinearLayout>
+
 </LinearLayout>
