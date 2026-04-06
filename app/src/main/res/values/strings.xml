@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">LifeMeter</string>
     <string name="main_title">LifeMeter</string>
-    <string name="main_subtitle">A warmer look at time, age and tiny absurdities.</string>
+    <string name="main_subtitle">Your life, by the numbers.</string>
 
     <!-- Hero (first launch) -->
     <string name="hero_heading">How long have you lived?</string>
