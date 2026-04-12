@@ -1,0 +1,37 @@
+# LifeMeter
+
+> Android app that turns your birthdate into a live dashboard — showing days alive, seconds alive, food consumed, global deaths and births since birth, and your horoscope sign.
+
+LifeMeter is a single-activity Kotlin Android app (SDK 34, Material 3) with a Vite + React GitHub Pages site. Built by Babak Bandpey at [Cocode](https://cocode.dk).
+
+## App
+
+- [Download LifeMeter.apk](https://github.com/cocodedk/lifemeter/releases/latest/download/LifeMeter.apk): Latest signed release APK
+- [GitHub Releases](https://github.com/cocodedk/lifemeter/releases): Version history and changelogs
+
+## Website
+
+- [English site](https://cocodedk.github.io/lifemeter/): Live demo and project overview
+- [Source code](https://github.com/cocodedk/lifemeter): Full project repository on GitHub
+
+## Documentation
+
+- [README](https://github.com/cocodedk/lifemeter/blob/master/README.md): Setup, build commands, and architecture overview
+- [CONTRIBUTING](https://github.com/cocodedk/lifemeter/blob/master/CONTRIBUTING.md): How to contribute, build, test, and submit PRs
+- [CLAUDE.md](https://github.com/cocodedk/lifemeter/blob/master/CLAUDE.md): Claude Code session startup, conventions, and required skills
+
+## CI/CD
+
+- [CI workflow](https://github.com/cocodedk/lifemeter/actions/workflows/ci.yml): Automated build and test on every PR
+- [Release workflow](https://github.com/cocodedk/lifemeter/actions/workflows/release-apk.yml): Signed APK release automation
+
+## Author
+
+- [Babak Bandpey](https://cocode.dk): Creator and maintainer
+- [LinkedIn](https://linkedin.com/in/babakbandpey): Professional profile
+- [GitHub](https://github.com/cocodedk): GitHub profile
+
+## Optional
+
+- [SECURITY.md](https://github.com/cocodedk/lifemeter/blob/master/SECURITY.md): Vulnerability reporting policy
+- [License (Apache-2.0)](https://github.com/cocodedk/lifemeter/blob/master/LICENSE): Full license text

@@ -7,56 +7,58 @@ LifeMeter turns your birthdate into a live dashboard — days alive, seconds, fo
 [![CI](https://github.com/cocodedk/lifemeter/actions/workflows/ci.yml/badge.svg)](https://github.com/cocodedk/lifemeter/actions/workflows/ci.yml)
 [![Release](https://github.com/cocodedk/lifemeter/actions/workflows/release-apk.yml/badge.svg)](https://github.com/cocodedk/lifemeter/actions/workflows/release-apk.yml)
 
-🌐 **[cocodedk.github.io/lifemeter](https://cocodedk.github.io/lifemeter/)** — live demo & download
+## Website
+- [English](https://cocodedk.github.io/lifemeter/)
+- [فارسی (Persian)](https://cocodedk.github.io/lifemeter/fa/)
 
 ---
 
-## What it shows
+## Features
 
-| Stat | Description |
-|---|---|
-| Days alive | How many days since your birthdate |
-| Seconds alive | Live — ticks every second |
-| kg food consumed | Rough estimate based on days alive |
-| Deaths since birth | Global deaths since you were born — live |
-| Session counter | Seconds, deaths, and births while you've had the app open |
-| Horoscope | Your zodiac sign with symbol and ruling planets |
+- Days alive — total days since your birthdate
+- Seconds alive — live counter, ticks every second
+- kg food consumed — rough estimate based on days alive
+- Deaths since birth — global deaths since you were born, live
+- Session counter — seconds, deaths, and births since app open
+- Horoscope — your zodiac sign with symbol and ruling planets
 
----
+## Download
 
-## Install
+[**Download LifeMeter.apk**](https://github.com/cocodedk/lifemeter/releases/latest/download/LifeMeter.apk)
 
-1. Download **[LifeMeter.apk](https://github.com/cocodedk/lifemeter/releases/latest/download/LifeMeter.apk)**
-2. Enable *Install from unknown sources* when prompted
-3. Open the app, tap **Set birth date**, and your dashboard appears
-
-Requires Android 5.0+.
+Requires Android 5.0+. Enable *Install from unknown sources* when prompted.
 
 ---
 
-## Development
+## Build from Source
+
+**Prerequisites:** Android Studio (Ladybug+), JDK 17, Android SDK 34
 
 ```bash
-# Clone
 git clone https://github.com/cocodedk/lifemeter.git
 cd lifemeter
 
-# Enable pre-commit hook (runs unit tests before each commit)
-git config core.hooksPath .githooks
+# Install git hooks
+./scripts/install-hooks.sh
 
 # Run unit tests
 ./gradlew :app:test
 
 # Build debug APK
 ./gradlew assembleDebug
+
+# Full smoke check (build + tests + lint)
+./gradlew buildSmoke --no-daemon
 ```
 
-### Project structure
+---
+
+## Architecture
 
 ```
 app/src/main/java/com/example/first/
   MainActivity.kt          — single activity, all UI logic
-  
+
 app/src/test/java/com/example/first/
   FormatNumberTest.kt      — number formatting (7 tests)
   HoroscopeTest.kt         — horoscope sign lookup (16 tests)
@@ -67,26 +69,32 @@ website/                   — Vite + React GitHub Pages site
     Hero.jsx / Features.jsx / Install.jsx / About.jsx
 ```
 
+| Layer | Technology |
+|---|---|
+| Android app | Kotlin, SDK 34, Material Components 3 |
+| State | SharedPreferences for birthdate persistence |
+| UI gesture | SwipeRefreshLayout |
+| Website | Vite + React |
+
 ### CI/CD
 
 | Workflow | Trigger | What it does |
 |---|---|---|
-| `ci.yml` | PR / push (non-master) | Runs unit tests |
-| `release-apk.yml` | Push to master | Builds signed APK, creates GitHub Release |
+| `ci.yml` | PR / push (all branches) | Runs buildSmoke (build + tests + lint) |
+| `release-apk.yml` | Push to master + workflow_dispatch | Builds signed APK, creates GitHub Release |
 | `deploy-pages.yml` | Push to master (website changes) | Deploys React site to GitHub Pages |
 
 **Signing secrets required for release builds:**
 `KEYSTORE_BASE64` · `KEYSTORE_PASSWORD` · `KEY_ALIAS` · `KEY_PASSWORD`
 
----
-
-## Built with
-
-- Kotlin · Android SDK 34 · Material Components 3
-- SharedPreferences for birthdate persistence
-- SwipeRefreshLayout for pull-to-change gesture
-- Vite + React (website)
+Run `./scripts/setup-signing.sh` to generate a keystore and upload secrets automatically.
 
 ---
 
-**Created by [Babak Bandpey](https://cocode.dk) · Built by [Cocode](https://cocode.dk) · Apache-2.0**
+## Author
+
+**Babak Bandpey** — [cocode.dk](https://cocode.dk) | [LinkedIn](https://linkedin.com/in/babakbandpey) | [GitHub](https://github.com/cocodedk)
+
+---
+
+Apache-2.0 | © 2026 [Cocode](https://cocode.dk) | Created by [Babak Bandpey](https://linkedin.com/in/babakbandpey)
