@@ -1,13 +1,17 @@
 #!/bin/sh
-# Pre-commit hook: run unit tests before allowing a commit.
-# Enable with: git config core.hooksPath .githooks
+set -eu
 
-set -e
+SMOKE_CMD="./gradlew buildSmoke --no-daemon --quiet"
 
-ROOT="$(git rev-parse --show-toplevel)"
-cd "$ROOT"
+$SMOKE_CMD
 
-echo "Running unit tests..."
-./gradlew :app:test --no-daemon --quiet
-
-echo "Tests passed. Proceeding with commit."
+# Build signed release if signing env vars are set
+if [ -n "${KEYSTORE_PATH:-}" ] && [ -n "${KEYSTORE_PASSWORD:-}" ] && \
+   [ -n "${KEY_ALIAS:-}" ] && [ -n "${KEY_PASSWORD:-}" ]; then
+  if [ -f "$KEYSTORE_PATH" ]; then
+    ./gradlew assembleRelease --no-daemon --quiet
+  else
+    echo "KEYSTORE_PATH is set but file does not exist: $KEYSTORE_PATH" >&2
+    exit 1
+  fi
+fi

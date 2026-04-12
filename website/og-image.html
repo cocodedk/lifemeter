@@ -1,0 +1,228 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1200px;height:630px;overflow:hidden;font-family:'IBM Plex Sans',sans-serif}
+
+.card{
+  width:1200px;height:630px;
+  background:#120a04;
+  display:flex;position:relative;overflow:hidden;
+}
+
+/* Warm radial glows */
+.card::before{
+  content:'';position:absolute;
+  top:-120px;left:-80px;
+  width:560px;height:560px;
+  background:radial-gradient(circle,rgba(232,136,42,0.14) 0%,transparent 70%);
+}
+.card::after{
+  content:'';position:absolute;
+  bottom:-60px;right:160px;
+  width:420px;height:420px;
+  background:radial-gradient(circle,rgba(212,92,58,0.12) 0%,transparent 70%);
+}
+
+/* Subtle amber grid */
+.grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(200,110,50,0.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(200,110,50,0.06) 1px,transparent 1px);
+  background-size:34px 34px;
+  mask-image:radial-gradient(circle at center,black 40%,transparent 85%);
+}
+
+/* LEFT */
+.left{
+  flex:1;padding:52px 36px 52px 64px;
+  display:flex;flex-direction:column;justify-content:center;
+  z-index:2;
+}
+
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(232,136,42,0.1);
+  border:1px solid rgba(232,136,42,0.3);
+  color:#e8882a;font-size:11px;font-weight:600;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:6px 16px;border-radius:4px;
+  margin-bottom:28px;width:fit-content;
+}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:#e8882a;}
+
+.logo-row{display:flex;align-items:center;gap:16px;margin-bottom:10px;}
+.logo-text{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:46px;font-weight:800;color:#f0d4b0;letter-spacing:-1.5px;
+}
+.logo-text em{color:#e8882a;font-style:normal;}
+
+.tagline{
+  font-size:22px;font-weight:400;
+  color:rgba(245,230,216,0.55);
+  margin-bottom:36px;line-height:1.35;
+}
+.tagline strong{color:rgba(245,230,216,0.9);font-weight:600;}
+
+/* Feature chips */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:38px;}
+.chip{
+  background:rgba(245,230,216,0.04);
+  border:1px solid rgba(210,130,70,0.22);
+  border-radius:8px;padding:8px 16px;
+  font-size:12px;color:#c4966a;font-weight:500;letter-spacing:0.3px;
+  white-space:nowrap;
+}
+.chip.hi{
+  background:rgba(232,136,42,0.1);
+  border-color:rgba(232,136,42,0.35);
+  color:#e8882a;
+}
+
+.cta{
+  color:rgba(245,230,216,0.35);font-size:14px;font-weight:500;
+}
+.cta span{color:#c4966a;font-weight:600;}
+
+/* RIGHT */
+.right{
+  width:420px;display:flex;align-items:center;justify-content:center;
+  z-index:2;position:relative;padding-right:44px;
+}
+
+/* Counter display */
+.counter-stack{
+  display:flex;flex-direction:column;gap:14px;
+  width:100%;
+}
+
+.counter-card{
+  background:rgba(38,20,8,0.82);
+  border:1px solid rgba(210,130,70,0.28);
+  border-radius:14px;padding:16px 22px;
+  position:relative;overflow:hidden;
+}
+.counter-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(232,136,42,0.05) 0%,transparent 60%);
+}
+.counter-card.accent{
+  border-color:rgba(232,136,42,0.45);
+  background:rgba(232,136,42,0.07);
+}
+
+.counter-label{
+  font-size:10px;text-transform:uppercase;letter-spacing:1.5px;
+  color:rgba(196,150,106,0.65);margin-bottom:4px;font-weight:600;
+}
+.counter-val{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:30px;font-weight:800;letter-spacing:-0.5px;line-height:1;
+  background:linear-gradient(135deg,#f0d4b0,#e8882a);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.counter-val.green{
+  background:linear-gradient(135deg,#a8e6b8,#6ab87a);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.counter-val.red{
+  background:linear-gradient(135deg,#f4a090,#d45c3a);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.counter-sub{
+  font-size:11px;color:rgba(196,150,106,0.5);margin-top:2px;
+}
+
+/* Bottom bar */
+.bottom-bar{
+  position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#e8882a,#d45c3a,#e8882a);
+  z-index:3;
+}
+
+.corner{
+  position:absolute;bottom:20px;left:64px;
+  font-size:13px;color:rgba(245,230,216,0.2);
+  z-index:3;letter-spacing:0.3px;
+}
+.corner span{color:#c4966a;font-weight:600;}
+
+/* Hourglass icon */
+.icon{font-size:38px;line-height:1;filter:drop-shadow(0 0 12px rgba(232,136,42,0.5));}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="grid"></div>
+
+  <div class="left">
+    <div class="badge">
+      <div class="badge-dot"></div>
+      Android · Free · No Accounts
+    </div>
+
+    <div class="logo-row">
+      <div class="icon">⏳</div>
+      <div class="logo-text">Life<em>Meter</em></div>
+    </div>
+
+    <div class="tagline">
+      How long have<br>
+      <strong>you been alive?</strong>
+    </div>
+
+    <div class="chips">
+      <div class="chip hi">Days Alive</div>
+      <div class="chip hi">Seconds</div>
+      <div class="chip">Food Consumed</div>
+      <div class="chip">Global Deaths &amp; Births</div>
+      <div class="chip">Horoscope</div>
+      <div class="chip">Local-first</div>
+    </div>
+
+    <div class="cta">
+      <span>cocodedk.github.io/lifemeter</span>
+      &nbsp;·&nbsp; Built by Babak Bandpey
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="counter-stack">
+
+      <div class="counter-card accent">
+        <div class="counter-label">Days Alive</div>
+        <div class="counter-val">13,286</div>
+        <div class="counter-sub">Since your first breath</div>
+      </div>
+
+      <div class="counter-card">
+        <div class="counter-label">Seconds</div>
+        <div class="counter-val">1,147,910,400</div>
+        <div class="counter-sub">Counting right now</div>
+      </div>
+
+      <div style="display:flex;gap:14px;">
+        <div class="counter-card" style="flex:1">
+          <div class="counter-label">Births today</div>
+          <div class="counter-val green">86,240</div>
+        </div>
+        <div class="counter-card" style="flex:1">
+          <div class="counter-label">Deaths today</div>
+          <div class="counter-val red">38,910</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="bottom-bar"></div>
+  <div class="corner">Built by <span>Babak Bandpey</span> · cocode.dk</div>
+</div>
+</body></html>
