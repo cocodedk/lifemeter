@@ -65,7 +65,10 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled = false
+            // R8 shrinks and optimises the release build. No reflection, Gson/Moshi/Retrofit
+            // models, or getIdentifier() lookups exist in this app, so no keep rules are needed.
+            minifyEnabled = true
+            shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             if (hasSigningConfig) {
                 signingConfig signingConfigs.release
