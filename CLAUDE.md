@@ -44,7 +44,7 @@ lifemeter/
 ├── .github/workflows/            ← CI, release, pages automation
 ├── .githooks/                    ← pre-commit, commit-msg hooks
 ├── scripts/                      ← install-hooks.sh, setup-repo.sh, setup-signing.sh
-└── version.txt                   ← semantic version (MAJOR.MINOR.PATCH)
+└── gradle.properties             ← VERSION_NAME / VERSION_CODE, the app's version
 ```
 
 ### Layer Rules
@@ -102,9 +102,9 @@ lifemeter/
 | File | Purpose |
 |------|---------|
 | `CLAUDE.md` | This file — project conventions and session startup |
-| `version.txt` | Semantic version (MAJOR.MINOR.PATCH) |
+| `gradle.properties` | Also holds VERSION_NAME/VERSION_CODE, the app's version — bump both before a release |
 | `.github/workflows/ci.yml` | CI on PRs and branches |
-| `.github/workflows/release-apk.yml` | Signed APK build + GitHub Release |
+| `.github/workflows/release-apk.yml` | Signed APK build of the version in `gradle.properties` + GitHub Release; refuses one already tagged |
 | `.github/workflows/deploy-pages.yml` | GitHub Pages deployment |
 | `.githooks/pre-commit` | Runs buildSmoke before commit |
 | `.githooks/commit-msg` | Enforces Conventional Commits |

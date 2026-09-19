@@ -1,25 +1,11 @@
 apply plugin: 'com.android.application'
 
-// The release workflow computes the version from the latest git tag and passes it
-// in; F-Droid passes it as a Gradle property (gradleprops in the build recipe).
-// A local build with neither just gets 0.0.0 and never pretends otherwise.
-def gradlePropVersion = providers.gradleProperty('VERSION_NAME').getOrNull()
-def envVersion = System.getenv('VERSION_NAME')
-def appVersionName = [gradlePropVersion, envVersion].find { it != null && !it.trim().isEmpty() } ?: '0.0.0'
-
-def semver = appVersionName.tokenize('.')
-def vMajor = (semver.size() > 0 && semver[0].isInteger()) ? semver[0].toInteger() : 0
-def vMinor = (semver.size() > 1 && semver[1].isInteger()) ? semver[1].toInteger() : 0
-def vPatch = (semver.size() > 2 && semver[2].isInteger()) ? semver[2].toInteger() : 0
-// The fleet's formula as-is: major*1_000_000 + minor*1_000 + patch, no ceiling
-// offset — v0.1.0 is versionCode 1000, exactly. The only adjustment is the
-// zero guard below: AGP hard-fails *configuration* (every variant, including
-// assembleDebug/testDebugUnitTest/lintDebug, not just release) when versionCode
-// is 0, and CI's buildSmoke never sets VERSION_NAME, so the "0.0.0" fallback
-// would otherwise break every PR build. This only ever fires for that fallback;
-// every real tagged version keeps the formula's exact result.
-def rawVersionCode = vMajor * 1_000_000 + vMinor * 1_000 + vPatch
-def appVersionCode = rawVersionCode > 0 ? rawVersionCode : 1
+// The version lives in gradle.properties, where the release workflow and F-Droid's
+// checkupdates both read it. See the comment there before bumping it. The fleet's
+// formula as-is: major*1_000_000 + minor*1_000 + patch, no ceiling offset — v0.1.1
+// is versionCode 1001, exactly.
+def appVersionName = providers.gradleProperty('VERSION_NAME').get()
+def appVersionCode = providers.gradleProperty('VERSION_CODE').get().toInteger()
 
 // Signing material only ever arrives through the environment. A missing keystore
 // is not an error — it just means this is a local build, which stays unsigned.
