@@ -16,3 +16,6 @@
 # Signing keystores — never commit these
 *.keystore
 *.jks
+
+# Built release artifacts — F-Droid's source scanner rejects committed APKs
+/app/release/

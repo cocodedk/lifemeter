@@ -1,16 +1,60 @@
 apply plugin: 'com.android.application'
 
+// The release workflow computes the version from the latest git tag and passes it
+// in; F-Droid passes it as a Gradle property (gradleprops in the build recipe).
+// A local build with neither just gets 0.0.0 and never pretends otherwise.
+def gradlePropVersion = providers.gradleProperty('VERSION_NAME').getOrNull()
+def envVersion = System.getenv('VERSION_NAME')
+def appVersionName = [gradlePropVersion, envVersion].find { it != null && !it.trim().isEmpty() } ?: '0.0.0'
+
+def semver = appVersionName.tokenize('.')
+def vMajor = (semver.size() > 0 && semver[0].isInteger()) ? semver[0].toInteger() : 0
+def vMinor = (semver.size() > 1 && semver[1].isInteger()) ? semver[1].toInteger() : 0
+def vPatch = (semver.size() > 2 && semver[2].isInteger()) ? semver[2].toInteger() : 0
+// The fleet's formula as-is: major*1_000_000 + minor*1_000 + patch, no ceiling
+// offset — v0.1.0 is versionCode 1000, exactly. The only adjustment is the
+// zero guard below: AGP hard-fails *configuration* (every variant, including
+// assembleDebug/testDebugUnitTest/lintDebug, not just release) when versionCode
+// is 0, and CI's buildSmoke never sets VERSION_NAME, so the "0.0.0" fallback
+// would otherwise break every PR build. This only ever fires for that fallback;
+// every real tagged version keeps the formula's exact result.
+def rawVersionCode = vMajor * 1_000_000 + vMinor * 1_000 + vPatch
+def appVersionCode = rawVersionCode > 0 ? rawVersionCode : 1
+
+// Signing material only ever arrives through the environment. A missing keystore
+// is not an error — it just means this is a local build, which stays unsigned.
+def keystorePath = System.getenv('KEYSTORE_PATH')
+def keystorePassword = System.getenv('KEYSTORE_PASSWORD')
+def keyAliasEnv = System.getenv('KEY_ALIAS')
+def keyPasswordEnv = System.getenv('KEY_PASSWORD')
+def keystoreFile = (keystorePath != null && !keystorePath.trim().isEmpty()) ? rootProject.file(keystorePath) : null
+def hasSigningConfig = keystoreFile != null && keystoreFile.isFile() \
+    && keystorePassword != null && !keystorePassword.trim().isEmpty() \
+    && keyAliasEnv != null && !keyAliasEnv.trim().isEmpty() \
+    && keyPasswordEnv != null && !keyPasswordEnv.trim().isEmpty()
+
 android {
     namespace = 'com.example.first'
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.first"
+        applicationId = "dk.cocode.lifemeter"
         minSdk = 21
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = appVersionCode
+        versionName = appVersionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        if (hasSigningConfig) {
+            release {
+                storeFile keystoreFile
+                storePassword keystorePassword
+                keyAlias keyAliasEnv
+                keyPassword keyPasswordEnv
+            }
+        }
     }
 
     compileOptions {
@@ -23,7 +67,18 @@ android {
         release {
             minifyEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (hasSigningConfig) {
+                signingConfig signingConfigs.release
+            }
         }
+    }
+
+    // AGP otherwise adds a "Dependency metadata" block to the APK signing block,
+    // encrypted with a key only Google Play holds. F-Droid rejects APKs that carry
+    // it, and it lands in the published release APK that F-Droid verifies against.
+    dependenciesInfo {
+        includeInApk false
+        includeInBundle false
     }
 }
 

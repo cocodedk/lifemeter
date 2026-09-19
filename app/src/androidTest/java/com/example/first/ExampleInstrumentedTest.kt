@@ -19,6 +19,8 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.first", appContext.packageName)
+        // The runtime package name follows applicationId (dk.cocode.lifemeter), not
+        // the com.example.first namespace/source-package the Kotlin files still live under.
+        assertEquals("dk.cocode.lifemeter", appContext.packageName)
     }
 }
