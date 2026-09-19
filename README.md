@@ -81,7 +81,7 @@ website/                   — Vite + React GitHub Pages site
 | Workflow | Trigger | What it does |
 |---|---|---|
 | `ci.yml` | PR / push (all branches) | Runs buildSmoke (build + tests + lint) |
-| `release-apk.yml` | Push to master + workflow_dispatch | Builds signed APK, creates GitHub Release |
+| `release-apk.yml` | workflow_dispatch | Builds signed APK, creates GitHub Release |
 | `deploy-pages.yml` | Push to master (website changes) | Deploys React site to GitHub Pages |
 
 **Signing secrets required for release builds:**

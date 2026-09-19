@@ -1,0 +1,1 @@
+Initial release: days and seconds alive, food consumed, global deaths and births since you were born, and your horoscope sign — all live from a birthdate you set once.

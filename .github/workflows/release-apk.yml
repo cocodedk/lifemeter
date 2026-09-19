@@ -1,12 +1,13 @@
-# Build a signed release APK on push/merge to master.
+# Build a signed release APK on request and publish it as a GitHub Release.
 # Requires GitHub secrets: KEYSTORE_BASE64, KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD
 # To create KEYSTORE_BASE64: base64 -w 0 your-release.keystore (linux)
 
 name: Build signed release APK
 
+# Manual only. A push trigger here would fire again on the tag this workflow
+# creates, and the version comes from tags now rather than a committed file, so
+# there is nothing left for a push to react to.
 on:
-  push:
-    branches: [master]
   workflow_dispatch:
     inputs:
       bump:
@@ -19,6 +20,12 @@ on:
 permissions:
   contents: write
 
+# Serialize rather than cancel: the next version is derived from the newest tag, so
+# two concurrent runs would both read the same one and try to release the same version.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 env:
   KEYSTORE_PATH: ${{ github.workspace }}/app/release.keystore
 
@@ -27,6 +34,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          fetch-depth: 0 # shallow clones hide tags, and the version comes from them
+
+      - name: Verify signing secrets
+        # Through env, not ${{ }}: interpolation splices the secret's *value* into the
+        # shell source, so a password containing $ or a backtick would be expanded
+        # before the test ran and report itself missing when it is set.
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          missing=""
+          [ -z "$KEYSTORE_BASE64" ] && missing="$missing KEYSTORE_BASE64"
+          [ -z "$KEYSTORE_PASSWORD" ] && missing="$missing KEYSTORE_PASSWORD"
+          [ -z "$KEY_ALIAS" ] && missing="$missing KEY_ALIAS"
+          [ -z "$KEY_PASSWORD" ] && missing="$missing KEY_PASSWORD"
+          if [ -n "$missing" ]; then
+            echo "Missing repository secrets:$missing" >&2
+            echo "Run ./scripts/setup-signing.sh to generate a keystore and upload them." >&2
+            exit 1
+          fi
 
       - uses: actions/setup-java@1bcf9fb12cf4aa7d266a90ae39939e61372fe520 # v5.4.0
         with:
@@ -34,47 +64,40 @@ jobs:
           java-version: '17'
           cache: gradle
 
-      - name: Verify signing secrets
-        run: |
-          missing=0
-          if [ -z "${{ secrets.KEYSTORE_BASE64 }}" ]; then echo "Missing secret: KEYSTORE_BASE64"; missing=1; fi
-          if [ -z "${{ secrets.KEYSTORE_PASSWORD }}" ]; then echo "Missing secret: KEYSTORE_PASSWORD"; missing=1; fi
-          if [ -z "${{ secrets.KEY_ALIAS }}" ]; then echo "Missing secret: KEY_ALIAS"; missing=1; fi
-          if [ -z "${{ secrets.KEY_PASSWORD }}" ]; then echo "Missing secret: KEY_PASSWORD"; missing=1; fi
-          if [ "$missing" -ne 0 ]; then exit 1; fi
-
-      - name: Read and bump version
+      - name: Compute next version
         id: version
         run: |
-          VERSION=$(tr -d '\r\n' < version.txt)
-          if [[ ! "$VERSION" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
-            echo "Invalid version format in version.txt: $VERSION"
-            exit 1
-          fi
-          MAJOR="${BASH_REMATCH[1]}"
-          MINOR="${BASH_REMATCH[2]}"
-          PATCH="${BASH_REMATCH[3]}"
-          BUMP="${{ github.event.inputs.bump || 'patch' }}"
-          case "$BUMP" in
-            major) MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0 ;;
-            minor) MINOR=$((MINOR + 1)); PATCH=0 ;;
-            patch) PATCH=$((PATCH + 1)) ;;
-            *) echo "Unsupported bump type: $BUMP"; exit 1 ;;
+          # --sort=-version:refname, because a lexical sort puts v0.9.0 above v0.10.0.
+          LATEST=$(git tag --list 'v*' --sort=-version:refname | head -1)
+          [ -z "$LATEST" ] && LATEST="v0.0.0"
+          VERSION="${LATEST#v}"
+          [[ "$VERSION" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]] || { echo "Cannot parse tag: $LATEST"; exit 1; }
+          MAJOR="${BASH_REMATCH[1]}"; MINOR="${BASH_REMATCH[2]}"; PATCH="${BASH_REMATCH[3]}"
+          case "${{ inputs.bump }}" in
+            major) MAJOR=$((MAJOR+1)); MINOR=0; PATCH=0 ;;
+            minor) MINOR=$((MINOR+1)); PATCH=0 ;;
+            patch) PATCH=$((PATCH+1)) ;;
           esac
-          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
-          echo "$NEW_VERSION" > version.txt
-          echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          echo "version=$MAJOR.$MINOR.$PATCH" >> "$GITHUB_OUTPUT"
+          echo "tag=v$MAJOR.$MINOR.$PATCH" >> "$GITHUB_OUTPUT"
 
-      - name: Commit version bump
+      - name: Decode and verify keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add version.txt
-          git commit -m "chore: bump version to ${{ steps.version.outputs.version }}" || true
-          git push || true
-
-      - name: Decode keystore
-        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > "$KEYSTORE_PATH"
+          echo "$KEYSTORE_BASE64" | base64 -d > "$KEYSTORE_PATH"
+          # Gradle decides at *configuration* time whether a signing config exists, so a
+          # corrupt keystore is not an error there — it silently produces
+          # app-release-unsigned.apk and the staging step below then dies with
+          # "cp: cannot stat app-release.apk", minutes later and nowhere near the cause.
+          # This covers the file, the store password and the alias. It deliberately does
+          # not pass -keypass: setup-signing.sh writes a PKCS12 keystore, which has no
+          # separate key password, and keytool ignores the flag with a warning. The
+          # apksigner step below is what actually proves the signature.
+          keytool -list -keystore "$KEYSTORE_PATH" -alias "$KEY_ALIAS" \
+              -storepass "$KEYSTORE_PASSWORD" >/dev/null
 
       - name: Build release APK
         run: ./gradlew assembleRelease --no-daemon --no-configuration-cache
@@ -88,17 +111,37 @@ jobs:
       - name: Copy APK with stable name
         run: cp app/build/outputs/apk/release/app-release.apk LifeMeter.apk
 
+      - name: Verify the APK is signed
+        run: |
+          # The check that proves what we are about to publish. An unsigned APK uploads
+          # exactly as cleanly as a signed one, so assert it rather than infer it from a
+          # green build. This also covers the one fault the keystore pre-flight cannot
+          # see, a key password that does not match the store password.
+          APKSIGNER=$(ls "${ANDROID_HOME:-$ANDROID_SDK_ROOT}"/build-tools/*/apksigner 2>/dev/null | sort -V | tail -1)
+          [ -n "$APKSIGNER" ] || { echo "apksigner not found in the Android SDK" >&2; exit 1; }
+          "$APKSIGNER" verify --print-certs LifeMeter.apk
+
+      - name: Remove keystore from the runner
+        if: always()
+        run: rm -f "$KEYSTORE_PATH"
+
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: LifeMeter-${{ steps.version.outputs.version }}
+          name: LifeMeter-${{ steps.version.outputs.tag }}
           path: LifeMeter.apk
 
-      - uses: softprops/action-gh-release@718ea10b132b3b2eba29c1007bb80653f286566b # v2
+      # This step creates the tag as well as the release. Pushing the tag ourselves first
+      # would mean a failure here left the tag behind with no release attached, and the
+      # next run would compute the following version — burning that number for good.
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@718ea10b132b3b2eba29c1007bb80653f286566b # v2
         with:
-          tag_name: v${{ steps.version.outputs.version }}
-          name: Release ${{ steps.version.outputs.version }}
-          files: LifeMeter.apk
-          draft: false
+          tag_name: ${{ steps.version.outputs.tag }}
+          # Without this the tag lands on whatever the default branch points at when the
+          # API call runs, which is not necessarily the commit whose APK is attached.
+          target_commitish: ${{ github.sha }}
+          name: ${{ steps.version.outputs.tag }}
           generate_release_notes: true
+          files: LifeMeter.apk
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
