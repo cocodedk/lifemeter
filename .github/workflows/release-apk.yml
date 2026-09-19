@@ -5,23 +5,15 @@
 name: Build signed release APK
 
 # Manual only. A push trigger here would fire again on the tag this workflow
-# creates, and the version comes from tags now rather than a committed file, so
-# there is nothing left for a push to react to.
+# creates, which is an infinite loop.
 on:
   workflow_dispatch:
-    inputs:
-      bump:
-        description: 'Version bump type'
-        required: false
-        default: 'patch'
-        type: choice
-        options: [patch, minor, major]
 
 permissions:
   contents: write
 
-# Serialize rather than cancel: the next version is derived from the newest tag, so
-# two concurrent runs would both read the same one and try to release the same version.
+# Serialize rather than cancel: two concurrent runs would read the same version from
+# gradle.properties and both try to release it.
 concurrency:
   group: release
   cancel-in-progress: false
@@ -64,22 +56,20 @@ jobs:
           java-version: '17'
           cache: gradle
 
-      - name: Compute next version
+      - name: Read the version
         id: version
         run: |
-          # --sort=-version:refname, because a lexical sort puts v0.9.0 above v0.10.0.
-          LATEST=$(git tag --list 'v*' --sort=-version:refname | head -1)
-          [ -z "$LATEST" ] && LATEST="v0.0.0"
-          VERSION="${LATEST#v}"
-          [[ "$VERSION" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]] || { echo "Cannot parse tag: $LATEST"; exit 1; }
-          MAJOR="${BASH_REMATCH[1]}"; MINOR="${BASH_REMATCH[2]}"; PATCH="${BASH_REMATCH[3]}"
-          case "${{ inputs.bump }}" in
-            major) MAJOR=$((MAJOR+1)); MINOR=0; PATCH=0 ;;
-            minor) MINOR=$((MINOR+1)); PATCH=0 ;;
-            patch) PATCH=$((PATCH+1)) ;;
-          esac
-          echo "version=$MAJOR.$MINOR.$PATCH" >> "$GITHUB_OUTPUT"
-          echo "tag=v$MAJOR.$MINOR.$PATCH" >> "$GITHUB_OUTPUT"
+          # gradle.properties is the only place the version is set; F-Droid's checkupdates
+          # reads the same lines at each tag. Refuse to re-release a version, so a
+          # forgotten bump fails here instead of overwriting nothing and confusing later.
+          VERSION=$(sed -n 's/^VERSION_NAME=//p' gradle.properties)
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Cannot parse VERSION_NAME: '$VERSION'" >&2; exit 1; }
+          if git rev-parse -q --verify "refs/tags/v$VERSION" >/dev/null; then
+            echo "v$VERSION is already released. Bump VERSION_NAME and VERSION_CODE in gradle.properties first." >&2
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Decode and verify keystore
         env:
@@ -106,7 +96,6 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          VERSION_NAME: ${{ steps.version.outputs.version }}
 
       - name: Copy APK with stable name
         run: cp app/build/outputs/apk/release/app-release.apk LifeMeter.apk
@@ -132,7 +121,7 @@ jobs:
 
       # This step creates the tag as well as the release. Pushing the tag ourselves first
       # would mean a failure here left the tag behind with no release attached, and the
-      # next run would compute the following version — burning that number for good.
+      # already-released check above would then refuse to retry that version.
       - name: Create GitHub Release
         uses: softprops/action-gh-release@718ea10b132b3b2eba29c1007bb80653f286566b # v2
         with:
