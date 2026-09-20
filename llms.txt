@@ -11,7 +11,7 @@ LifeMeter is a single-activity Kotlin Android app (SDK 34, Material 3) with a Vi
 
 ## Website
 
-- [English site](https://cocodedk.github.io/lifemeter/): Live demo and project overview
+- [English site](https://lifemeter.cocode.dk/): Live demo and project overview
 - [Source code](https://github.com/cocodedk/lifemeter): Full project repository on GitHub
 
 ## Documentation
