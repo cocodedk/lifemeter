@@ -8,8 +8,8 @@ LifeMeter turns your birthdate into a live dashboard — days alive, seconds, fo
 [![Release](https://github.com/cocodedk/lifemeter/actions/workflows/release-apk.yml/badge.svg)](https://github.com/cocodedk/lifemeter/actions/workflows/release-apk.yml)
 
 ## Website
-- [English](https://cocodedk.github.io/lifemeter/)
-- [فارسی (Persian)](https://cocodedk.github.io/lifemeter/fa/)
+- [English](https://lifemeter.cocode.dk/)
+- [فارسی (Persian)](https://lifemeter.cocode.dk/fa/)
 
 ---
 

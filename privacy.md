@@ -5,7 +5,7 @@
 **Last updated:** 14 July 2026
 
 > The canonical, always-current version of this policy is published at
-> **https://cocodedk.github.io/lifemeter/privacy.html**
+> **https://lifemeter.cocode.dk/privacy.html**
 
 **LifeMeter does not collect, transmit, or share any personal data.**
 It turns a birthdate you choose into a live, on-device dashboard — days alive, seconds, food
