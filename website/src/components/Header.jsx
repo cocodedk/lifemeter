@@ -1,18 +1,16 @@
-import styles from './Header.module.css'
-
+// The cocode.dk family frame replaces the site's own top bar (brand + in-page nav). Without
+// JavaScript its children show instead: a way home and the in-page anchors that would
+// otherwise be lost once the old <nav> is gone.
 export default function Header() {
   return (
-    <header className={`${styles.header} shell`}>
-      <div className={styles.brand}>
-        <img src="favicon.svg" alt="LifeMeter" width={28} height={28} />
-        <span>LifeMeter</span>
-      </div>
-      <nav className={styles.nav}>
-        <a href="#try">Try it</a>
-        <a href="#features">Features</a>
-        <a href="#install">Install</a>
-        <a href="#about">About</a>
-      </nav>
-    </header>
+    <cocode-head
+      project="LifeMeter"
+      accent="#e8882a"
+      on-accent="#120a04"
+      links="Try it:#try,Features:#features,Install:#install,About:#about"
+      dark
+    >
+      <a href="https://cocode.dk">cocode.dk</a>
+    </cocode-head>
   )
 }

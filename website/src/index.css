@@ -40,6 +40,12 @@ body {
 
 .shell { width: min(1100px, 92vw); margin: 0 auto; }
 
+/* The cocode.dk frame lines up with .shell's fluid column: it caps at 1100px, and shrinks to
+   92vw below that, so a fixed --cocode-gutter can only match one edge exactly -- 16px is close
+   at 390px, 0 once the column has hit its 1100px cap. */
+cocode-head, cocode-foot { --cocode-max: 1100px; --cocode-gutter: 16px; }
+@media (min-width: 768px) { cocode-head, cocode-foot { --cocode-gutter: 0px; } }
+
 h1, h2, h3 { font-family: "Space Grotesk", "IBM Plex Sans", sans-serif; }
 a { color: var(--text); text-decoration: none; }
 
