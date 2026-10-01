@@ -12,9 +12,10 @@ import androidx.core.widget.NestedScrollView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
 import java.text.NumberFormat
+import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.temporal.ChronoUnit
 import java.util.Locale
 
 private const val PREFS_NAME = "lifemeter_prefs"
@@ -205,14 +206,11 @@ class MainActivity : AppCompatActivity() {
         timer = object : CountDownTimer(Long.MAX_VALUE / 2, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val timePassed = System.currentTimeMillis() / 1000 - sessionStartTime
+                val year = LocalDate.now().year
                 sessionSecondsValue.text = formatNumber(timePassed)
-                sessionDeathsValue.text  = formatNumber(Math.round(timePassed * 1.8))
-                sessionBirthsValue.text  = formatNumber(Math.round(timePassed * 4.0))
-                val birth = selectedBirthDate ?: return
-                val now   = LocalDateTime.now()
-                val ssb = dateToEpoch(now.year, now.monthValue, now.dayOfMonth) -
-                        dateToEpoch(birth.year, birth.monthValue, birth.dayOfMonth)
-                updateLiveStats(ssb)
+                sessionDeathsValue.text  = formatNumber(Math.round(timePassed * deathsPerSecond(year)))
+                sessionBirthsValue.text  = formatNumber(Math.round(timePassed * birthsPerSecond(year)))
+                updateLiveStats()
             }
             override fun onFinish() {}
         }.also { it.start() }
@@ -220,37 +218,34 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateDashboard() {
         val birth = selectedBirthDate ?: return
-        val now   = LocalDateTime.now()
-        val secondsSinceBirth = dateToEpoch(now.year, now.monthValue, now.dayOfMonth) -
-                dateToEpoch(birth.year, birth.monthValue, birth.dayOfMonth)
-        val days = secondsSinceBirth / 86400
+        val today = LocalDate.now()
+        val days = ChronoUnit.DAYS.between(birth, today)
 
         daysValue.text = formatNumber(days)
-        foodValue.text = formatNumber(days / 2)
+        foodValue.text = formatNumber(foodKg(days))
 
         val sign = getHoroscopeSign(birth.monthValue - 1, birth.dayOfMonth)
         horoscopeSymbol.text  = sign.symbol
         horoscopeName.text    = sign.name
         horoscopePlanets.text = sign.planets
 
-        if (now.year - birth.year >= 15) {
-            val secAfter15  = dateToEpoch(now.year, now.monthValue, now.dayOfMonth) -
-                    dateToEpoch(birth.year + 15, birth.monthValue, birth.dayOfMonth)
-            val daysAfter15 = secAfter15 / 86400
-            sexText.text       = getString(R.string.curiosities_sex_hours, formatNumber(daysAfter15 / 6))
+        val hours = sexHours(birth, today)
+        if (hours > 0) {
+            sexText.text       = getString(R.string.curiosities_sex_hours, formatNumber(hours))
             sexText.visibility = View.VISIBLE
         } else {
             sexText.visibility = View.GONE
         }
 
-        updateLiveStats(secondsSinceBirth)
+        updateLiveStats()
     }
 
-    private fun updateLiveStats(secondsSinceBirth: Long) {
-        val timePassed = if (sessionStartTime > 0L) System.currentTimeMillis() / 1000 - sessionStartTime else 0L
-        val total = secondsSinceBirth + timePassed
-        secondsValue.text = formatNumber(total)
-        deathsValue.text  = formatNumber(total * 2)
+    private fun updateLiveStats() {
+        val birth = selectedBirthDate ?: return
+        val now = Instant.now()
+        val zone = ZoneId.systemDefault()
+        secondsValue.text = formatNumber(secondsAlive(birth, now, zone))
+        deathsValue.text  = formatNumber(deathsSince(birth, now, zone))
     }
 
     private fun saveBirthDate(date: LocalDate) {
@@ -265,7 +260,4 @@ class MainActivity : AppCompatActivity() {
             .getString(PREFS_KEY_BIRTHDATE, null) ?: return null
         return try { LocalDate.parse(s) } catch (e: Exception) { null }
     }
-
-    private fun dateToEpoch(year: Int, month: Int, day: Int): Long =
-        LocalDate.of(year, month, day).atStartOfDay(ZoneId.systemDefault()).toInstant().epochSecond
 }
