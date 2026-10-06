@@ -1,6 +1,5 @@
 import styles from './Hero.module.css'
 
-const APK_URL = 'https://github.com/cocodedk/lifemeter/releases/latest/download/LifeMeter.apk'
 const GITHUB_URL = 'https://github.com/cocodedk/lifemeter'
 
 export default function Hero() {
@@ -14,8 +13,8 @@ export default function Hero() {
         absurd curiosities. Set it once, it remembers forever.
       </p>
       <div className={styles.cta}>
-        <a className={styles.btnPrimary} href={APK_URL} target="_blank" rel="noreferrer">
-          Download APK
+        <a className={styles.btnPrimary} href="#install">
+          Get the app
         </a>
         <a className={styles.btnGhost} href={GITHUB_URL} target="_blank" rel="noreferrer">
           View GitHub

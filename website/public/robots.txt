@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://lifemeter.cocode.dk/sitemap.xml
