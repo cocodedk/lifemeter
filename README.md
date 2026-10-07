@@ -17,11 +17,11 @@ LifeMeter turns your birth date into a live dashboard of numbers about your life
 
 <!-- cocode-apps:install:start -->
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/dk.cocode.lifemeter/)
-- [Download the APK from GitHub](https://github.com/cocodedk/lifemeter/releases/latest/download/LifeMeter.apk)
-- [Auto-update the GitHub APK with Obtainium](https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/cocodedk/lifemeter)
+- [Download the Android installation file (APK) from GitHub](https://github.com/cocodedk/lifemeter/releases/latest/download/LifeMeter.apk)
+- [Add the app to Obtainium, an app that keeps it up to date](https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/cocodedk/lifemeter)
 <!-- cocode-apps:install:end -->
 
-Requires Android 5.0 or newer. If you install the APK file, open it and, if Android asks, allow the app you opened it from (your browser or file manager) to install apps.
+Requires Android 5.0 or newer. If you download the installation file (APK) from GitHub, open it and, if Android asks, allow the app you opened it from (your browser or file manager) to install apps.
 
 ---
 

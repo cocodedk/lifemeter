@@ -33,8 +33,8 @@
     <string name="session_births">Anslåede fødsler i verden denne session</string>
 
     <!-- Numbers and dates. The formats take one number (%f) or day, month, year in this order. -->
-    <string name="number_millions">%.1f&#160;mio.</string>
-    <string name="number_billions">%.2f&#160;mia.</string>
+    <string name="number_millions">%.1f mio.</string>
+    <string name="number_billions">%.2f mia.</string>
     <string name="birth_date_format">%1$02d / %2$02d / %3$d</string>
 
     <!-- Curiosities -->
