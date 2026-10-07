@@ -62,6 +62,12 @@ android {
         }
     }
 
+    // The About page reads the app's version and id from BuildConfig, which AGP no longer
+    // generates by default.
+    buildFeatures {
+        buildConfig = true
+    }
+
     // AGP otherwise adds a "Dependency metadata" block to the APK signing block,
     // encrypted with a key only Google Play holds. F-Droid rejects APKs that carry
     // it, and it lands in the published release APK that F-Droid verifies against.

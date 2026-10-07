@@ -4,6 +4,7 @@
     <string name="main_subtitle">Your life, by the numbers.</string>
 
     <!-- Hero (first launch) -->
+    <string name="hero_icon" translatable="false">⏳</string>
     <string name="hero_heading">How long have you lived?</string>
     <string name="hero_subtext">Set your birth date to see your life in numbers.</string>
     <string name="pick_date_hint">Pick your date once — the app will remember it.</string>
@@ -32,7 +33,66 @@
     <string name="session_deaths">Deaths while watching</string>
     <string name="session_births">Births while watching</string>
 
+    <!-- Numbers and dates. The formats take one number (%f) or day, month, year in this order. -->
+    <string name="number_millions">%.1fM</string>
+    <string name="number_billions">%.2fB</string>
+    <string name="birth_date_format">%1$02d / %2$02d / %3$d</string>
+
     <!-- Curiosities -->
     <string name="curiosities_sex_hours">Estimated time having sex: %s hrs</string>
 
+    <!-- Horoscope: the twelve signs and their ruling planets -->
+    <string name="sign_aries">Aries</string>
+    <string name="sign_taurus">Taurus</string>
+    <string name="sign_gemini">Gemini</string>
+    <string name="sign_cancer">Cancer</string>
+    <string name="sign_leo">Leo</string>
+    <string name="sign_virgo">Virgo</string>
+    <string name="sign_libra">Libra</string>
+    <string name="sign_scorpio">Scorpio</string>
+    <string name="sign_sagittarius">Sagittarius</string>
+    <string name="sign_capricorn">Capricorn</string>
+    <string name="sign_aquarius">Aquarius</string>
+    <string name="sign_pisces">Pisces</string>
+    <string name="planets_aries">Mars</string>
+    <string name="planets_taurus">Venus · Moon</string>
+    <string name="planets_gemini">Mercury</string>
+    <string name="planets_cancer">Moon · Jupiter</string>
+    <string name="planets_leo">Sun</string>
+    <string name="planets_virgo">Mercury</string>
+    <string name="planets_libra">Venus · Saturn</string>
+    <string name="planets_scorpio">Mars · Pluto</string>
+    <string name="planets_sagittarius">Jupiter</string>
+    <string name="planets_capricorn">Saturn · Mars</string>
+    <string name="planets_aquarius">Saturn · Uranus</string>
+    <string name="planets_pisces">Jupiter · Neptune · Venus</string>
+
+    <!-- Main screen menu -->
+    <string name="menu_about">About</string>
+
+    <!-- About page -->
+    <string name="about_title">About LifeMeter</string>
+    <string name="about_name_version_title">Name and version</string>
+    <string name="about_version">Version %1$s (build %2$d)</string>
+    <string name="about_check_updates">See the latest version</string>
+    <string name="about_update_hint_fdroid">This opens LifeMeter\'s page on F-Droid in your browser. The app itself never goes online.</string>
+    <string name="about_update_hint_github">This opens the latest LifeMeter release on GitHub in your browser. The app itself never goes online.</string>
+    <string name="about_what_title">What the app does</string>
+    <string name="about_what_body">LifeMeter turns your birth date into a live dashboard of numbers about your life. It shows how many days and seconds you have been alive, a rough estimate of the food you have eaten, and how many people have died in the world since you were born. It also counts world births and deaths while the app is open, and shows your horoscope sign and a few curiosities. You enter your birth date once, and the app keeps it on your phone.</string>
+    <string name="about_privacy_title">Privacy</string>
+    <string name="about_privacy_body">LifeMeter does not collect, send or share any personal data. The only thing it saves is the birth date you pick. It is kept in the app\'s private storage on your phone, and we never receive it. It is removed if you uninstall the app or clear its data. The app asks for no Android permissions, including internet access, so it cannot send your data anywhere. It has no analytics, crash reports or ads.</string>
+    <string name="about_privacy_link">Read the privacy policy</string>
+    <string name="about_links_title">Links</string>
+    <string name="about_website">Open the website</string>
+    <string name="about_source">See the source code on GitHub</string>
+    <string name="about_report">Report a problem on GitHub</string>
+    <string name="about_credits">Credits and licenses</string>
+    <string name="about_license">LifeMeter is free to use. Its source code is open under the Apache License 2.0, so you may read, change and share it.</string>
+    <string name="credit_un">The world birth and death numbers come from the United Nations World Population Prospects 2024.</string>
+    <string name="credit_food">The food estimate uses the Food Balance Sheets 2023 of the Food and Agriculture Organization (FAO) and the Food Waste Index 2024 of the United Nations Environment Programme (UNEP). It is a world average, not a measure of what you eat.</string>
+    <string name="credit_curiosities">The estimate under Curiosities uses the British Natsal-3 survey of sexual attitudes and lifestyles (2010–12) and a 2013 study by Frappier and colleagues in PLoS ONE. It is an average, not data about you.</string>
+    <string name="credit_libraries">The app uses the AndroidX libraries and Material Components for Android, both released under the Apache License 2.0.</string>
+    <string name="about_made_by_title">Made by Cocode</string>
+    <string name="about_made_by">Made by Cocode (cocode.dk)</string>
+    <string name="about_no_browser">Your phone has no app that can open this link. Install a web browser, then tap the button again.</string>
 </resources>

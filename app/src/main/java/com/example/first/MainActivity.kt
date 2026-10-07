@@ -1,9 +1,11 @@
 package com.example.first
 
 import android.app.DatePickerDialog
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -11,42 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
-import java.text.NumberFormat
-import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
-import java.time.temporal.ChronoUnit
-import java.util.Locale
-
-private const val PREFS_NAME = "lifemeter_prefs"
-private const val PREFS_KEY_BIRTHDATE = "birthdate"
-
-data class HoroscopeResult(val symbol: String, val name: String, val planets: String)
-
-fun getHoroscopeSign(month: Int, day: Int): HoroscopeResult {
-    val m = month + 1
-    return when {
-        (m == 3 && day >= 21) || (m == 4 && day <= 19)  -> HoroscopeResult("♈", "Aries", "Mars")
-        (m == 4 && day >= 20) || (m == 5 && day <= 20)  -> HoroscopeResult("♉", "Taurus", "Venus · Moon")
-        (m == 5 && day >= 21) || (m == 6 && day <= 20)  -> HoroscopeResult("♊", "Gemini", "Mercury")
-        (m == 6 && day >= 21) || (m == 7 && day <= 22)  -> HoroscopeResult("♋", "Cancer", "Moon · Jupiter")
-        (m == 7 && day >= 23) || (m == 8 && day <= 22)  -> HoroscopeResult("♌", "Leo", "Sun")
-        (m == 8 && day >= 23) || (m == 9 && day <= 22)  -> HoroscopeResult("♍", "Virgo", "Mercury")
-        (m == 9 && day >= 23) || (m == 10 && day <= 22) -> HoroscopeResult("♎", "Libra", "Venus · Saturn")
-        (m == 10 && day >= 23) || (m == 11 && day <= 21)-> HoroscopeResult("♏", "Scorpio", "Mars · Pluto")
-        (m == 11 && day >= 22) || (m == 12 && day <= 21)-> HoroscopeResult("♐", "Sagittarius", "Jupiter")
-        (m == 12 && day >= 22) || (m == 1 && day <= 19) -> HoroscopeResult("♑", "Capricorn", "Saturn · Mars")
-        (m == 1 && day >= 20) || (m == 2 && day <= 18)  -> HoroscopeResult("♒", "Aquarius", "Saturn · Uranus")
-        (m == 2 && day >= 19) || (m == 3 && day <= 20)  -> HoroscopeResult("♓", "Pisces", "Jupiter · Neptune · Venus")
-        else -> HoroscopeResult("", "", "")
-    }
-}
-
-fun formatNumber(n: Long): String = when {
-    n >= 1_000_000_000L -> "%.2fB".format(n / 1_000_000_000.0)
-    n >= 1_000_000L     -> "%.1fM".format(n / 1_000_000.0)
-    else                -> NumberFormat.getNumberInstance(Locale.US).format(n)
-}
 
 class MainActivity : AppCompatActivity() {
 
@@ -59,18 +26,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var changeBirthDateButton: MaterialButton
     private lateinit var setBirthDateButton: MaterialButton
     private lateinit var resultsContainer: LinearLayout
-    private lateinit var daysValue: TextView
-    private lateinit var secondsValue: TextView
-    private lateinit var foodValue: TextView
-    private lateinit var deathsValue: TextView
-    private lateinit var sessionSecondsValue: TextView
-    private lateinit var sessionDeathsValue: TextView
-    private lateinit var sessionBirthsValue: TextView
-    private lateinit var horoscopeSymbol: TextView
-    private lateinit var horoscopeName: TextView
-    private lateinit var horoscopePlanets: TextView
-    private lateinit var sexText: TextView
 
+    private lateinit var dashboard: Dashboard
+    private val birthDateStore by lazy { BirthDateStore(this) }
     private var timer: CountDownTimer? = null
     private var selectedBirthDate: LocalDate? = null
     private var sessionStartTime: Long = 0L
@@ -81,8 +39,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayShowTitleEnabled(false)
         bindViews()
+        dashboard = Dashboard(this)
 
-        selectedBirthDate = loadBirthDate()
+        selectedBirthDate = birthDateStore.load()
 
         if (selectedBirthDate != null) {
             showReturningUserState()
@@ -96,6 +55,19 @@ class MainActivity : AppCompatActivity() {
             swipeRefreshLayout.isRefreshing = false
             showBirthDatePicker()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.action_about -> {
+            startActivity(Intent(this, AboutActivity::class.java))
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
@@ -127,17 +99,6 @@ class MainActivity : AppCompatActivity() {
         changeBirthDateButton = findViewById(R.id.change_birth_date_button)
         setBirthDateButton    = findViewById(R.id.set_birth_date_button)
         resultsContainer      = findViewById(R.id.results_container)
-        daysValue             = findViewById(R.id.days_value)
-        secondsValue          = findViewById(R.id.seconds_value)
-        foodValue             = findViewById(R.id.food_value)
-        deathsValue           = findViewById(R.id.deaths_value)
-        sessionSecondsValue   = findViewById(R.id.session_seconds_value)
-        sessionDeathsValue    = findViewById(R.id.session_deaths_value)
-        sessionBirthsValue    = findViewById(R.id.session_births_value)
-        horoscopeSymbol       = findViewById(R.id.horoscope_symbol)
-        horoscopeName         = findViewById(R.id.horoscope_name)
-        horoscopePlanets      = findViewById(R.id.horoscope_planets)
-        sexText               = findViewById(R.id.sex_text)
     }
 
     private fun showFirstLaunchState() {
@@ -166,7 +127,7 @@ class MainActivity : AppCompatActivity() {
             this,
             { _, year, month, day ->
                 selectedBirthDate = LocalDate.of(year, month + 1, day)
-                saveBirthDate(selectedBirthDate!!)
+                birthDateStore.save(selectedBirthDate!!)
                 renderSelectedBirthDate()
                 if (resultsContainer.visibility != View.VISIBLE) {
                     transitionToReturningLayout()
@@ -185,7 +146,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun renderSelectedBirthDate() {
         val d = selectedBirthDate ?: return
-        selectedBirthDateText.text = "%02d / %02d / %d".format(d.dayOfMonth, d.monthValue, d.year)
+        selectedBirthDateText.text = getString(R.string.birth_date_format, d.dayOfMonth, d.monthValue, d.year)
     }
 
     private fun revealDashboard() {
@@ -205,11 +166,7 @@ class MainActivity : AppCompatActivity() {
         timer?.cancel()
         timer = object : CountDownTimer(Long.MAX_VALUE / 2, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                val timePassed = System.currentTimeMillis() / 1000 - sessionStartTime
-                val year = LocalDate.now().year
-                sessionSecondsValue.text = formatNumber(timePassed)
-                sessionDeathsValue.text  = formatNumber(Math.round(timePassed * deathsPerSecond(year)))
-                sessionBirthsValue.text  = formatNumber(Math.round(timePassed * birthsPerSecond(year)))
+                dashboard.showSession(System.currentTimeMillis() / 1000 - sessionStartTime)
                 updateLiveStats()
             }
             override fun onFinish() {}
@@ -217,47 +174,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateDashboard() {
-        val birth = selectedBirthDate ?: return
-        val today = LocalDate.now()
-        val days = ChronoUnit.DAYS.between(birth, today)
-
-        daysValue.text = formatNumber(days)
-        foodValue.text = formatNumber(foodKg(days))
-
-        val sign = getHoroscopeSign(birth.monthValue - 1, birth.dayOfMonth)
-        horoscopeSymbol.text  = sign.symbol
-        horoscopeName.text    = sign.name
-        horoscopePlanets.text = sign.planets
-
-        val hours = sexHours(birth, today)
-        if (hours > 0) {
-            sexText.text       = getString(R.string.curiosities_sex_hours, formatNumber(hours))
-            sexText.visibility = View.VISIBLE
-        } else {
-            sexText.visibility = View.GONE
-        }
-
-        updateLiveStats()
+        dashboard.showBirth(selectedBirthDate ?: return)
     }
 
     private fun updateLiveStats() {
-        val birth = selectedBirthDate ?: return
-        val now = Instant.now()
-        val zone = ZoneId.systemDefault()
-        secondsValue.text = formatNumber(secondsAlive(birth, now, zone))
-        deathsValue.text  = formatNumber(deathsSince(birth, now, zone))
-    }
-
-    private fun saveBirthDate(date: LocalDate) {
-        getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .edit()
-            .putString(PREFS_KEY_BIRTHDATE, date.toString())
-            .apply()
-    }
-
-    private fun loadBirthDate(): LocalDate? {
-        val s = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .getString(PREFS_KEY_BIRTHDATE, null) ?: return null
-        return try { LocalDate.parse(s) } catch (e: Exception) { null }
+        dashboard.showLive(selectedBirthDate ?: return)
     }
 }
