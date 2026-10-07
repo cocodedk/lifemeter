@@ -2,7 +2,7 @@
 
 > Android app that turns your birth date into a live dashboard. It shows days and seconds alive, estimated food consumption, estimated worldwide deaths since birth, estimated births and deaths in the world during the current session, and your horoscope sign. The app and the website are in English and Danish.
 
-LifeMeter is a single-activity Kotlin Android app (SDK 34, Material Components) with a Vite + React GitHub Pages site. Built by Babak Bandpey at [Cocode](https://cocode.dk).
+LifeMeter is a Kotlin Android app (SDK 34, Material Components) with a main screen and an About screen, and a Vite + React GitHub Pages site. Built by Babak Bandpey at [Cocode](https://cocode.dk).
 
 ## App
 

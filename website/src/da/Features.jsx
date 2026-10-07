@@ -6,7 +6,7 @@ const features = [
   { title: 'Stjernetegn og kuriositeter', body: 'Se dit stjernetegn og dets symbol og de planeter, solen eller månen, der hører til. Kuriositetskortet skønner også, hvor mange timer du har brugt på sex siden din 16-års fødselsdag, ud fra gennemsnit fra undersøgelser.' },
   { title: 'Gemmer din fødselsdato', body: 'Vælg din fødselsdato én gang. Din oversigt åbner med dine tal, hver gang du starter appen, uden at du skal vælge datoen igen.' },
   { title: 'Skift fødselsdato', body: 'Tryk på Skift fødselsdato, eller rul op til toppen og træk ned, for at vælge en anden dato. Prøv med en vens fødselsdato.' },
-  { title: 'Bliver på din telefon', body: 'Ingen konto og ingen analyse, og appen har ingen tilladelse til internettet. Din fødselsdato bliver gemt i appens private lager og kan komme med i din Android-sikkerhedskopi.' },
+  { title: 'Bliver på din telefon', body: 'Ingen konto og ingen brugsstatistik, og appen har ingen tilladelse til internettet. Din fødselsdato bliver gemt i appens private lager og kan komme med i din Android-sikkerhedskopi.' },
 ]
 
 export default function Features() {
