@@ -84,8 +84,8 @@
     <string name="about_links_title">Links</string>
     <string name="about_website">Åbn hjemmesiden</string>
     <string name="about_source">Se kildekoden på GitHub</string>
-    <string name="about_report">Meld et problem på GitHub</string>
-    <string name="about_credits">Kilder og licenser</string>
+    <string name="about_report">Meld en fejl på GitHub</string>
+    <string name="about_credits">Tak og licenser</string>
     <string name="about_license">LifeMeter er gratis at bruge. Kildekoden er åben under Apache License 2.0, så du må læse, ændre og dele den.</string>
     <string name="credit_un">Tallene for fødsler og dødsfald i verden kommer fra FN\'s World Population Prospects 2024.</string>
     <string name="credit_food">Skønnet over mad bygger på Food Balance Sheets 2023 fra FN\'s fødevare- og landbrugsorganisation (FAO) og Food Waste Index 2024 fra FN\'s miljøprogram (UNEP). Det er et verdensgennemsnit og ikke et mål for, hvad du spiser.</string>
