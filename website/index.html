@@ -59,8 +59,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://brand.cocode.dk/v1.css" />
+    <script type="module" src="https://brand.cocode.dk/v1.js"></script>
   </head>
   <body>
+    <!-- The cocode.dk family frame. Without JavaScript its child shows instead: a way home and the
+         in-page anchors. The app's own menu (the shared navigation) sits directly below it. -->
+    <cocode-head
+      project="LifeMeter"
+      accent="#e8882a"
+      on-accent="#120a04"
+      links="Try it:#try,Features:#features,Install:#install,About:#about"
+      dark
+    >
+      <a href="https://cocode.dk">cocode.dk</a>
+    </cocode-head>
     <header class="site-header shell">
       <!-- cocode-apps:nav:start -->
 <link rel="stylesheet" href="/css/cocode-nav.css">
@@ -85,6 +98,10 @@
 </footer>
 <!-- cocode-apps:footer:end -->
     </div>
+    <cocode-foot repo="cocodedk/lifemeter" dark>
+      <a href="https://cocode.dk">cocode.dk</a>
+      <a href="https://github.com/cocodedk/lifemeter">GitHub</a>
+    </cocode-foot>
     <!-- The install block is written here by the cocode-apps tools; Install.jsx copies it into the page. -->
     <template id="install-block">
       <!-- cocode-apps:install:start -->

@@ -11,8 +11,8 @@ const features = [
 
 export default function Features() {
   return (
-    <section id="how" className={`${styles.section} reveal`}>
-      <h2 className={styles.h2}>What it does</h2>
+    <section id="features" className={`${styles.section} reveal`}>
+      <h2 id="how" className={styles.h2}>What it does</h2>
       <div className={styles.grid}>
         {features.map(f => (
           <article key={f.title} className={`${styles.card} glass`}>
