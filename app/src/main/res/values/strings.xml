@@ -12,10 +12,10 @@
 
     <!-- Compact date row -->
     <string name="your_birthday_label">Your birthday</string>
-    <string name="change_birth_date">Change</string>
+    <string name="change_birth_date">Change birth date</string>
 
     <!-- Swipe hint -->
-    <string name="pull_to_change">↓ Pull down anywhere to change birth date</string>
+    <string name="pull_to_change">↓ Scroll to the top, then pull down to change your birth date.</string>
 
     <!-- Section labels -->
     <string name="overview_label">Lifetime totals</string>
@@ -25,13 +25,13 @@
     <!-- Stat card labels -->
     <string name="stat_days_alive">Days alive</string>
     <string name="stat_seconds_alive">Seconds alive</string>
-    <string name="stat_food_consumed">kg food consumed</string>
-    <string name="stat_deaths_since_birth">Deaths since birth</string>
+    <string name="stat_food_consumed">Estimated food consumed (kg)</string>
+    <string name="stat_deaths_since_birth">Estimated worldwide deaths since birth</string>
 
     <!-- Session row labels -->
     <string name="session_seconds">Seconds on screen</string>
-    <string name="session_deaths">Deaths while watching</string>
-    <string name="session_births">Births while watching</string>
+    <string name="session_deaths">Estimated worldwide deaths this session</string>
+    <string name="session_births">Estimated worldwide births this session</string>
 
     <!-- Numbers and dates. The formats take one number (%f) or day, month, year in this order. -->
     <string name="number_millions">%.1fM</string>
@@ -78,9 +78,9 @@
     <string name="about_update_hint_fdroid">This opens LifeMeter\'s page on F-Droid in your browser. The app itself never goes online.</string>
     <string name="about_update_hint_github">This opens the latest LifeMeter release on GitHub in your browser. The app itself never goes online.</string>
     <string name="about_what_title">What the app does</string>
-    <string name="about_what_body">LifeMeter turns your birth date into a live dashboard of numbers about your life. It shows how many days and seconds you have been alive, a rough estimate of the food you have eaten, and how many people have died in the world since you were born. It also counts world births and deaths while the app is open, and shows your horoscope sign and a few curiosities. You enter your birth date once, and the app keeps it on your phone.</string>
+    <string name="about_what_body">LifeMeter turns your birth date into a live dashboard of numbers about your life. It shows how many days and seconds you have been alive, a rough estimate of the food you have eaten, and an estimate of how many people have died in the world since you were born. It also estimates world births and deaths while the app is open, and shows your horoscope sign and a few curiosities. You enter your birth date once, and the app saves it on your phone.</string>
     <string name="about_privacy_title">Privacy</string>
-    <string name="about_privacy_body">LifeMeter does not collect, send or share any personal data. The only thing it saves is the birth date you pick. It is kept in the app\'s private storage on your phone, and we never receive it. It is removed if you uninstall the app or clear its data. The app asks for no Android permissions, including internet access, so it cannot send your data anywhere. It has no analytics, crash reports or ads.</string>
+    <string name="about_privacy_body">LifeMeter does not collect, send or share any personal data. The only thing it saves is the birth date you pick. It is kept in the app\'s private storage on your phone, and we never receive it. Uninstalling the app or clearing its data removes it from your phone. If you use Android backup, a copy may also be kept in your own backup, which we cannot see, and Android may restore it if you reinstall the app. The app has no internet permission and does not ask for access to your location, contacts, camera, microphone or storage. It has no analytics, crash reports or ads.</string>
     <string name="about_privacy_link">Read the privacy policy</string>
     <string name="about_links_title">Links</string>
     <string name="about_website">Open the website</string>

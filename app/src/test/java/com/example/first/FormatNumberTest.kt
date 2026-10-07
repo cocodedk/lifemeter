@@ -8,8 +8,11 @@ class FormatNumberTest {
     // The English formats from strings.xml (number_billions, number_millions).
     private fun format(n: Long) = formatNumber(n, "%.2fB", "%.1fM")
 
-    @Test fun `the unit comes from the format strings`() {
+    @Test fun `the billions unit comes from the format string`() {
         assertEquals("1.50 mia.", formatNumber(1_500_000_000L, "%.2f mia.", "%.1f mio."))
+    }
+
+    @Test fun `the millions unit comes from the format string`() {
         assertEquals("2.5 mio.", formatNumber(2_500_000L, "%.2f mia.", "%.1f mio."))
     }
 

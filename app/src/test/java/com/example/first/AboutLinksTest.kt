@@ -36,9 +36,15 @@ class AboutLinksTest {
         assertNull(aboutUrl(AboutLink.Privacy, id, privacyUrl = null))
     }
 
-    @Test fun `website source and issues links`() {
+    @Test fun `website opens the site`() {
         assertEquals("https://lifemeter.cocode.dk/", aboutUrl(AboutLink.Website, id))
+    }
+
+    @Test fun `source opens the repository`() {
         assertEquals("https://github.com/cocodedk/lifemeter", aboutUrl(AboutLink.Source, id))
+    }
+
+    @Test fun `issues opens the issue tracker`() {
         assertEquals("https://github.com/cocodedk/lifemeter/issues", aboutUrl(AboutLink.Issues, id))
     }
 }
