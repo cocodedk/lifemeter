@@ -9,7 +9,18 @@ LifeMeter turns your birthdate into a live dashboard — days alive, seconds, fo
 
 ## Website
 - [English](https://lifemeter.cocode.dk/)
-- [فارسی (Persian)](https://lifemeter.cocode.dk/fa/)
+
+---
+
+## Download
+
+<!-- cocode-apps:install:start -->
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/dk.cocode.lifemeter/)
+- [Download the APK from GitHub](https://github.com/cocodedk/lifemeter/releases/latest/download/LifeMeter.apk)
+- [Auto-update the GitHub APK with Obtainium](https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/cocodedk/lifemeter)
+<!-- cocode-apps:install:end -->
+
+Requires Android 5.0+. Enable *Install from unknown sources* when prompted.
 
 ---
 
@@ -22,15 +33,13 @@ LifeMeter turns your birthdate into a live dashboard — days alive, seconds, fo
 - Session counter — seconds, deaths, and births since app open
 - Horoscope — your zodiac sign with symbol and ruling planets
 
-## Download
+## Privacy
 
-[**Download LifeMeter.apk**](https://github.com/cocodedk/lifemeter/releases/latest/download/LifeMeter.apk)
-
-Requires Android 5.0+. Enable *Install from unknown sources* when prompted.
+LifeMeter does not collect, transmit, or share any personal data. The only thing it stores is the birthdate you pick, in the app's private storage on your own device. It requests no Android permissions at all, including no internet permission, and uses no analytics, crash reporting or advertising. Read the full [privacy policy](https://lifemeter.cocode.dk/privacy/).
 
 ---
 
-## Build from Source
+## Build
 
 **Prerequisites:** Android Studio (Ladybug+), JDK 17, Android SDK 34
 
@@ -91,10 +100,18 @@ Run `./scripts/setup-signing.sh` to generate a keystore and upload secrets autom
 
 ---
 
+## Contributing
+
+Issues and pull requests are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
+
+---
+
 ## Author
 
 **Babak Bandpey** — [cocode.dk](https://cocode.dk) | [LinkedIn](https://linkedin.com/in/babakbandpey) | [GitHub](https://github.com/cocodedk)
 
 ---
 
-Apache-2.0 | © 2026 [Cocode](https://cocode.dk) | Created by [Babak Bandpey](https://linkedin.com/in/babakbandpey)
+## License
+
+Apache-2.0, see [LICENSE](LICENSE). © 2026 [Cocode](https://cocode.dk) | Created by [Babak Bandpey](https://linkedin.com/in/babakbandpey)

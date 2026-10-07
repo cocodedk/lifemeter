@@ -46,6 +46,40 @@ body {
 cocode-head, cocode-foot { --cocode-max: 1100px; --cocode-gutter: 16px; }
 @media (min-width: 768px) { cocode-head, cocode-foot { --cocode-gutter: 0px; } }
 
+main:focus { outline: 0; }
+
+/* The shared cocode-apps blocks (css/cocode-nav.css brings the layout) in the site's own look.
+   The shared stylesheet loads after this one, so these selectors are scoped to win. */
+.site-header { padding-top: 12px; }
+.site-header .cocode-nav { gap: 4px 8px; }
+.site-header .cocode-nav a { color: var(--muted); border-radius: 10px; padding-inline: 10px; }
+.site-header .cocode-nav a:hover { color: var(--amber); }
+.site-header .cocode-nav a[aria-current="page"] { color: var(--text); }
+.site-header .cocode-nav .brand {
+  gap: 10px; padding-inline: 0; color: var(--text);
+  font-family: "Space Grotesk", "IBM Plex Sans", sans-serif; font-weight: 700;
+}
+.site-header .cocode-nav .brand img { border-radius: 8px; }
+.skip:focus { background: var(--amber); color: #120a04; }
+a:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+
+.site-footer { padding: 32px 0 48px; font-size: 0.88rem; color: var(--muted); }
+.site-footer .cocode-footer a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+.site-footer .cocode-footer a:hover { color: var(--amber); }
+
+.install { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-bottom: 4px; }
+.install a, .install .fdroid-soon { display: inline-flex; align-items: center; min-height: 48px; }
+.install a { color: var(--amber); text-decoration: underline; text-underline-offset: 2px; font-size: 0.92rem; }
+.install .fdroid { text-decoration: none; }
+.install li:nth-child(2) a {
+  padding: 0 28px; border-radius: 12px; text-decoration: none;
+  background: linear-gradient(90deg, var(--amber), var(--warm-pink)); color: #120a04;
+  font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 0.95rem;
+  box-shadow: 0 0 24px rgba(232, 136, 42, 0.3); transition: transform 0.18s, box-shadow 0.18s;
+}
+.install li:nth-child(2) a:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(232, 136, 42, 0.5); }
+.install .fdroid-soon { padding: 0 20px; border: 1px dashed var(--line-strong); border-radius: 12px; color: var(--muted); }
+
 h1, h2, h3 { font-family: "Space Grotesk", "IBM Plex Sans", sans-serif; }
 a { color: var(--text); text-decoration: none; }
 
