@@ -2,12 +2,12 @@
 
 ## Project Overview
 
-LifeMeter is an Android app that turns your birthdate into a live dashboard — showing days alive, seconds alive, food consumed, global deaths and births since birth, your horoscope sign, and other curiosities. Set your date once and the app remembers it forever.
+LifeMeter is an Android app that turns your birth date into a live dashboard. It shows days and seconds alive, estimated food consumption, estimated worldwide deaths since birth, estimated worldwide births and deaths during the current session, your horoscope sign, and a few curiosities. Set your date once and the app saves it for future visits (SharedPreferences, which Android backup may copy). The app and website are in English and Danish.
 
 - **Language / Runtime**: Kotlin, Java 17 (desugar enabled)
-- **Framework**: Android SDK 34, Material Components 3, Jetpack (LiveData, ViewModel)
-- **Architecture**: One activity for the main screen, one for the About page
-- **Package / Namespace**: `com.example.first`
+- **Framework**: Android SDK 34, Material Components 1.12.0, AndroidX
+- **Architecture**: One activity for the main screen (state held in the activity, birth date in SharedPreferences), one for the About page
+- **Package / Namespace**: `com.example.first`; **application id**: `dk.cocode.lifemeter`
 
 ---
 
@@ -38,14 +38,16 @@ lifemeter/
 │   ├── AboutActivity.kt         ← the About page, opened from the toolbar's info icon
 │   ├── AboutLinks.kt            ← where each About link goes (unit-tested)
 │   └── Horoscope.kt / FormatNumber.kt / BirthDateStore.kt
+├── app/src/main/res/values/ and values-da/   ← app text, English and Danish (keep both in step)
 ├── app/src/test/java/com/example/first/
 │   ├── AboutLinksTest.kt         ← About link targets
 │   ├── FormatNumberTest.kt       ← number formatting
 │   └── HoroscopeTest.kt          ← horoscope sign lookup (16 tests)
 ├── website/                      ← Vite + React GitHub Pages site
-│   └── src/components/
-│       ├── Calculator.jsx        ← live birthdate calculator
-│       ├── Hero.jsx / Features.jsx / Install.jsx / About.jsx
+│   ├── src/components/
+│   │   ├── Calculator.jsx        ← simplified birth date calculator (browser preview)
+│   │   └── Hero.jsx / Features.jsx / Install.jsx / About.jsx
+│   └── src/da/                   ← the Danish home page (same layout, Danish text)
 ├── .github/workflows/            ← CI, release, pages automation
 ├── .githooks/                    ← pre-commit, commit-msg hooks
 ├── scripts/                      ← install-hooks.sh, setup-repo.sh, setup-signing.sh
@@ -108,7 +110,7 @@ lifemeter/
 |------|---------|
 | `CLAUDE.md` | This file — project conventions and session startup |
 | `gradle.properties` | Also holds VERSION_NAME/VERSION_CODE, the app's version — bump both before a release |
-| `.github/workflows/ci.yml` | CI on PRs and branches |
+| `.github/workflows/ci.yml` | CI on pull requests targeting master and on pushes to all branches |
 | `.github/workflows/release-apk.yml` | Signed APK build of the version in `gradle.properties` + GitHub Release; refuses one already tagged |
 | `.github/workflows/deploy-pages.yml` | GitHub Pages deployment |
 | `.githooks/pre-commit` | Runs buildSmoke before commit |

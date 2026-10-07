@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react'
 import styles from './Install.module.css'
 
 const steps = [
-  { n: 1, title: 'Allow installation', body: 'If you install the APK, enable "Install from unknown sources" for your browser or file manager when prompted.' },
-  { n: 2, title: 'Open and set your birthdate', body: <>Tap <em>Set birth date</em>, pick your date, and your live dashboard appears instantly.</> },
+  { n: 1, title: 'Allow installation', body: 'If you install the APK file from GitHub, open it. When Android asks, allow your browser or file manager to install apps, then tap Install.' },
+  { n: 2, title: 'Open the app and set your birth date', body: <>Tap <em>Set birth date</em>, pick your date, and your dashboard opens at once.</> },
 ]
 
 export default function Install() {

@@ -9,12 +9,11 @@ export default function About() {
         <strong>Bygget af <a href="https://cocode.dk" target="_blank" rel="noreferrer">Cocode</a>.</strong>
       </p>
       <p className={styles.body} style={{ marginTop: 12 }}>
-        LifeMeter og BabakCast udgør en lille værktøjskasse af Android-apps til personlig brug:
-        praktiske, private og hurtige.
+        LifeMeter og BabakCast er Android-apps fra Cocode. Kildekoden til dem er linket nedenfor.
       </p>
       <div className={styles.links}>
         <a href="https://github.com/cocodedk/lifemeter" target="_blank" rel="noreferrer">Kildekode til LifeMeter</a>
-        <a href="https://github.com/cocodedk/BabakCast" target="_blank" rel="noreferrer">BabakCast</a>
+        <a href="https://github.com/cocodedk/BabakCast" target="_blank" rel="noreferrer">Kildekode til BabakCast</a>
         <a href="https://cocode.dk" target="_blank" rel="noreferrer">cocode.dk</a>
       </div>
     </section>

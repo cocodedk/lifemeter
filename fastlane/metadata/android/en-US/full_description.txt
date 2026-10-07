@@ -1,7 +1,9 @@
-<p>LifeMeter turns your birthdate into a live dashboard of numbers about your life.</p>
+<p>LifeMeter turns your birth date into a live dashboard of numbers about your life. You enter your birth date once, and the app saves it on your phone.</p>
 
-<p>It shows the total number of days and seconds you have been alive, and a rough estimate of the food you have consumed over that time, based on a world average of about 1.7 kg a day. It also runs a live count of world deaths since you were born, plus a session counter for seconds, deaths, and births since you opened the app. The death and birth figures come from the United Nations World Population Prospects 2024, year by year; years before 1950 use the 1950 figure.</p>
+<p>It shows how many days and seconds you have been alive, and a rough estimate of the food you have eaten in that time, based on a world average of about 1.7 kg a day. It also estimates how many people have died in the world since you were born. The seconds and the death estimate are recalculated every second while the app is open.</p>
 
-<p>LifeMeter looks up your horoscope sign, its symbol, and its ruling planets from your birthdate. You set your birthdate once, and the app remembers it for every session after that.</p>
+<p>The "This session" section estimates the births and deaths in the world while the app is open. Its counters start again when you return to the app or pick a new date. The death and birth figures come from the United Nations World Population Prospects 2024: yearly estimates up to 2023 and projections after that. Years before 1950 use the 1950 figure, and years after 2030 use the 2030 figure.</p>
 
-<p>A curiosities card adds one more rough estimate: the hours you have spent having sex, counted from your 16th birthday. It multiplies the average number of times a month at each age, from the British Natsal-3 survey, by 25 minutes a time. It is an average, not data about you.</p>
+<p>LifeMeter looks up your horoscope sign from your birth date, and shows its symbol and the planets, sun or moon linked to it.</p>
+
+<p>A Curiosities card adds one more rough estimate: the hours you have spent having sex, counted from your 16th birthday. It multiplies the average number of times a month at each age, from the British Natsal-3 survey, by 25 minutes a time. It is an average, not data about you.</p>

@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react'
 import styles from '../components/Install.module.css'
 
 const steps = [
-  { n: 1, title: 'Tillad installation', body: 'Hvis du installerer APK-filen, skal du slå "Installér fra ukendte kilder" til for din browser eller filhåndtering, når Android spørger.' },
-  { n: 2, title: 'Åbn appen og vælg din fødselsdato', body: <>Tryk på <em>Vælg fødselsdato</em>, vælg din dato, og din levende oversigt dukker op med det samme.</> },
+  { n: 1, title: 'Tillad installation', body: 'Hvis du installerer APK-filen fra GitHub, så åbn den. Når Android spørger, skal du tillade, at din browser eller filhåndtering installerer apps, og så trykke på Installér.' },
+  { n: 2, title: 'Åbn appen og vælg din fødselsdato', body: <>Tryk på <em>Vælg fødselsdato</em>, vælg din dato, og din oversigt åbner med det samme.</> },
 ]
 
 export default function Install() {

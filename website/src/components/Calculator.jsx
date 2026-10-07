@@ -35,17 +35,17 @@ function computeStats(birthdate, sessionStart) {
   const now = new Date()
   const todayEpoch = Math.floor(new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() / 1000)
   const birthEpoch = dateToEpochSeconds(y, m, d)
-  const secondsSinceBirth = todayEpoch - birthEpoch
-  const days = Math.floor(secondsSinceBirth / 86400)
-  const sessionSecs = Math.floor((Date.now() - sessionStart) / 1000)
-  const total = secondsSinceBirth + sessionSecs
+  const days = Math.floor((todayEpoch - birthEpoch) / 86400)
+  const sessionSecs = Math.floor((now.getTime() - sessionStart) / 1000)
+  // Seconds from midnight on the birth date to now, as the app counts them.
+  const total = Math.floor(now.getTime() / 1000) - birthEpoch
 
   const sign = getHoroscope(m, d)
 
   return {
     days: fmt(days),
     seconds: fmt(total),
-    food: fmt(Math.floor(days / 2)),
+    food: fmt(Math.round(days * 1.7)),
     deaths: fmt(total * 2),
     sessionSecs: fmt(sessionSecs),
     sessionDeaths: fmt(Math.round(sessionSecs * 1.8)),
@@ -75,11 +75,12 @@ export default function Calculator() {
   return (
     <section id="try" className={`${styles.section} reveal-2`}>
       <p className={styles.kicker}>Try it right here</p>
-      <h2 className={styles.h2}>Enter your birthdate</h2>
-      <p className={styles.sub}>The same numbers the Android app shows — live in your browser.</p>
+      <h2 className={styles.h2}>Enter your birth date</h2>
+      <p className={styles.sub}>A simplified preview in your browser. Its estimates differ from those in the Android app.</p>
 
       <input
         type="date"
+        aria-label="Birth date"
         className={styles.datePicker}
         value={birthdate}
         max={new Date().toISOString().split('T')[0]}
@@ -93,18 +94,18 @@ export default function Calculator() {
           <div className={styles.grid}>
             <StatCard value={stats.days}   label="Days alive" />
             <StatCard value={stats.seconds} label="Seconds alive" live />
-            <StatCard value={stats.food}   label="kg food consumed" />
-            <StatCard value={stats.deaths} label="Deaths since birth" live />
+            <StatCard value={stats.food}   label="Estimated food consumed (kg)" />
+            <StatCard value={stats.deaths} label="Estimated worldwide deaths since birth" live />
           </div>
 
           <p className={styles.sectionLabel} style={{marginTop: '24px'}}>This session</p>
           <div className={`${styles.sessionCard} glass`}>
-            <SessionRow label="Seconds on screen" value={stats.sessionSecs} />
-            <SessionRow label="Deaths while watching" value={stats.sessionDeaths} />
-            <SessionRow label="Births while watching" value={stats.sessionBirths} />
+            <SessionRow label="Seconds since you chose the date" value={stats.sessionSecs} />
+            <SessionRow label="Estimated worldwide deaths since you chose the date" value={stats.sessionDeaths} />
+            <SessionRow label="Estimated worldwide births since you chose the date" value={stats.sessionBirths} />
           </div>
 
-          <p className={styles.sectionLabel} style={{marginTop: '24px'}}>Curiosities</p>
+          <p className={styles.sectionLabel} style={{marginTop: '24px'}}>Horoscope sign</p>
           <div className={`${styles.horoscopeCard} glass`}>
             <span className={styles.signSymbol}>{stats.sign.symbol}</span>
             <span className={styles.signName}>{stats.sign.name}</span>

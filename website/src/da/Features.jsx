@@ -1,12 +1,12 @@
 import styles from '../components/Features.module.css'
 
 const features = [
-  { title: 'Levende tal for hele livet', body: 'Dage i live, sekunder i live, kilo mad spist og dødsfald, siden du blev født. Det hele tæller op i realtid.' },
-  { title: 'Sessionstæller', body: 'Sekunder på skærmen og dødsfald og fødsler, mens du har kigget med. Nulstilles, hver gang du vender tilbage til appen.' },
-  { title: 'Stjernetegn og kuriositeter', body: 'Dit stjernetegn med symbol. Og så et tal mere, som tit får folk til at løfte øjenbryn.' },
-  { title: 'Husker din dato', body: 'Vælg den én gang. Oversigten er klar med det samme, hver gang du åbner appen. Du skal ikke taste datoen igen eller trykke på Fortsæt.' },
-  { title: 'Træk ned for at skifte', body: 'Stryg ned hvor som helst på skærmen for at åbne datovælgeren. Prøv med en vens fødselsdato.' },
-  { title: 'Bliver på telefonen', body: 'Ingen server, ingen konto, ingen analyseværktøjer. Din fødselsdato ligger i Androids SharedPreferences og ingen andre steder.' },
+  { title: 'Hele livet i alt', body: 'Se dine dage i live, sekunder i live, anslået mad spist og anslåede dødsfald i verden, siden du blev født. Sekunderne og skønnet over dødsfald bliver regnet ud på ny hvert sekund, mens appen er åben. Store tal bliver afrundet.' },
+  { title: 'Denne session', body: 'Se, hvor mange sekunder appen har været åben, og de anslåede fødsler og dødsfald i verden i den tid. Tællerne starter forfra, når du vender tilbage til appen eller vælger en ny fødselsdato.' },
+  { title: 'Stjernetegn og kuriositeter', body: 'Se dit stjernetegn og dets symbol og de planeter, solen eller månen, der hører til. Kuriositetskortet skønner også, hvor mange timer du har brugt på sex siden din 16-års fødselsdag, ud fra gennemsnit fra undersøgelser.' },
+  { title: 'Gemmer din fødselsdato', body: 'Vælg din fødselsdato én gang. Din oversigt åbner med dine tal, hver gang du starter appen, uden at du skal vælge datoen igen.' },
+  { title: 'Skift fødselsdato', body: 'Tryk på Skift fødselsdato, eller rul op til toppen og træk ned, for at vælge en anden dato. Prøv med en vens fødselsdato.' },
+  { title: 'Bliver på din telefon', body: 'Ingen konto og ingen analyse, og appen har ingen tilladelse til internettet. Din fødselsdato bliver gemt i appens private lager og kan komme med i din Android-sikkerhedskopi.' },
 ]
 
 export default function Features() {
@@ -23,7 +23,8 @@ export default function Features() {
       </div>
 
       <blockquote className={`${styles.quote} glass`}>
-        LifeMeter dømmer ikke, sporer ingenting og sender ingenting nogen steder hen. Den tæller bare.
+        LifeMeter sporer dig ikke, og appen har ingen tilladelse til internettet. Den regner
+        bare.
       </blockquote>
     </section>
   )

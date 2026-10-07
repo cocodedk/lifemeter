@@ -10,11 +10,11 @@
     <string name="set_birth_date">Vælg fødselsdato</string>
 
     <!-- Compact date row -->
-    <string name="your_birthday_label">Din fødselsdag</string>
-    <string name="change_birth_date">Skift</string>
+    <string name="your_birthday_label">Din fødselsdato</string>
+    <string name="change_birth_date">Skift fødselsdato</string>
 
     <!-- Swipe hint -->
-    <string name="pull_to_change">↓ Træk ned hvor som helst for at ændre fødselsdatoen</string>
+    <string name="pull_to_change">↓ Rul op til toppen, og træk så ned for at skifte din fødselsdato.</string>
 
     <!-- Section labels -->
     <string name="overview_label">Hele livet i alt</string>
@@ -24,15 +24,74 @@
     <!-- Stat card labels -->
     <string name="stat_days_alive">Dage i live</string>
     <string name="stat_seconds_alive">Sekunder i live</string>
-    <string name="stat_food_consumed">kg mad spist</string>
-    <string name="stat_deaths_since_birth">Dødsfald siden fødslen</string>
+    <string name="stat_food_consumed">Anslået mad spist (kg)</string>
+    <string name="stat_deaths_since_birth">Anslåede dødsfald i verden, siden du blev født</string>
 
     <!-- Session row labels -->
     <string name="session_seconds">Sekunder på skærmen</string>
-    <string name="session_deaths">Dødsfald, mens du kigger</string>
-    <string name="session_births">Fødsler, mens du kigger</string>
+    <string name="session_deaths">Anslåede dødsfald i verden denne session</string>
+    <string name="session_births">Anslåede fødsler i verden denne session</string>
+
+    <!-- Numbers and dates. The formats take one number (%f) or day, month, year in this order. -->
+    <string name="number_millions">%.1f&#160;mio.</string>
+    <string name="number_billions">%.2f&#160;mia.</string>
+    <string name="birth_date_format">%1$02d / %2$02d / %3$d</string>
 
     <!-- Curiosities -->
     <string name="curiosities_sex_hours">Anslået tid brugt på sex: %s timer</string>
 
+    <!-- Horoscope: the twelve signs and the planets, sun or moon linked to them -->
+    <string name="sign_aries">Vædderen</string>
+    <string name="sign_taurus">Tyren</string>
+    <string name="sign_gemini">Tvillingerne</string>
+    <string name="sign_cancer">Krebsen</string>
+    <string name="sign_leo">Løven</string>
+    <string name="sign_virgo">Jomfruen</string>
+    <string name="sign_libra">Vægten</string>
+    <string name="sign_scorpio">Skorpionen</string>
+    <string name="sign_sagittarius">Skytten</string>
+    <string name="sign_capricorn">Stenbukken</string>
+    <string name="sign_aquarius">Vandmanden</string>
+    <string name="sign_pisces">Fiskene</string>
+    <string name="planets_aries">Mars</string>
+    <string name="planets_taurus">Venus · Månen</string>
+    <string name="planets_gemini">Merkur</string>
+    <string name="planets_cancer">Månen · Jupiter</string>
+    <string name="planets_leo">Solen</string>
+    <string name="planets_virgo">Merkur</string>
+    <string name="planets_libra">Venus · Saturn</string>
+    <string name="planets_scorpio">Mars · Pluto</string>
+    <string name="planets_sagittarius">Jupiter</string>
+    <string name="planets_capricorn">Saturn · Mars</string>
+    <string name="planets_aquarius">Saturn · Uranus</string>
+    <string name="planets_pisces">Jupiter · Neptun · Venus</string>
+
+    <!-- Main screen menu -->
+    <string name="menu_about">Om</string>
+
+    <!-- About page -->
+    <string name="about_title">Om LifeMeter</string>
+    <string name="about_name_version_title">Navn og version</string>
+    <string name="about_version">Version %1$s (build %2$d)</string>
+    <string name="about_check_updates">Se den nyeste version</string>
+    <string name="about_update_hint_fdroid">Det åbner LifeMeters side på F-Droid i din browser. Selve appen går aldrig online.</string>
+    <string name="about_update_hint_github">Det åbner den nyeste udgave af LifeMeter på GitHub i din browser. Selve appen går aldrig online.</string>
+    <string name="about_what_title">Det kan appen</string>
+    <string name="about_what_body">LifeMeter gør din fødselsdato til et levende overblik med tal om dit liv. Appen viser, hvor mange dage og sekunder du har været i live, et groft skøn over, hvor meget mad du har spist, og et skøn over, hvor mange mennesker i verden der er døde, siden du blev født. Den skønner også, hvor mange der bliver født og dør i verden, mens appen er åben, og viser dit stjernetegn og et par kuriositeter. Du vælger din fødselsdato én gang, og appen gemmer den på din telefon.</string>
+    <string name="about_privacy_title">Privatliv</string>
+    <string name="about_privacy_body">LifeMeter indsamler, sender og deler ingen personoplysninger. Det eneste, appen gemmer, er den fødselsdato, du vælger. Den ligger i appens private lager på din telefon, og vi modtager den aldrig. Hvis du afinstallerer appen eller rydder dens data, forsvinder datoen fra din telefon. Bruger du Android-sikkerhedskopiering, kan der også ligge en kopi i din egen sikkerhedskopi, som vi ikke kan se, og Android kan gendanne den, hvis du installerer appen igen. Appen har ingen tilladelse til internettet og beder ikke om adgang til din placering, dine kontakter, dit kamera, din mikrofon eller dit lager. Den har ingen analyse, ingen fejlrapporter og ingen reklamer.</string>
+    <string name="about_privacy_link">Læs privatlivspolitikken</string>
+    <string name="about_links_title">Links</string>
+    <string name="about_website">Åbn hjemmesiden</string>
+    <string name="about_source">Se kildekoden på GitHub</string>
+    <string name="about_report">Meld et problem på GitHub</string>
+    <string name="about_credits">Kilder og licenser</string>
+    <string name="about_license">LifeMeter er gratis at bruge. Kildekoden er åben under Apache License 2.0, så du må læse, ændre og dele den.</string>
+    <string name="credit_un">Tallene for fødsler og dødsfald i verden kommer fra FN\'s World Population Prospects 2024.</string>
+    <string name="credit_food">Skønnet over mad bygger på Food Balance Sheets 2023 fra FN\'s fødevare- og landbrugsorganisation (FAO) og Food Waste Index 2024 fra FN\'s miljøprogram (UNEP). Det er et verdensgennemsnit og ikke et mål for, hvad du spiser.</string>
+    <string name="credit_curiosities">Skønnet under Kuriositeter bruger den britiske Natsal-3-undersøgelse af seksuelle holdninger og livsstil (2010–12) og en undersøgelse fra 2013 af Frappier og kolleger i PLoS ONE. Det er et gennemsnit og ikke tal om dig.</string>
+    <string name="credit_libraries">Appen bruger AndroidX-bibliotekerne og Material Components for Android, begge udgivet under Apache License 2.0.</string>
+    <string name="about_made_by_title">Lavet af Cocode</string>
+    <string name="about_made_by">Lavet af Cocode (cocode.dk)</string>
+    <string name="about_no_browser">Din telefon har ingen app, der kan åbne linket. Installér en browser, og tryk så på knappen igen.</string>
 </resources>
