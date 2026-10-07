@@ -85,4 +85,54 @@
         <item name="android:insetBottom">0dp</item>
     </style>
 
+    <!-- About page -->
+    <!-- The Up arrow is drawn with colorControlNormal, which the dark app bar overlay makes white. -->
+    <style name="AboutToolbarControls">
+        <item name="colorControlNormal">@color/colorTextPrimary</item>
+    </style>
+
+    <style name="AboutSectionTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/colorTextSecondary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="AboutCard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AboutCardColumn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">18dp</item>
+    </style>
+
+    <style name="AboutBody">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:lineSpacingMultiplier">1.1</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="AboutPrimaryButton" parent="AppPrimaryButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">52dp</item>
+        <item name="android:layout_marginTop">14dp</item>
+    </style>
+
+    <style name="AboutLinkButton" parent="AppSecondaryButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">52dp</item>
+    </style>
+
 </resources>

@@ -6,7 +6,7 @@ LifeMeter is an Android app that turns your birthdate into a live dashboard — 
 
 - **Language / Runtime**: Kotlin, Java 17 (desugar enabled)
 - **Framework**: Android SDK 34, Material Components 3, Jetpack (LiveData, ViewModel)
-- **Architecture**: Single Activity, ViewModel + LiveData
+- **Architecture**: One activity for the main screen, one for the About page
 - **Package / Namespace**: `com.example.first`
 
 ---
@@ -33,9 +33,14 @@ These skills **must** be invoked when the relevant situation arises. Never skip 
 ```
 lifemeter/
 ├── app/src/main/java/com/example/first/
-│   └── MainActivity.kt          ← single activity, all UI logic
+│   ├── MainActivity.kt          ← the main screen: birth date, layout state, session timer
+│   ├── Dashboard.kt             ← fills in the numbers on the main screen
+│   ├── AboutActivity.kt         ← the About page, opened from the toolbar's info icon
+│   ├── AboutLinks.kt            ← where each About link goes (unit-tested)
+│   └── Horoscope.kt / FormatNumber.kt / BirthDateStore.kt
 ├── app/src/test/java/com/example/first/
-│   ├── FormatNumberTest.kt       ← number formatting (7 tests)
+│   ├── AboutLinksTest.kt         ← About link targets
+│   ├── FormatNumberTest.kt       ← number formatting
 │   └── HoroscopeTest.kt          ← horoscope sign lookup (16 tests)
 ├── website/                      ← Vite + React GitHub Pages site
 │   └── src/components/
@@ -48,7 +53,7 @@ lifemeter/
 ```
 
 ### Layer Rules
-- All UI logic lives in `MainActivity.kt`
+- The main screen lives in `MainActivity.kt` and `Dashboard.kt`; the About page is its own `AboutActivity`
 - Tests are in `app/src/test/` (unit) and `app/src/androidTest/` (instrumented)
 - Website is an independent Vite/React project in `website/`
 

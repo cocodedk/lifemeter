@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Curiosities: label, card and the pull-down hint. Included into results_container. -->
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="LinearLayout">
+
+    <!-- CURIOSITIES -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/story_label"
+        android:textAllCaps="true"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="12sp" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:cardBackgroundColor="@color/colorCardSecondary">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="20dp">
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:gravity="center_vertical" android:orientation="horizontal">
+                <TextView android:id="@+id/horoscope_symbol"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:textColor="@color/colorHighlight" android:textSize="34sp"
+                    tools:text="♓" />
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:id="@+id/horoscope_name"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/colorHighlight" android:textSize="20sp"
+                        tools:text="Pisces" />
+                    <TextView android:id="@+id/horoscope_planets"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        tools:text="Jupiter · Neptune · Venus" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginTop="14dp" android:background="@color/colorDivider" />
+
+            <TextView android:id="@+id/sex_text"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                android:visibility="gone"
+                tools:text="Estimated time having sex: 1,406 hrs"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Pull-down hint -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:text="@string/pull_to_change"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="12sp" />
+
+</merge>

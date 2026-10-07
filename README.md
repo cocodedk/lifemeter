@@ -66,10 +66,14 @@ cd lifemeter
 
 ```
 app/src/main/java/com/example/first/
-  MainActivity.kt          — single activity, all UI logic
+  MainActivity.kt          — the main screen
+  Dashboard.kt             — fills in the numbers on the main screen
+  AboutActivity.kt         — the About page (opened from the toolbar's info icon)
+  AboutLinks.kt            — where each About link goes
 
 app/src/test/java/com/example/first/
-  FormatNumberTest.kt      — number formatting (7 tests)
+  AboutLinksTest.kt        — About link targets
+  FormatNumberTest.kt      — number formatting
   HoroscopeTest.kt         — horoscope sign lookup (16 tests)
 
 website/                   — Vite + React GitHub Pages site

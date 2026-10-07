@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="18dp"
+    app:cardBackgroundColor="@color/colorCardSecondary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <!-- Compact row: shown for returning users -->
+        <LinearLayout
+            android:id="@+id/date_compact_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.08"
+                    android:text="@string/your_birthday_label"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/selected_birth_date_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="16sp"
+                    tools:text="15 / 03 / 1990" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/change_birth_date_button"
+                style="@style/AppSecondaryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:minHeight="40dp"
+                android:text="@string/change_birth_date" />
+        </LinearLayout>
+
+        <!-- First launch content -->
+        <LinearLayout
+            android:id="@+id/first_launch_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible"
+            tools:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="14dp"
+                android:text="@string/pick_date_hint"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="14sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/set_birth_date_button"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="@string/set_birth_date" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
