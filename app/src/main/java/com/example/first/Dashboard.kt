@@ -4,10 +4,12 @@ import android.app.Activity
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.core.os.ConfigurationCompat
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
+import java.util.Locale
 
 /** The numbers on the main screen: finds their views once and fills them in. */
 class Dashboard(private val activity: Activity) {
@@ -64,10 +66,12 @@ class Dashboard(private val activity: Activity) {
         sessionBirthsValue.text  = fmt(Math.round(seconds * birthsPerSecond(year)))
     }
 
+    /** Numbers follow the language the app is shown in, so a Danish phone reads 13.234, not 13,234. */
     private fun fmt(n: Long): String = formatNumber(
         n,
         activity.getString(R.string.number_billions),
         activity.getString(R.string.number_millions),
+        ConfigurationCompat.getLocales(activity.resources.configuration)[0] ?: Locale.getDefault(),
     )
 
     private fun stringOrEmpty(@StringRes id: Int): String = if (id == 0) "" else activity.getString(id)
