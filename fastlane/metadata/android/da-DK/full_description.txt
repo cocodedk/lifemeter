@@ -1,0 +1,7 @@
+<p>LifeMeter gør din fødselsdato til et levende overblik over tallene i dit liv.</p>
+
+<p>Den viser, hvor mange dage og sekunder du har levet i alt, og et groft skøn over, hvor meget mad du har spist i den tid, ud fra et verdensgennemsnit på omkring 1,7 kg om dagen. Den tæller også løbende dødsfaldene i verden, siden du blev født, og har en tæller for sekunder, dødsfald og fødsler, siden du åbnede appen. Tallene for dødsfald og fødsler kommer fra FN's World Population Prospects 2024, år for år. For årene før 1950 bruges tallet fra 1950.</p>
+
+<p>LifeMeter finder dit stjernetegn, dets symbol og dets herskende planeter ud fra din fødselsdato. Du vælger datoen én gang, og så husker appen den, hver gang du åbner den.</p>
+
+<p>Et kuriositetskort tilføjer endnu et groft skøn: hvor mange timer du har brugt på sex, regnet fra din 16-års fødselsdag. Det ganger det gennemsnitlige antal gange om måneden i hver alder, fra den britiske Natsal-3-undersøgelse, med 25 minutter pr. gang. Det er et gennemsnit, ikke tal om dig.</p>

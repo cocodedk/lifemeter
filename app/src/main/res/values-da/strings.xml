@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">LifeMeter</string>
+    <string name="main_title">LifeMeter</string>
+    <string name="main_subtitle">Dit liv i tal.</string>
+
+    <!-- Hero (first launch) -->
+    <string name="hero_heading">Hvor længe har du levet?</string>
+    <string name="hero_subtext">Vælg din fødselsdato for at se dit liv i tal.</string>
+    <string name="pick_date_hint">Vælg datoen én gang, så husker appen den.</string>
+    <string name="set_birth_date">Vælg fødselsdato</string>
+
+    <!-- Compact date row -->
+    <string name="your_birthday_label">Din fødselsdag</string>
+    <string name="change_birth_date">Skift</string>
+
+    <!-- Swipe hint -->
+    <string name="pull_to_change">↓ Træk ned hvor som helst for at ændre fødselsdatoen</string>
+
+    <!-- Section labels -->
+    <string name="overview_label">Hele livet i alt</string>
+    <string name="session_label">Denne session</string>
+    <string name="story_label">Kuriositeter</string>
+
+    <!-- Stat card labels -->
+    <string name="stat_days_alive">Dage i live</string>
+    <string name="stat_seconds_alive">Sekunder i live</string>
+    <string name="stat_food_consumed">kg mad spist</string>
+    <string name="stat_deaths_since_birth">Dødsfald siden fødslen</string>
+
+    <!-- Session row labels -->
+    <string name="session_seconds">Sekunder på skærmen</string>
+    <string name="session_deaths">Dødsfald, mens du kigger</string>
+    <string name="session_births">Fødsler, mens du kigger</string>
+
+    <!-- Curiosities -->
+    <string name="curiosities_sex_hours">Anslået tid brugt på sex: %s timer</string>
+
+</resources>

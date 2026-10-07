@@ -19,7 +19,12 @@ export default defineConfig({
   base: '/',
   build: {
     rollupOptions: {
-      input: { main: 'index.html', privacy: 'privacy/index.html' },
+      input: {
+        main: 'index.html',
+        privacy: 'privacy/index.html',
+        da: 'da/index.html',
+        daPrivacy: 'da/privacy/index.html',
+      },
     },
   },
 })
