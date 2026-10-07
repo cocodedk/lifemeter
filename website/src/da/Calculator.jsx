@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import styles from './Calculator.module.css'
+import styles from '../components/Calculator.module.css'
 
 function dateToEpochSeconds(year, month, day) {
   return Math.floor(new Date(year, month - 1, day).getTime() / 1000)
@@ -7,26 +7,27 @@ function dateToEpochSeconds(year, month, day) {
 
 function getHoroscope(month, day) {
   const signs = [
-    { name: 'Capricorn', symbol: '♑', check: (m, d) => (m === 12 && d >= 22) || (m === 1 && d <= 19) },
-    { name: 'Aquarius',  symbol: '♒', check: (m, d) => (m === 1 && d >= 20) || (m === 2 && d <= 18) },
-    { name: 'Pisces',    symbol: '♓', check: (m, d) => (m === 2 && d >= 19) || (m === 3 && d <= 20) },
-    { name: 'Aries',     symbol: '♈', check: (m, d) => (m === 3 && d >= 21) || (m === 4 && d <= 19) },
-    { name: 'Taurus',    symbol: '♉', check: (m, d) => (m === 4 && d >= 20) || (m === 5 && d <= 20) },
-    { name: 'Gemini',    symbol: '♊', check: (m, d) => (m === 5 && d >= 21) || (m === 6 && d <= 20) },
-    { name: 'Cancer',    symbol: '♋', check: (m, d) => (m === 6 && d >= 21) || (m === 7 && d <= 22) },
-    { name: 'Leo',       symbol: '♌', check: (m, d) => (m === 7 && d >= 23) || (m === 8 && d <= 22) },
-    { name: 'Virgo',     symbol: '♍', check: (m, d) => (m === 8 && d >= 23) || (m === 9 && d <= 22) },
-    { name: 'Libra',     symbol: '♎', check: (m, d) => (m === 9 && d >= 23) || (m === 10 && d <= 22) },
-    { name: 'Scorpio',   symbol: '♏', check: (m, d) => (m === 10 && d >= 23) || (m === 11 && d <= 21) },
-    { name: 'Sagittarius',symbol:'♐', check: (m, d) => (m === 11 && d >= 22) || (m === 12 && d <= 21) },
+    { name: 'Stenbukken',   symbol: '♑', check: (m, d) => (m === 12 && d >= 22) || (m === 1 && d <= 19) },
+    { name: 'Vandmanden',   symbol: '♒', check: (m, d) => (m === 1 && d >= 20) || (m === 2 && d <= 18) },
+    { name: 'Fiskene',      symbol: '♓', check: (m, d) => (m === 2 && d >= 19) || (m === 3 && d <= 20) },
+    { name: 'Vædderen',     symbol: '♈', check: (m, d) => (m === 3 && d >= 21) || (m === 4 && d <= 19) },
+    { name: 'Tyren',        symbol: '♉', check: (m, d) => (m === 4 && d >= 20) || (m === 5 && d <= 20) },
+    { name: 'Tvillingerne', symbol: '♊', check: (m, d) => (m === 5 && d >= 21) || (m === 6 && d <= 20) },
+    { name: 'Krebsen',      symbol: '♋', check: (m, d) => (m === 6 && d >= 21) || (m === 7 && d <= 22) },
+    { name: 'Løven',        symbol: '♌', check: (m, d) => (m === 7 && d >= 23) || (m === 8 && d <= 22) },
+    { name: 'Jomfruen',     symbol: '♍', check: (m, d) => (m === 8 && d >= 23) || (m === 9 && d <= 22) },
+    { name: 'Vægten',       symbol: '♎', check: (m, d) => (m === 9 && d >= 23) || (m === 10 && d <= 22) },
+    { name: 'Skorpionen',   symbol: '♏', check: (m, d) => (m === 10 && d >= 23) || (m === 11 && d <= 21) },
+    { name: 'Skytten',      symbol: '♐', check: (m, d) => (m === 11 && d >= 22) || (m === 12 && d <= 21) },
   ]
   return signs.find(s => s.check(month, day)) ?? { name: '', symbol: '' }
 }
 
+// Same rounding as the English page, written the Danish way: decimal comma, "mio." and "mia.".
 function fmt(n) {
-  if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(2) + 'B'
-  if (n >= 1_000_000)     return (n / 1_000_000).toFixed(1) + 'M'
-  return n.toLocaleString('en-US')
+  if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(2).replace('.', ',') + ' mia.'
+  if (n >= 1_000_000)     return (n / 1_000_000).toFixed(1).replace('.', ',') + ' mio.'
+  return n.toLocaleString('da-DK')
 }
 
 function computeStats(birthdate, sessionStart) {
@@ -74,13 +75,13 @@ export default function Calculator() {
 
   return (
     <section id="try" className={`${styles.section} reveal-2`}>
-      <p className={styles.kicker}>Try it right here</p>
-      <h2 className={styles.h2}>Enter your birth date</h2>
-      <p className={styles.sub}>A simplified preview in your browser. Its estimates differ from those in the Android app.</p>
+      <p className={styles.kicker}>Prøv den lige her</p>
+      <h2 className={styles.h2}>Indtast din fødselsdato</h2>
+      <p className={styles.sub}>Et forenklet eksempel i din browser. Skønnene er ikke de samme som i Android-appen.</p>
 
       <input
         type="date"
-        aria-label="Birth date"
+        aria-label="Fødselsdato"
         className={styles.datePicker}
         value={birthdate}
         max={new Date().toISOString().split('T')[0]}
@@ -90,22 +91,22 @@ export default function Calculator() {
 
       {stats ? (
         <div className={styles.dashboard}>
-          <p className={styles.sectionLabel}>Lifetime totals</p>
+          <p className={styles.sectionLabel}>Hele livet i alt</p>
           <div className={styles.grid}>
-            <StatCard value={stats.days}   label="Days alive" />
-            <StatCard value={stats.seconds} label="Seconds alive" live />
-            <StatCard value={stats.food}   label="Estimated food consumed (kg)" />
-            <StatCard value={stats.deaths} label="Estimated worldwide deaths since birth" live />
+            <StatCard value={stats.days}   label="Dage i live" />
+            <StatCard value={stats.seconds} label="Sekunder i live" live />
+            <StatCard value={stats.food}   label="Anslået mad spist (kg)" />
+            <StatCard value={stats.deaths} label="Anslåede dødsfald i verden, siden du blev født" live />
           </div>
 
-          <p className={styles.sectionLabel} style={{marginTop: '24px'}}>This session</p>
+          <p className={styles.sectionLabel} style={{marginTop: '24px'}}>Denne session</p>
           <div className={`${styles.sessionCard} glass`}>
-            <SessionRow label="Seconds since you chose the date" value={stats.sessionSecs} />
-            <SessionRow label="Estimated worldwide deaths since you chose the date" value={stats.sessionDeaths} />
-            <SessionRow label="Estimated worldwide births since you chose the date" value={stats.sessionBirths} />
+            <SessionRow label="Sekunder, siden du valgte datoen" value={stats.sessionSecs} />
+            <SessionRow label="Anslåede dødsfald i verden, siden du valgte datoen" value={stats.sessionDeaths} />
+            <SessionRow label="Anslåede fødsler i verden, siden du valgte datoen" value={stats.sessionBirths} />
           </div>
 
-          <p className={styles.sectionLabel} style={{marginTop: '24px'}}>Horoscope sign</p>
+          <p className={styles.sectionLabel} style={{marginTop: '24px'}}>Stjernetegn</p>
           <div className={`${styles.horoscopeCard} glass`}>
             <span className={styles.signSymbol}>{stats.sign.symbol}</span>
             <span className={styles.signName}>{stats.sign.name}</span>
@@ -114,7 +115,7 @@ export default function Calculator() {
       ) : (
         <div className={styles.placeholder}>
           <span className={styles.hourglass}>⏳</span>
-          <p>Pick a date above to see your numbers</p>
+          <p>Vælg en dato ovenfor for at se dine tal</p>
         </div>
       )}
     </section>

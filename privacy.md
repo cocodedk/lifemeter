@@ -1,44 +1,55 @@
 # Privacy Policy — LifeMeter
 
-**App:** LifeMeter (`com.example.first`)
+**App:** LifeMeter (`dk.cocode.lifemeter`)
 **Developer:** CoCode.dk — Babak Bandpey
-**Last updated:** 14 July 2026
+**Last updated:** 7 October 2026
 
 > The canonical, always-current version of this policy is published at
-> **https://lifemeter.cocode.dk/privacy.html**
+> **https://lifemeter.cocode.dk/privacy/**
 
 **LifeMeter does not collect, transmit, or share any personal data.**
-It turns a birthdate you choose into a live, on-device dashboard — days alive, seconds, food
-estimates, global birth and death counters, and your horoscope sign — and it works entirely on your
-device.
+It turns a birth date you choose into a live, on-device dashboard of days alive, seconds, food
+estimates, estimated worldwide births and deaths, and your horoscope sign. It works entirely on
+your device.
 
 ## The one thing you enter
 
-The only information LifeMeter stores is the **birthdate you pick**. It is saved in the app's private
-storage on your own device so the dashboard can remember it the next time you open the app. Every
-number you see — days alive, seconds, food, births and deaths, and your horoscope sign — is
-calculated on your device from that date. Your birthdate is never sent to us or to any third party. It
-stays on your phone and is removed if you delete the app or clear its data.
+The only information LifeMeter stores is the **birth date you pick**. It is saved in the app's private
+storage on your own device so the dashboard can remember it the next time you open the app. The
+lifetime figures (days alive, seconds, food and deaths) and your horoscope sign are calculated on
+your device from that date. The session figures (seconds, births and deaths) are calculated from the
+time the app has been open. LifeMeter does not send your birth date to us or to any third party.
+Android backup may keep a copy outside your phone (see Device backup below). Uninstalling the app or
+clearing its data removes the copy on your phone.
 
 ## No internet, no tracking
 
-- The app requests **no internet permission — in fact, no Android permissions at all** — so it is technically unable to send your data anywhere.
+- The app requests **no internet permission**, so the app itself cannot connect to the internet or send your data anywhere.
+- It does not ask for access to your **location, contacts, camera, microphone, or storage**.
 - We use **no analytics, no crash reporting, and no advertising**.
-- There are **no third-party SDKs, no cookies, and no advertising identifiers**.
-- The app requests **no runtime permissions** (no location, contacts, camera, microphone, or storage access).
+- The app uses the AndroidX and Material interface libraries. It has **no analytics or advertising SDKs, no cookies, and no advertising identifiers**.
+
+## Links you tap
+
+The About screen has buttons that open web pages: LifeMeter's page on F-Droid, this privacy policy, the
+LifeMeter website, the source code on GitHub, and GitHub's page for reporting a problem. A button does
+nothing until you tap it. When you tap one, LifeMeter hands the web address to your phone's browser, and
+the browser opens the page. The app sends no information about you with the address. From then on you are
+on that website, which can see what any website sees when you visit, such as your IP address, and which
+follows its own privacy policy. The app itself never goes online.
 
 ## Bundled reference content
 
-LifeMeter ships with a small bundled dataset of tarot-card descriptions whose text was originally
-sourced from [labyrinthos.co](https://labyrinthos.co), credited inside the data file. This content
-lives entirely inside the installed app. Because the app has no internet access, it **never connects
-to labyrinthos.co** — or to any other website — and no information about you is ever sent there.
+LifeMeter includes worldwide birth and death figures for 1950 to 2030 (from the United Nations World
+Population Prospects 2024) and the constants it uses for its estimates. They are part of the installed
+app. The app does not download reference data.
 
 ## Device backup
 
 If you have enabled Android Auto Backup or Google account backup on your device, the operating system
-may include this app's local data in your own personal Google backup. This is controlled entirely by
-you and Google — we have no access to it. See
+may include this app's local data, including the birth date you picked, in your own personal Google
+backup. Android may restore it if you reinstall the app. This is controlled entirely by you and
+Google, and we have no access to it. See
 [Google's Privacy Policy](https://policies.google.com/privacy) for details.
 
 ## Children

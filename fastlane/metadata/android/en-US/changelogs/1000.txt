@@ -1,1 +1,1 @@
-Initial release: days and seconds alive, food consumed, global deaths and births since you were born, and your horoscope sign — all live from a birthdate you set once.
+Initial release: days and seconds alive, food eaten, estimated worldwide deaths since you were born, estimated worldwide births and deaths while the app is open, and your horoscope sign, all from a birth date you set once.

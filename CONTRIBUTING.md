@@ -1,7 +1,7 @@
 # Contributing to LifeMeter
 
 ## Local Setup
-1. Install Android Studio (Ladybug or newer) and JDK 17.
+1. Install Android Studio Panda 1 (2025.3.1) or newer. Gradle runs on the JetBrains JDK 21 named in `gradle/gradle-daemon-jvm.properties`; the app's source targets Java 17.
 2. Clone the repository and open it in Android Studio.
 3. Sync Gradle dependencies.
 4. Connect an Android device or start an emulator (API 21+).

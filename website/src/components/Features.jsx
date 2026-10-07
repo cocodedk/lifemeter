@@ -1,12 +1,12 @@
 import styles from './Features.module.css'
 
 const features = [
-  { title: 'Live lifetime totals', body: 'Days alive, seconds alive, kilos of food consumed, and deaths since you were born — all ticking in real time.' },
-  { title: 'Session counter', body: 'Seconds on screen, deaths and births while you\'ve been watching. Resets every time you return to the app.' },
-  { title: 'Horoscope & curiosities', body: 'Your zodiac sign with symbol. Plus one more number that tends to raise eyebrows.' },
-  { title: 'Remembers your date', body: 'Set it once. The dashboard loads instantly on every launch — no re-entering, no tapping Continue.' },
-  { title: 'Pull-down to change', body: 'Swipe down anywhere on the screen to open the date picker. Try it with a friend\'s birthdate.' },
-  { title: 'Stays on device', body: 'No backend, no account, no analytics. Your birthdate lives in Android SharedPreferences and nowhere else.' },
+  { title: 'Lifetime totals', body: 'See your days alive, seconds alive, estimated food consumed, and estimated worldwide deaths since you were born. The seconds and the death estimate are recalculated every second while the app is open. Large totals are rounded.' },
+  { title: 'This session', body: 'See how many seconds the app has been open, and the estimated worldwide births and deaths in that time. The counters start again when you return to the app or pick a new birth date.' },
+  { title: 'Horoscope and curiosities', body: 'See your horoscope sign and its symbol, and the planets, sun or moon linked to it. The Curiosities card also estimates the hours spent having sex since your 16th birthday, using survey averages.' },
+  { title: 'Saves your birth date', body: 'Enter your birth date once. Your dashboard opens with your numbers every time you start the app, with nothing to enter again.' },
+  { title: 'Change your birth date', body: 'Tap Change birth date, or scroll to the top and pull down, to pick another date. Try it with a friend\'s birth date.' },
+  { title: 'Stays on your phone', body: 'No account and no analytics, and the app has no internet permission. Your birth date is saved in the app\'s private storage and may be included in your Android backup.' },
 ]
 
 export default function Features() {
@@ -23,7 +23,8 @@ export default function Features() {
       </div>
 
       <blockquote className={`${styles.quote} glass`}>
-        LifeMeter makes no judgements, tracks nothing, and sends nothing anywhere. It just counts.
+        LifeMeter does not track you, and the app has no internet permission. It only does the
+        arithmetic.
       </blockquote>
     </section>
   )

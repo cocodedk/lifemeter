@@ -1,15 +1,15 @@
 import { useEffect, useRef } from 'react'
-import styles from './Install.module.css'
+import styles from '../components/Install.module.css'
 
 const steps = [
-  { n: 1, title: 'Allow installation', body: 'If you downloaded the installation file (APK) from GitHub, open it. When Android asks, allow your browser or file manager to install apps, then tap Install.' },
-  { n: 2, title: 'Open the app and set your birth date', body: <>Tap <em>Set birth date</em>, pick your date, and your dashboard opens at once.</> },
+  { n: 1, title: 'Tillad installation', body: 'Hvis du har hentet installationsfilen (APK) fra GitHub, så åbn den. Når Android spørger, skal du tillade, at din browser eller filhåndtering installerer apps, og så trykke på Installér.' },
+  { n: 2, title: 'Åbn appen og vælg din fødselsdato', body: <>Tryk på <em>Vælg fødselsdato</em>, vælg din dato, og din oversigt åbner med det samme.</> },
 ]
 
 export default function Install() {
   const slot = useRef(null)
 
-  // The install block (F-Droid, APK, Obtainium) is written into index.html by the cocode-apps
+  // The install block (F-Droid, APK, Obtainium) is written into da/index.html by the cocode-apps
   // tools, inside <template id="install-block">, so it is not part of this tree: copy it in.
   useEffect(() => {
     const template = document.getElementById('install-block')
@@ -18,7 +18,7 @@ export default function Install() {
 
   return (
     <section id="install" className={`${styles.section} glass reveal`}>
-      <h2 className={styles.h2}>Install on Android</h2>
+      <h2 className={styles.h2}>Installér på Android</h2>
       <div ref={slot} />
       <div className={styles.steps}>
         {steps.map(s => (

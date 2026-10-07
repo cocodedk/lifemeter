@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import androidx.core.os.ConfigurationCompat
 import androidx.core.view.ViewCompat
 import com.google.android.material.snackbar.Snackbar
 
@@ -42,7 +43,8 @@ class AboutActivity : AppCompatActivity() {
 
     private fun bindLink(@IdRes buttonId: Int, link: AboutLink) {
         val button = findViewById<View>(buttonId)
-        val url = aboutUrl(link, BuildConfig.APPLICATION_ID)
+        val language = ConfigurationCompat.getLocales(resources.configuration)[0]?.language ?: "en"
+        val url = aboutUrl(link, BuildConfig.APPLICATION_ID, language)
         if (url == null) {
             button.visibility = View.GONE
         } else {

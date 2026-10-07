@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privatlivspolitik | LifeMeter</title>
+  <meta name="description" content="Privatlivspolitik for LifeMeter: Android-appen indsamler ingen personoplysninger, har ingen tilladelse til internettet, ingen brugsstatistik og ingen reklamer og gemmer den fødselsdato, du indtaster, på din enhed. Android-sikkerhedskopiering kan tage den med." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://lifemeter.cocode.dk/da/privacy/" />
+  <link rel="alternate" hreflang="da" href="https://lifemeter.cocode.dk/da/privacy/" />
+  <link rel="alternate" hreflang="en" href="https://lifemeter.cocode.dk/privacy/" />
+  <link rel="alternate" hreflang="x-default" href="https://lifemeter.cocode.dk/privacy/" />
+  <meta name="theme-color" content="#1e1008" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #120a04; --bg-2: #1e1008;
+      --surface: rgba(38, 20, 8, 0.82);
+      --line: rgba(210, 130, 70, 0.28);
+      --text: #f5e6d8; --muted: #c4966a;
+      --amber: #e8882a; --cream: #f0d4b0; --warm-pink: #d45c3a;
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      color: var(--text); line-height: 1.68;
+      font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+      background:
+        radial-gradient(1200px 800px at 12% -10%, #3d1f0a 0%, transparent 60%),
+        radial-gradient(1100px 700px at 92% 8%, #2a1208 0%, transparent 58%),
+        linear-gradient(180deg, var(--bg-2), var(--bg));
+      min-height: 100vh;
+    }
+    a { color: var(--amber); text-decoration: underline; text-underline-offset: 2px; }
+    a:hover { color: var(--cream); }
+    .container { width: min(760px, 92vw); margin: 0 auto; padding: 48px 0 64px; }
+    .back { display: inline-block; margin-bottom: 22px; color: var(--muted); text-decoration: none; font-size: 0.92rem; }
+    .back:hover { color: var(--amber); }
+    .card {
+      border: 1px solid var(--line); border-radius: var(--radius);
+      background: var(--surface); backdrop-filter: blur(12px);
+      padding: clamp(24px, 5vw, 44px);
+    }
+    h1 { font-family: "Space Grotesk", "IBM Plex Sans", sans-serif; font-weight: 700; font-size: clamp(1.9rem, 5vw, 2.6rem); margin: 0 0 6px; color: var(--amber); }
+    h2 { font-family: "Space Grotesk", "IBM Plex Sans", sans-serif; font-weight: 500; font-size: 1.22rem; margin: 30px 0 8px; color: var(--cream); }
+    .meta { color: var(--muted); font-size: 0.9rem; margin: 0 0 6px; }
+    .meta code { font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 0.85rem; }
+    p, li { color: var(--text); }
+    ul { padding-inline-start: 1.2em; }
+    li { margin: 5px 0; }
+    strong { color: var(--cream); }
+    /* The cocode.dk frame lines up with .container's fluid column: min(760px, 92vw), no side
+       padding, same shape as .shell on the main page. */
+    cocode-head, cocode-foot { --cocode-max: 760px; --cocode-gutter: 16px; }
+    @media (min-width: 768px) { cocode-head, cocode-foot { --cocode-gutter: 0px; } }
+    /* The shared cocode-apps blocks (css/cocode-nav.css brings the layout) in the site's own look.
+       The shared stylesheet loads after this one, so these selectors are scoped to win. */
+    .site-header, .site-footer { width: min(760px, 92vw); margin: 0 auto; }
+    .site-header { padding-top: 12px; }
+    .site-header .cocode-nav { gap: 4px 8px; }
+    .site-header .cocode-nav a { color: var(--muted); border-radius: 10px; padding-inline: 10px; text-decoration: none; }
+    .site-header .cocode-nav a:hover { color: var(--amber); }
+    .site-header .cocode-nav a[aria-current="page"] { color: var(--text); }
+    .site-header .cocode-nav .brand {
+      gap: 10px; padding-inline: 0; color: var(--text);
+      font-family: "Space Grotesk", "IBM Plex Sans", sans-serif; font-weight: 700;
+    }
+    .site-header .cocode-nav .brand img { border-radius: 8px; }
+    .skip:focus { background: var(--amber); color: #120a04; }
+    a:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+    main:focus { outline: 0; }
+    .site-footer { padding-bottom: 48px; font-size: 0.88rem; color: var(--muted); }
+    .site-footer .cocode-footer a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+    .site-footer .cocode-footer a:hover { color: var(--amber); }
+  </style>
+  <link rel="stylesheet" href="https://brand.cocode.dk/v1.css" />
+  <script type="module" src="https://brand.cocode.dk/v1.js"></script>
+</head>
+<body>
+  <!-- The cocode.dk family frame. Without JavaScript its child shows instead: a way home.
+       The app's own menu (the shared navigation) sits directly below it. -->
+  <cocode-head project="LifeMeter" accent="#e8882a" on-accent="#120a04" dark>
+    <a href="https://cocode.dk">cocode.dk</a>
+  </cocode-head>
+  <header class="site-header">
+    <!-- cocode-apps:nav:start -->
+<link rel="stylesheet" href="/css/cocode-nav.css">
+<a class="skip" href="#main">Spring til indhold</a>
+<nav class="cocode-nav" aria-label="LifeMeter">
+  <a class="brand" href="/da/" data-nav="home"><img src="/img/icon.png" alt="" width="32" height="32">LifeMeter</a>
+  <a href="/da/#how" data-nav="how">Sådan virker det</a>
+  <a href="/da/#install" data-nav="install">Installér</a>
+  <a href="/da/privacy/" data-nav="privacy" aria-current="page">Privatliv</a>
+  <a href="/privacy/" hreflang="en" lang="en" data-nav="lang">English</a>
+  <a href="https://cocode.dk/" data-nav="more">Flere apps</a>
+</nav>
+<!-- cocode-apps:nav:end -->
+  </header>
+  <main id="main" tabindex="-1" class="container">
+    <div class="card">
+      <section lang="da">
+        <h1>Privatlivspolitik</h1>
+        <p class="meta">LifeMeter &middot; <code>dk.cocode.lifemeter</code></p>
+        <p class="meta">Sidst opdateret: 7. oktober 2026</p>
+
+        <p><strong>LifeMeter indsamler, sender eller deler ingen personoplysninger.</strong>
+        Appen gør en fødselsdato, du selv vælger, til et levende overblik på din egen enhed med dage i live,
+        sekunder, skøn over mad, skøn over fødsler og dødsfald i verden og dit stjernetegn. Den virker helt og
+        holdent på din enhed.</p>
+
+        <h2>Det eneste, du indtaster</h2>
+        <p>Den eneste oplysning, LifeMeter gemmer, er <strong>den fødselsdato, du vælger</strong>. Den bliver gemt
+        i appens private lager på din egen enhed, så oversigten kan huske den, næste gang du åbner appen. Tallene
+        for hele livet (dage i live, sekunder, mad og dødsfald) og dit stjernetegn bliver regnet ud på din enhed
+        ud fra den dato. Tallene for sessionen (sekunder, fødsler og dødsfald) bliver regnet ud fra, hvor længe
+        appen har været åben. LifeMeter sender ikke din fødselsdato til os eller til tredjeparter.
+        Android-sikkerhedskopiering kan gemme en kopi uden for din telefon (se Sikkerhedskopi af enheden
+        nedenfor). Hvis du afinstallerer appen eller rydder dens data, forsvinder kopien på din telefon.</p>
+
+        <h2>Intet internet, ingen sporing</h2>
+        <ul>
+          <li>Appen beder <strong>ikke om tilladelse til internettet</strong>, så selve appen ikke kan oprette forbindelse til internettet eller sende dine data nogen steder hen.</li>
+          <li>Den beder ikke om adgang til din <strong>placering, dine kontakter, dit kamera, din mikrofon eller dit lager</strong>.</li>
+          <li>Vi bruger <strong>ingen brugsstatistik, ingen fejlrapportering og ingen reklamer</strong>.</li>
+          <li>Appen bruger AndroidX- og Material-bibliotekerne til brugerfladen. Den har <strong>ingen SDK'er til brugsstatistik eller reklamer, ingen cookies og ingen reklame-id'er</strong>.</li>
+        </ul>
+
+        <h2>Links, du trykker på</h2>
+        <p>Skærmen Om LifeMeter har knapper, der åbner websider: LifeMeters side på F-Droid, denne privatlivspolitik,
+        LifeMeters hjemmeside, kildekoden på GitHub og GitHubs side til at melde et problem. En knap gør intet, før
+        du trykker på den. Når du trykker, giver LifeMeter webadressen videre til din telefons browser, som åbner
+        siden. Appen sender ingen oplysninger om dig med adressen. Derefter er du på det websted, som kan se det, alle
+        websteder kan se, når du besøger dem, for eksempel din IP-adresse, og som følger sin egen privatlivspolitik.
+        Selve appen går aldrig online.</p>
+
+        <h2>Medfølgende referenceindhold</h2>
+        <p>LifeMeter indeholder tal for fødsler og dødsfald i hele verden for 1950 til 2030 (fra FN's World
+        Population Prospects 2024) og de faste værdier, appen bruger til sine skøn. De er en del af den installerede
+        app. Appen henter ikke referencedata fra internettet.</p>
+
+        <h2>Sikkerhedskopi af enheden</h2>
+        <p>Hvis du har slået Android Auto Backup eller sikkerhedskopiering til din Google-konto til på din enhed,
+        kan operativsystemet tage appens lokale data med i din egen personlige Google-sikkerhedskopi, også den
+        fødselsdato, du har valgt. Android kan gendanne den, hvis du installerer appen igen. Det er helt op til dig
+        og Google, og vi har ingen adgang til den. Se
+        <a href="https://policies.google.com/privacy" rel="noopener" target="_blank">Googles privatlivspolitik</a>
+        for flere oplysninger.</p>
+
+        <h2>Børn</h2>
+        <p>Appen indsamler ikke bevidst data fra nogen, heller ikke fra børn.</p>
+
+        <h2>Ændringer</h2>
+        <p>Hvis denne politik ændres, bliver den opdaterede version lagt på denne side med en ny
+        &raquo;sidst opdateret&laquo;-dato.</p>
+
+        <h2>Kontakt</h2>
+        <p>Spørgsmål om denne politik kan sendes til
+        <a href="mailto:bb@cocode.dk">bb@cocode.dk</a> (CoCode.dk, udvikler: Babak Bandpey).</p>
+      </section>
+    </div>
+  </main>
+
+  <div class="site-footer">
+    <!-- cocode-apps:footer:start -->
+<footer class="cocode-footer">
+  <a href="https://github.com/cocodedk/lifemeter">Kildekode</a> ·
+  <a href="/da/privacy/">Privatliv</a> ·
+  Licens: Apache-2.0 ·
+  <a href="https://cocode.dk/">Lavet af Cocode (cocode.dk)</a>
+</footer>
+<!-- cocode-apps:footer:end -->
+  </div>
+
+  <cocode-foot repo="cocodedk/lifemeter" dark>
+    <a href="https://cocode.dk">cocode.dk</a>
+    <a href="https://github.com/cocodedk/lifemeter">GitHub</a>
+  </cocode-foot>
+</body>
+</html>
